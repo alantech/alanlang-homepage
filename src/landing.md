@@ -34,7 +34,7 @@
 
 `alan` has predictable execution by not allowing unbounded loops nor recursion.
 The `alan` compiler and runtime apply the possible parallelism in the users' code without the need for concurrent or asynchronous programming.
-Read more about the design [here]().
+Learn more about `alan` through our [blog](), [documentation](https://docs.alantechnologies.com), or [source code](https://github.com/alantech).
 
 ## Try Alan
 
