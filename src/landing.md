@@ -14,21 +14,29 @@
       <b>Blog</b>
     </a>
   </span>
+  &nbsp;
+  &nbsp;
+  <span>
+    <a style="text-align: right; text-decoration: none; color: #cccccc;" href="https://github.com/alantech">
+      <b>Github</b>
+    </a>
+  </span>
 </div>
 
 &nbsp;
 
 <center>
   <img src="alan-logo.png" alt="drawing" width="180"/>
-  <h2>Alan Programming Language</h2>
+  <h1>Alan Programming Language</h1>
 </center>
 
 &nbsp;
 
-Alan is open source and has predictable execution and
-can autoscale.
+`alan` has predictable execution by not allowing unbounded loops nor recursion.
+The `alan` compiler and runtime apply the possible parallelism in the users' code without the need for concurrent or asynchronous programming.
+Read more about the design [here]().
 
-#### Try Alan
+## Try Alan
 
 ```rust,editable,ignore,mdbook-runnable
 
@@ -36,11 +44,7 @@ int result = 4;
 return result;
 ```
 
-#### Why Alan
-
-
-
-#### Compare Alan
+## Compare Alan
 
 <table style="width: 100%;">
 <tr>
@@ -108,10 +112,7 @@ return x;
 </tr>
 </table>
 
-#### About us
+## About us
 
-We are a startup based in the Bay Area, CA. We are a team of developers
-that going tired of re-writing the same code over and over again
-when the scale of the business changed.
-
-Please reach out on [Discord](https://discord.gg/XatB9we) or email us at hello at alantechnologies dot com
+We are a team of developers based in the Bay Area, CA that got tired of re-writing software products as they scaled.
+Please reach out on [Discord](https://discord.gg/XatB9we) or email us at hello at alantechnologies dot com.
