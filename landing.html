@@ -96,15 +96,6 @@
         
         <div id="menu-bar-hover-placeholder"></div>
 
-        <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
-        <script type="text/javascript">
-            document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
-            document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
-            Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
-                link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
-            });
-        </script>
-
         <div id="content" class="content">
             <main>
                 <p> </p>
