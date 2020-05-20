@@ -7,7 +7,7 @@
 
 &nbsp;
 
-#### JavaScript
+#### Node.js
 
 ```javascript,
 int foo() {
