@@ -280,17 +280,7 @@ function playpen_text(playpen) {
         highlight: document.querySelector("[href$='highlight.css']"),
     };
 
-    function get_theme() {
-        var theme;
-        try { theme = localStorage.getItem('mdbook-theme'); } catch (e) { }
-        if (theme === null || theme === undefined) {
-            return default_theme;
-        } else {
-            return theme;
-        }
-    }
-
-    function set_theme(theme, store = true) {
+    function set_theme(theme) {
         let ace_theme;
 
         if (theme == 'coal' || theme == 'navy') {
@@ -321,20 +311,10 @@ function playpen_text(playpen) {
             });
         }
 
-        var previousTheme = get_theme();
-
-        if (store) {
-            try { localStorage.setItem('mdbook-theme', theme); } catch (e) { }
-        }
-
-        html.classList.remove(previousTheme);
         html.classList.add(theme);
     }
 
-    // Set theme
-    var theme = get_theme();
-
-    set_theme(theme, false);
+    set_theme(default_theme);
 
 })();
 
