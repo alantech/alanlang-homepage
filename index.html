@@ -1,9 +1,9 @@
 <!DOCTYPE HTML>
-<html lang="en" class="sidebar-visible no-js light">
+<html lang="en" class="sidebar-visible no-js ayu">
 <head>
     <!-- Book generated using mdBook -->
     <meta charset="UTF-8">
-    <title>Landing</title>
+    <title>Alan Programming Language</title>
     
 
     <!-- Custom HTML head -->
@@ -40,55 +40,22 @@
 <!-- Provide site root to javascript -->
 <script type="text/javascript">
     var path_to_root = "";
-    var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "light" : "light";
+    var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "ayu" : "ayu";
 </script>
 
-<!-- Work around some values being stored in localStorage wrapped in quotes -->
+<!-- Set the default theme before any content is loaded, prevents flash -->
 <script type="text/javascript">
-    try {
-        var theme = localStorage.getItem('mdbook-theme');
-        var sidebar = localStorage.getItem('mdbook-sidebar');
-
-        if (theme.startsWith('"') && theme.endsWith('"')) {
-            localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
-        }
-
-        if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
-            localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
-        }
-    } catch (e) { }
-</script>
-
-<!-- Set the theme before any content is loaded, prevents flash -->
-<script type="text/javascript">
-    var theme;
-    try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
-    if (theme === null || theme === undefined) { theme = default_theme; }
     var html = document.querySelector('html');
-    html.classList.remove('no-js')
-    html.classList.remove('light')
-    html.classList.add(theme);
+    html.classList.add(default_theme);
     html.classList.add('js');
 </script>
 
-<!-- Hide / unhide sidebar before it is displayed -->
+<!-- Hide sidebar before it is displayed -->
 <script type="text/javascript">
     var html = document.querySelector('html');
-    var sidebar = 'hidden';
-    if (document.body.clientWidth >= 1080) {
-        try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
-        sidebar = sidebar || 'visible';
-    }
     html.classList.remove('sidebar-visible');
     html.classList.add("sidebar-hidden");
 </script>
-
-<nav id="sidebar" class="sidebar" aria-label="Table of contents">
-    <div class="sidebar-scrollbox">
-        <ol class="chapter"><li class="chapter-item expanded "><a href="landing.html"><strong aria-hidden="true">1.</strong> Landing</a></li></ol>
-    </div>
-    <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
-</nav>
 
 <div id="page-wrapper" class="page-wrapper">
 
@@ -99,36 +66,62 @@
         <div id="content" class="content">
             <main>
                 <p> </p>
+<!--- NavBar --->
+<div style="text-align: right">
+  <span>
+    <a style="text-align: right; text-decoration: none; color: #cccccc;" href="https://docs.alantechnologies.com">
+      <b>Docs</b>
+    </a>
+  </span>
+  &nbsp;
+  &nbsp;
+  <span>
+    <a style="text-align: right; text-decoration: none; color: #cccccc;" href="https://docs.alantechnologies.com">
+      <b>Blog</b>
+    </a>
+  </span>
+  &nbsp;
+  &nbsp;
+  <span>
+    <a style="text-align: right; text-decoration: none; color: #cccccc;" href="https://github.com/alantech">
+      <b>Github</b>
+    </a>
+  </span>
+</div>
+<p> </p>
 <center>
-<img src="alan-logo.png" alt="drawing" width="200"/>
-<h1><a class="header" href="#alan-programming-language" id="alan-programming-language">Alan Programming Language</a></h1>
+  <img src="alan-logo.png" alt="drawing" width="180"/>
+  <h1><a class="header" href="#alan-programming-language" id="alan-programming-language">Alan Programming Language</a></h1>
 </center>
 <p> </p>
-<h4><a class="header" href="#nodejs" id="nodejs">Node.js</a></h4>
-<pre><code class="language-javascript ">int foo() {
-  int result = 4;
-  return result;
-}
-</code></pre>
+<p><code>alan</code> has predictable execution by not allowing unbounded loops nor recursion.
+The <code>alan</code> compiler and runtime apply the possible parallelism in the users' code without the need for concurrent or asynchronous programming.
+Learn more about <code>alan</code> through our <a href="">blog</a>, <a href="https://docs.alantechnologies.com">documentation</a>, or <a href="https://github.com/alantech">source code</a>.</p>
+<h2><a class="header" href="#try-alan" id="try-alan">Try Alan</a></h2>
+<pre><pre class="playpen"><code class="language-rust editable ignore mdbook-runnable">
+int result = 4;
+return result;
+</code></pre></pre>
+<h2><a class="header" href="#compare-alan" id="compare-alan">Compare Alan</a></h2>
 <table style="width: 100%;">
 <tr>
-<th> Good </th>
-<th> Bad </th>
+<th></th>
+<th></th>
 </tr>
 <tr>
 <td>
-<pre><pre class="playpen"><code class="language-rust editable">
-<span class="boring">#![allow(unused_variables)]
-</span><span class="boring">fn main() {
-</span>int foo() {
+<pre><code class="language-rust ignore">/* ALAN */
+
+int foo() {
 int result = 4;
 return result;
 }
-<span class="boring">}
-</span></code></pre></pre>
+</code></pre>
 </td>
 <td>
-<pre><code class="language-c++">int foo() { 
+<pre><code class="language-javascript">/* NODE.JS */
+
+int foo() {
 int x = 4;
 return x;
 }
@@ -136,6 +129,35 @@ return x;
 </td>
 </tr>
 </table>
+<table style="width: 100%;">
+<tr>
+<th></th>
+<th></th>
+</tr>
+<tr>
+<td>
+<pre><code class="language-go">/* GOLANG */
+
+int foo() {
+int result = 4;
+return result;
+}
+</code></pre>
+</td>
+<td>
+<pre><code class="language-java">/* JAVA */
+
+int foo() { 
+int x = 4;
+return x;
+}
+</code></pre>
+</td>
+</tr>
+</table>
+<h2><a class="header" href="#about-us" id="about-us">About us</a></h2>
+<p>We are a team of developers based in the Bay Area, CA that got tired of re-writing software products as they scaled.
+Please reach out on <a href="https://discord.gg/XatB9we">Discord</a> or email us at hello at alantechnologies dot com.</p>
 
             </main>
         </div>
@@ -148,6 +170,10 @@ return x;
 
 
 
+    <script type="text/javascript">
+        window.playpen_line_numbers = true;
+    </script>
+
 
 
     <script type="text/javascript">
@@ -155,6 +181,12 @@ return x;
     </script>
 
 
+
+    <script src="ace.js" type="text/javascript" charset="utf-8"></script>
+    <script src="editor.js" type="text/javascript" charset="utf-8"></script>
+    <script src="mode-rust.js" type="text/javascript" charset="utf-8"></script>
+    <script src="theme-dawn.js" type="text/javascript" charset="utf-8"></script>
+    <script src="theme-tomorrow_night.js" type="text/javascript" charset="utf-8"></script>
 
 
 
