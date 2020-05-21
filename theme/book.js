@@ -272,8 +272,6 @@ function playpen_text(playpen) {
 })();
 
 (function themes() {
-    var html = document.querySelector('html');
-    var themeColorMetaTag = document.querySelector('meta[name="theme-color"]');
     var stylesheets = {
         ayuHighlight: document.querySelector("[href$='ayu-highlight.css']"),
         tomorrowNight: document.querySelector("[href$='tomorrow-night.css']"),
@@ -283,16 +281,26 @@ function playpen_text(playpen) {
     function set_theme(theme) {
         let ace_theme;
 
-        if (theme == 'coal' || theme == 'navy') {
+        if (theme === 'coal' || theme === 'navy') {
             stylesheets.ayuHighlight.disabled = true;
             stylesheets.tomorrowNight.disabled = false;
             stylesheets.highlight.disabled = true;
 
             ace_theme = "ace/theme/tomorrow_night";
-        } else if (theme == 'ayu') {
+        } else if (theme === 'ayu') {
             stylesheets.ayuHighlight.disabled = false;
             stylesheets.tomorrowNight.disabled = true;
             stylesheets.highlight.disabled = true;
+            ace_theme = "ace/theme/tomorrow_night";
+        }  else if (theme  === 'solarized-dark') {
+            stylesheets.ayuHighlight.disabled = false;
+            stylesheets.tomorrowNight.disabled = true;
+            stylesheets.highlight.disabled = true;
+            ace_theme = "ace/theme/tomorrow_night";
+        } else if (theme  === 'solarized-light') {
+            stylesheets.ayuHighlight.disabled = true;
+            stylesheets.tomorrowNight.disabled = false;
+            stylesheets.highlight.disabled = false;
             ace_theme = "ace/theme/tomorrow_night";
         } else {
             stylesheets.ayuHighlight.disabled = true;
@@ -301,17 +309,11 @@ function playpen_text(playpen) {
             ace_theme = "ace/theme/dawn";
         }
 
-        setTimeout(function () {
-            themeColorMetaTag.content = getComputedStyle(document.body).backgroundColor;
-        }, 1);
-
         if (window.ace && window.editors) {
             window.editors.forEach(function (editor) {
                 editor.setTheme(ace_theme);
             });
         }
-
-        html.classList.add(theme);
     }
 
     set_theme(default_theme);

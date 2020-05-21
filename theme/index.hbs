@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html lang="{{ language }}" class="sidebar-visible no-js {{ default_theme }}">
+<html lang="{{ language }}" class="sidebar-hidden js {{ default_theme }}">
 <head>
     <!-- Book generated using mdBook -->
     <meta charset="UTF-8">
@@ -48,20 +48,6 @@
 <script type="text/javascript">
     var path_to_root = "{{ path_to_root }}";
     var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "{{ preferred_dark_theme }}" : "{{ default_theme }}";
-</script>
-
-<!-- Set the default theme before any content is loaded, prevents flash -->
-<script type="text/javascript">
-    var html = document.querySelector('html');
-    html.classList.add(default_theme);
-    html.classList.add('js');
-</script>
-
-<!-- Hide sidebar before it is displayed -->
-<script type="text/javascript">
-    var html = document.querySelector('html');
-    html.classList.remove('sidebar-visible');
-    html.classList.add("sidebar-hidden");
 </script>
 
 <div id="page-wrapper" class="page-wrapper">

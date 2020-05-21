@@ -4,8 +4,8 @@ multilingual = false
 src = "src"
 
 [output.html]
-default-theme = "ayu"
-preferred-dark-theme = "ayu"
+default-theme = "solarized-light"
+#preferred-dark-theme = "solarized-dark"
 
 [output.html.playpen]
 editable = true
