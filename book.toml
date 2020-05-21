@@ -3,5 +3,13 @@ language = "en"
 multilingual = false
 src = "src"
 
+[output.html]
+default-theme = "ayu"
+preferred-dark-theme = "ayu"
+
+[output.html.playpen]
+editable = true
+line-numbers = true
+
 [output.html.search]
 enable = false
