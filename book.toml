@@ -5,6 +5,7 @@ src = "src"
 
 [output.html]
 default-theme = "solarized-light"
+preferred-dark-theme = "solarized-dark"
 
 [output.html.playpen]
 editable = true
