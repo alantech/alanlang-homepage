@@ -301,16 +301,16 @@ function playpen_text(playpen) {
             stylesheets.ayuHighlight.disabled = true;
             stylesheets.tomorrowNight.disabled = true;
             stylesheets.highlight.disabled = true;
-            stylesheets.solarizedDarkHljs.disabled = true;
-            stylesheets.solarizedLightHljs.disabled = false;
-            ace_theme = "ace/theme/solarized_light";
+            stylesheets.solarizedDarkHljs.disabled = false;
+            stylesheets.solarizedLightHljs.disabled = true;
+            ace_theme = "ace/theme/solarized_dark";
         } else if (theme  === 'solarized-light') {
             stylesheets.ayuHighlight.disabled = true;
             stylesheets.tomorrowNight.disabled = true;
             stylesheets.highlight.disabled = true;
-            stylesheets.solarizedLightHljs.disabled = true;
-            stylesheets.solarizedDarkHljs.disabled = false;
-            ace_theme = "ace/theme/solarized_dark";
+            stylesheets.solarizedLightHljs.disabled = false;
+            stylesheets.solarizedDarkHljs.disabled = true;
+            ace_theme = "ace/theme/solarized_light";
         } else {
             stylesheets.ayuHighlight.disabled = true;
             stylesheets.tomorrowNight.disabled = true;
