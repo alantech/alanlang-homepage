@@ -276,6 +276,8 @@ function playpen_text(playpen) {
         ayuHighlight: document.querySelector("[href$='ayu-highlight.css']"),
         tomorrowNight: document.querySelector("[href$='tomorrow-night.css']"),
         highlight: document.querySelector("[href$='highlight.css']"),
+        solarizedLightHljs: document.querySelector("[href$='solarized-light-hljs.css']"),
+        solarizedDarkHljs: document.querySelector("[href$='solarized-dark-hljs.css']"),
     };
 
     function set_theme(theme) {
@@ -285,27 +287,36 @@ function playpen_text(playpen) {
             stylesheets.ayuHighlight.disabled = true;
             stylesheets.tomorrowNight.disabled = false;
             stylesheets.highlight.disabled = true;
-
+            stylesheets.solarizedDarkHljs.disabled = true;
+            stylesheets.solarizedLightHljs.disabled = true;
             ace_theme = "ace/theme/tomorrow_night";
         } else if (theme === 'ayu') {
             stylesheets.ayuHighlight.disabled = false;
             stylesheets.tomorrowNight.disabled = true;
             stylesheets.highlight.disabled = true;
+            stylesheets.solarizedDarkHljs.disabled = true;
+            stylesheets.solarizedLightHljs.disabled = true;
             ace_theme = "ace/theme/tomorrow_night";
         }  else if (theme  === 'solarized-dark') {
-            stylesheets.ayuHighlight.disabled = false;
+            stylesheets.ayuHighlight.disabled = true;
             stylesheets.tomorrowNight.disabled = true;
             stylesheets.highlight.disabled = true;
-            ace_theme = "ace/theme/tomorrow_night";
+            stylesheets.solarizedDarkHljs.disabled = true;
+            stylesheets.solarizedLightHljs.disabled = false;
+            ace_theme = "ace/theme/dawn";
         } else if (theme  === 'solarized-light') {
             stylesheets.ayuHighlight.disabled = true;
             stylesheets.tomorrowNight.disabled = true;
-            stylesheets.highlight.disabled = false;
-            ace_theme = "ace/theme/dawn";
+            stylesheets.highlight.disabled = true;
+            stylesheets.solarizedLightHljs.disabled = true;
+            stylesheets.solarizedDarkHljs.disabled = false;
+            ace_theme = "ace/theme/tomorrow_night";
         } else {
             stylesheets.ayuHighlight.disabled = true;
             stylesheets.tomorrowNight.disabled = true;
             stylesheets.highlight.disabled = false;
+            stylesheets.solarizedDarkHljs.disabled = true;
+            stylesheets.solarizedLightHljs.disabled = true;
             ace_theme = "ace/theme/dawn";
         }
 

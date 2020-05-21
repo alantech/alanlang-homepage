@@ -69,7 +69,7 @@
 
     --links: var(--blue);
 
-    --inline-code-color: var(--orange);
+    --inline-code-color: var(--yellow); /*var(--base1);*/
 
     --table-border-color: var(--base2);
     --table-header-bg: var(--base2);
@@ -83,7 +83,7 @@
 
     --links: var(--cyan);
 
-    --inline-code-color: var(--yellow);
+    --inline-code-color: var(--yellow); /*var(--base00);*/
 
     --table-border-color: var(--base02);
     --table-header-bg: var(--base02);
