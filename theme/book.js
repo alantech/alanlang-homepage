@@ -303,14 +303,14 @@ function playpen_text(playpen) {
             stylesheets.highlight.disabled = true;
             stylesheets.solarizedDarkHljs.disabled = true;
             stylesheets.solarizedLightHljs.disabled = false;
-            ace_theme = "ace/theme/dawn";
+            ace_theme = "ace/theme/solarized_light";
         } else if (theme  === 'solarized-light') {
             stylesheets.ayuHighlight.disabled = true;
             stylesheets.tomorrowNight.disabled = true;
             stylesheets.highlight.disabled = true;
             stylesheets.solarizedLightHljs.disabled = true;
             stylesheets.solarizedDarkHljs.disabled = false;
-            ace_theme = "ace/theme/tomorrow_night";
+            ace_theme = "ace/theme/solarized_dark";
         } else {
             stylesheets.ayuHighlight.disabled = true;
             stylesheets.tomorrowNight.disabled = true;

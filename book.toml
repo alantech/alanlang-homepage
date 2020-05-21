@@ -9,6 +9,10 @@ additional-css = [
   "solarized-light-hljs.css",
   "solarized-dark-hljs.css"
 ]
+additional-js = [
+  "theme-solarized_dark.js",
+  "theme-solarized_light.js",
+]
 
 [output.html.playpen]
 editable = true
