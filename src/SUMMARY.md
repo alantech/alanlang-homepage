@@ -1,3 +1,3 @@
 # Summary
 
-- [Alan Programming Language](./landing.md)
+- [The Alan Programming Language](./landing.md)
