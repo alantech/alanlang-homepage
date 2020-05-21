@@ -6,10 +6,14 @@ theme = "theme"
 default-theme = "solarized-light"
 preferred-dark-theme = "solarized-dark"
 additional-css = [
-  "solarized-light-hljs.css",
-  "solarized-dark-hljs.css"
+  "css/solarized-light-hljs.css",
+  "css/solarized-dark-hljs.css",
+  "css/override.css"
 ]
 additional-js = [
+  # ace editor themes
+  # mdbook requires these to be located at the top level
+  # and with this specific file name convention
   "theme-solarized_dark.js",
   "theme-solarized_light.js",
 ]
