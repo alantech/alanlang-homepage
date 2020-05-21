@@ -79,7 +79,7 @@
 .solarized-dark {
     --bg: var(--base03);
     --fg: var(--base0);
-    --title: var(--yellow);/*var(--base01);*/
+    --title: var(--base1);
 
     --links: var(--cyan);
 
