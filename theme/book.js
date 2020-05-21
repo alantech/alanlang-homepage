@@ -299,9 +299,9 @@ function playpen_text(playpen) {
             ace_theme = "ace/theme/tomorrow_night";
         } else if (theme  === 'solarized-light') {
             stylesheets.ayuHighlight.disabled = true;
-            stylesheets.tomorrowNight.disabled = false;
+            stylesheets.tomorrowNight.disabled = true;
             stylesheets.highlight.disabled = false;
-            ace_theme = "ace/theme/tomorrow_night";
+            ace_theme = "ace/theme/dawn";
         } else {
             stylesheets.ayuHighlight.disabled = true;
             stylesheets.tomorrowNight.disabled = true;

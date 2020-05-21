@@ -27,7 +27,7 @@
 
 <center>
   <img src="alan-logo.png" alt="drawing" width="180"/>
-  <h1>Alan Programming Language</h1>
+  <h1 style="color: var(--title);">Alan Programming Language</h1>
 </center>
 
 &nbsp;
