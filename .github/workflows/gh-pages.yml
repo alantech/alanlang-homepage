@@ -13,6 +13,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      # Add the ssh-key to the keyring in order to clone repos
+      - uses: webfactory/ssh-agent@v0.2.0
+        with:
+          ssh-private-key: ${{ secrets.ssh_key }}
+
       - name: Setup mdBook
         uses: peaceiris/actions-mdbook@v1
         with:
