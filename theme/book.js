@@ -34,10 +34,10 @@ function playpen_text(playpen) {
 
 
         // transpile alan to js and eval it
+        var oldLog = console.log;
         try {
             const js = alanCompiler('ln', 'js', text)
             result_block.innerText = "";
-            var oldLog = console.log;
             console.log = function() {
                 result_block.innerText += arguments[0];
                 oldLog.apply(oldLog, arguments);
@@ -46,6 +46,7 @@ function playpen_text(playpen) {
         } catch (e) {
             result_block.innerText = e.message;
         }
+        console.log = oldLog;
     }
 
     // Syntax highlighting Configuration
