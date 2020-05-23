@@ -89,10 +89,23 @@
 The <code>alan</code> compiler and runtime apply the possible parallelism in the users' code without the need for concurrent or asynchronous programming.
 Learn more about <code>alan</code> through our <a href="">blog</a>, <a href="https://docs.alantechnologies.com">documentation</a>, or <a href="https://github.com/alantech">source code</a>.</p>
 <h2><a class="header" href="#try-alan" id="try-alan">Try Alan</a></h2>
+<table style="width: 100%;">
+<tr>
+<th></th>
+<th></th>
+</tr>
+<tr>
+<td>
 <pre><pre class="playpen"><code class="language-rust editable ignore mdbook-runnable">
-int result = 4;
-return result;
+import @std/app
+
+on app.start {
+  app.print(&quot;Hello, World!&quot;)
+  emit app.exit 0
+}
 </code></pre></pre>
+</td>
+</table>
 <h2><a class="header" href="#compare-alan" id="compare-alan">Compare Alan</a></h2>
 <table style="width: 100%;">
 <tr>
@@ -180,16 +193,18 @@ Please reach out on <a href="https://discord.gg/XatB9we">Discord</a> or email us
     <script src="theme-tomorrow_night.js" type="text/javascript" charset="utf-8"></script>
 
 
-<script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
-<script src="highlight.js" type="text/javascript" charset="utf-8"></script>
-<script src="book.js" type="text/javascript" charset="utf-8"></script>
-
 <!-- Custom JS scripts -->
+
+    <script type="text/javascript" src="bundle.js"></script>
 
     <script type="text/javascript" src="theme-solarized_dark.js"></script>
 
     <script type="text/javascript" src="theme-solarized_light.js"></script>
 
+
+<script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+<script src="book.js" type="text/javascript" charset="utf-8"></script>
 
 </body>
 </html>
