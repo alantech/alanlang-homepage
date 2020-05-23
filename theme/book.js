@@ -16,6 +16,9 @@ function playpen_text(playpen) {
 }
 
 (function codeSnippets() {
+    // Browserify creates a toplevel `require` function that you can use to get the modules
+    const alanCompiler = require('alan-compiler')
+
     function fetch_with_timeout(url, options, timeout = 6000) {
         return Promise.race([
             fetch(url, options),
@@ -124,8 +127,6 @@ function playpen_text(playpen) {
 
         result_block.innerText = "Running...";
 
-        // Browserify creates a toplevel `require` function that you can use to get the modules
-        const alanCompiler = require('alan-compiler')
         // transpile alan to js
         const js = alanCompiler('ln', 'js', text)
         // console log returns undefined so wrap it
