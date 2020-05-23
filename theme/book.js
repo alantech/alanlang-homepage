@@ -124,17 +124,22 @@ function playpen_text(playpen) {
 
         result_block.innerText = "Running...";
 
-        fetch_with_timeout("https://play.rust-lang.org/evaluate.json", {
-            headers: {
-                'Content-Type': "application/json",
-            },
-            method: 'POST',
-            mode: 'cors',
-            body: JSON.stringify(params)
-        })
-        .then(response => response.json())
-        .then(response => result_block.innerText = response.result)
-        .catch(error => result_block.innerText = "Playground Communication: " + error.message);
+        // Browserify creates a toplevel `require` function that you can use to get the modules
+        const alanCompiler = require('alan-compiler')
+        // transpile alan to js
+        const js = alanCompiler('ln', 'js', text)
+        // console log returns undefined so wrap it
+        var newInnerText = "";
+        console.log = function(value) {
+            newInnerText += value + '\n';
+            return value;
+        };
+        try {
+            eval(js);
+            result_block.innerText = newInnerText;
+        } catch (e) {
+            result_block.innerText = e.message;
+        }
     }
 
     // Syntax highlighting Configuration
