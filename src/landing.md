@@ -38,11 +38,26 @@ Learn more about `alan` through our [blog](), [documentation](https://docs.alant
 
 ## Try Alan
 
+<table style="width: 100%;">
+<tr>
+<th></th>
+<th></th>
+</tr>
+<tr>
+<td>
+
 ```rust,editable,ignore,mdbook-runnable
 
-int result = 4;
-return result;
+import @std/app
+
+on app.start {
+  app.print("Hello, World!")
+  emit app.exit 0
+}
 ```
+
+</td>
+</table>
 
 ## Compare Alan
 
