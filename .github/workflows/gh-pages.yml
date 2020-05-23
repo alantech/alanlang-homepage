@@ -19,10 +19,10 @@ jobs:
           mdbook-version: '0.3.7'
           # mdbook-version: 'latest'
 
-      - run: mdbook build
-
       # Bundle alan compiler and js-runtime
       - run: bash alan-playground.sh
+
+      - run: mdbook build
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
