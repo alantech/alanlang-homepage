@@ -32430,7 +32430,6 @@ module.exports = {
   ...r,
   stdoutp: console.log,
   exitop: () => {
-    console.log('exit')
     r.emitter.removeAllListeners()
   }, // Clean up the event emitter, later we'll want a hook into the playground to show this
 }
