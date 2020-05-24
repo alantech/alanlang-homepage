@@ -48,7 +48,7 @@ function playpen_text(playpen) {
               result_block.innerText = e.message;
           }
           console.log = oldLog;
-        })
+        }, 10)
     }
 
     // Syntax highlighting Configuration
