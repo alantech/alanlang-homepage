@@ -14291,15 +14291,23 @@ class Microstatement {
                         let left = null;
                         if (i != 0)
                             left = withOperatorsList[i - 1];
-                        let right = null; // Technically, since we're doing this at runtime, there could be a syntax error
+                        let right = null;
                         if (i != withOperatorsList.length - 1)
                             right = withOperatorsList[i + 1];
-                        for (let j = 0; j < ops.length; j++) {
-                            if (ops[j].precedence > operatorPrecedence &&
-                                ops[j].applicableFunction(left == null ? null : left.microstatementval.outputType, right == null ? null : right.microstatementval.outputType, scope) != null) {
-                                op = ops[j];
-                                operatorListLoc = j;
-                                operatorPrecedence = op.precedence;
+                        // Skip over any operator that is followed by another operator as it must be a prefix
+                        // operator (or a syntax error, but we'll catch that later)
+                        if (right === null || !!right.microstatementval) {
+                            for (let j = 0; j < ops.length; j++) {
+                                if (ops[j].precedence > operatorPrecedence &&
+                                    ops[j].applicableFunction(left === null ? // Left is special, if two operators are in a row, this one
+                                        null : // needs to be a prefix operator for this to work at all
+                                        !!left.microstatementval ?
+                                            left.microstatementval.outputType :
+                                            null, right === null ? null : right.microstatementval.outputType, scope) != null) {
+                                    op = ops[j];
+                                    operatorListLoc = j;
+                                    operatorPrecedence = op.precedence;
+                                }
                             }
                         }
                         // During the process of determining the operator ordering, there may be tests that
@@ -30835,7 +30843,7 @@ const r = require('alan-js-runtime')
 // Redefined stdoutp and exitop to work in the browser
 module.exports = {
   ...r,
-  stdoutp: console.log,
+  stdoutp: (...args) => console.log(...args), // Lazy binding to replace `console.log` at will
   exitop: () => {
     r.emitter.removeAllListeners()
   }, // Clean up the event emitter, later we'll want a hook into the playground to show this
