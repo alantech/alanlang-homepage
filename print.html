@@ -85,8 +85,8 @@
   <h1 style="color: var(--title);">The Alan Programming Language</h1>
 </center>
 <p> </p>
-<p><code>alan</code> has predictable execution by not allowing unbounded loops nor recursion.
-The <code>alan</code> compiler and runtime apply the possible parallelism in the users' code without the need for concurrent or asynchronous programming.
+<p>The <code>alan</code> compiler and runtime apply the possible parallelism in the users' code without the need for concurrent or asynchronous programming by enforcing predictable execution.
+<code>alan</code> has predictable execution by not allowing unbounded loops nor recursion.
 Learn more about <code>alan</code> through our <a href="">blog</a>, <a href="https://docs.alantechnologies.com">documentation</a>, or <a href="https://github.com/alantech">source code</a>.</p>
 <h2><a class="header" href="#try-alan" id="try-alan">Try Alan</a></h2>
 <table style="width: 100%;">
@@ -96,8 +96,7 @@ Learn more about <code>alan</code> through our <a href="">blog</a>, <a href="htt
 </tr>
 <tr>
 <td>
-<pre><pre class="playpen"><code class="language-rust editable ignore mdbook-runnable">
-import @std/app
+<pre><pre class="playpen"><code class="language-rust editable ignore mdbook-runnable">import @std/app
 
 on app.start {
   app.print(&quot;Hello, World!&quot;)
