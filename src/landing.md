@@ -32,8 +32,8 @@
 
 &nbsp;
 
+The `alan` compiler and runtime apply the possible parallelism in the users' code without the need for concurrent or asynchronous programming by enforcing predictable execution.
 `alan` has predictable execution by not allowing unbounded loops nor recursion.
-The `alan` compiler and runtime apply the possible parallelism in the users' code without the need for concurrent or asynchronous programming.
 Learn more about `alan` through our [blog](), [documentation](https://docs.alantechnologies.com), or [source code](https://github.com/alantech).
 
 ## Try Alan
@@ -47,7 +47,6 @@ Learn more about `alan` through our [blog](), [documentation](https://docs.alant
 <td>
 
 ```rust,editable,ignore,mdbook-runnable
-
 import @std/app
 
 on app.start {
