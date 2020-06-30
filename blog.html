@@ -3,7 +3,7 @@
 <head>
     <!-- Book generated using mdBook -->
     <meta charset="UTF-8">
-    <title>Homepage</title>
+    <title>Blog</title>
 
     <!-- Custom HTML head -->
     
@@ -64,7 +64,7 @@
   var html = document.querySelector('html');
   var sidebar;
   html.classList.remove('sidebar-visible');
-  if (document.body.clientWidth >= 1080 && "Homepage" !== "Homepage") {
+  if (document.body.clientWidth >= 1080 && "Blog" !== "Homepage") {
     try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { console.error(e) }
     sidebar = sidebar || 'visible';
   } else {
@@ -75,7 +75,7 @@
 
 <nav id="sidebar" class="sidebar" aria-label="Table of contents">
   <div class="sidebar-scrollbox">
-    <ol class="chapter"><li class="chapter-item expanded affix "><a href="homepage.html">Homepage</a></li><li class="chapter-item expanded affix "><a href="blog.html">Blog</a></li><li class="chapter-item expanded "><a href="why_alan.html"><strong aria-hidden="true">1.</strong> Why Alan?</a></li></ol>
+    <ol class="chapter"><li class="chapter-item expanded affix "><a href="homepage.html">Homepage</a></li><li class="chapter-item expanded affix "><a href="blog.html" class="active">Blog</a></li><li class="chapter-item expanded "><a href="why_alan.html"><strong aria-hidden="true">1.</strong> Why Alan?</a></li></ol>
   </div>
   <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
 </nav>
@@ -133,97 +133,20 @@
         </script>
         <div id="content" class="content">
             <main>
-                <p> </p>
-<center>
-  <img src="alan-logo.png" alt="drawing" width="180"/>
-  <h1 style="color: var(--title);">The Alan Programming Language</h1>
-</center>
-<p> </p>
-<p>The <code>alan</code> compiler and runtime apply the possible parallelism in the users' code without the need for concurrent or asynchronous programming by enforcing predictable execution.
-<code>alan</code> has predictable execution by not allowing unbounded loops nor recursion.
-Learn more about <code>alan</code> through our <a href="">blog</a>, <a href="https://docs.alantechnologies.com">documentation</a>, or <a href="https://github.com/alantech">source code</a>.</p>
-<h2><a class="header" href="#try-alan" id="try-alan">Try Alan</a></h2>
-<table style="width: 100%;">
-<tr>
-<th></th>
-<th></th>
-</tr>
-<tr>
-<td>
-<pre><pre class="playpen"><code class="language-rust editable ignore mdbook-runnable">import @std/app
-
-on app.start {
-  app.print(&quot;Hello, World!&quot;)
-  emit app.exit 0
-}
-</code></pre></pre>
-</td>
-</table>
-<h2><a class="header" href="#compare-alan" id="compare-alan">Compare Alan</a></h2>
-<table style="width: 100%;">
-<tr>
-<th></th>
-<th></th>
-</tr>
-<tr>
-<td>
-<pre><code class="language-rust ignore">/* ALAN */
-
-int foo() {
-int result = 4;
-return result;
-}
-</code></pre>
-</td>
-<td>
-<pre><code class="language-javascript">/* NODE.JS */
-
-int foo() {
-int x = 4;
-return x;
-}
-</code></pre>
-</td>
-</tr>
-</table>
-<table style="width: 100%;">
-<tr>
-<th></th>
-<th></th>
-</tr>
-<tr>
-<td>
-<pre><code class="language-go">/* GOLANG */
-
-int foo() {
-int result = 4;
-return result;
-}
-</code></pre>
-</td>
-<td>
-<pre><code class="language-java">/* JAVA */
-
-int foo() { 
-int x = 4;
-return x;
-}
-</code></pre>
-</td>
-</tr>
-</table>
-<h2><a class="header" href="#about-us" id="about-us">About us</a></h2>
-<p>We are a team of developers based in the Bay Area, CA that got tired of re-writing software products as they scaled.
-Please reach out on <a href="https://discord.gg/XatB9we">Discord</a> or email us at hello at alantechnologies dot com.</p>
+                <h1><a class="header" href="#blog" id="blog">Blog</a></h1>
 
             </main>
 
             <nav class="nav-wrapper" aria-label="Page navigation">
               <!-- Mobile navigation buttons -->
               
+                <a rel="prev" href="homepage.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                  <i class="fa fa-angle-left"></i>
+                </a>
+              
 
               
-                <a rel="next" href="blog.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                <a rel="next" href="why_alan.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                   <i class="fa fa-angle-right"></i>
                 </a>
               
@@ -240,7 +163,7 @@ Please reach out on <a href="https://discord.gg/XatB9we">Discord</a> or email us
   // we are doing this here because handlebars does not allow evaluation in its conditionals
   // and mdbook does not allow defining handlebars helpers
   var dynNav = document.getElementById('dyn-navigation')
-  if ("Homepage" === "Homepage") {
+  if ("Blog" === "Homepage") {
     // hide left buttons in menu to search or toggle sidebar
     document.getElementById('left-menu').style.display = 'none'
     // link to blog

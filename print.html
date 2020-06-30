@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html lang="en" class="sidebar-hidden js">
+<html lang="en" class="sidebar-visible js">
 <head>
     <!-- Book generated using mdBook -->
     <meta charset="UTF-8">
@@ -48,38 +48,92 @@
     html.classList.add(default_theme);
 </script>
 
+<!-- Work around some values being stored in localStorage wrapped in quotes -->
+<script type="text/javascript">
+  try {
+    var sidebar = localStorage.getItem('mdbook-sidebar');
+
+    if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+      localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+    }
+  } catch (e) { }
+</script>
+
+<!-- Hide / unhide sidebar before it is displayed -->
+<script type="text/javascript">
+  var html = document.querySelector('html');
+  var sidebar;
+  html.classList.remove('sidebar-visible');
+  if (document.body.clientWidth >= 1080 && "" !== "Homepage") {
+    try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { console.error(e) }
+    sidebar = sidebar || 'visible';
+  } else {
+    sidebar = 'hidden'
+  }
+  html.classList.add("sidebar-" + sidebar);
+</script>
+
+<nav id="sidebar" class="sidebar" aria-label="Table of contents">
+  <div class="sidebar-scrollbox">
+    <ol class="chapter"><li class="chapter-item expanded affix "><a href="homepage.html">Homepage</a></li><li class="chapter-item expanded affix "><a href="blog.html">Blog</a></li><li class="chapter-item expanded "><a href="why_alan.html"><strong aria-hidden="true">1.</strong> Why Alan?</a></li></ol>
+  </div>
+  <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+</nav>
+
 <div id="page-wrapper" class="page-wrapper">
 
     <div class="page">
-        
-        <div id="menu-bar-hover-placeholder"></div>
+      
+      <div id="menu-bar-hover-placeholder"></div>
+        <div id="menu-bar" class="menu-bar sticky bordered">
+          <div id="left-menu" class="left-buttons">
+            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+              <i class="fa fa-bars"></i>
+            </button>
+            
+              <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                <i class="fa fa-search"></i>
+              </button>
+            
+          </div>
 
+          <h1 class="menu-title"></h1>
+
+          <div class="right-buttons">
+            <a classname="header-link" id="dyn-navigation">
+            </a>
+            <a href="https://docs.alantechnologies.com" title="Documentation">
+              <i>Docs</i>
+            </a>
+            <a href="https://github.com/alantech" title="Git repository" aria-label="Git repository">
+              <i id="git-repository-button" class="fa fa-github"></i>
+            </a>
+          </div>
+        </div>
+        
+          <div id="search-wrapper" class="hidden">
+            <form id="searchbar-outer" class="searchbar-outer">
+              <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+            </form>
+            <div id="searchresults-outer" class="searchresults-outer hidden">
+              <div id="searchresults-header" class="searchresults-header"></div>
+              <ul id="searchresults">
+              </ul>
+            </div>
+          </div>
+        
+
+        <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+        <script type="text/javascript">
+          document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+          document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+          Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+            link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+          });
+        </script>
         <div id="content" class="content">
             <main>
                 <p> </p>
-<!--- NavBar --->
-<div style="text-align: right">
-  <span>
-    <a style="text-align: right; text-decoration: none; color: var(--fg);" href="https://docs.alantechnologies.com">
-      <b>Docs</b>
-    </a>
-  </span>
-  &nbsp;
-  &nbsp;
-  <span>
-    <a style="text-align: right; text-decoration: none; color: var(--fg);" href="https://docs.alantechnologies.com">
-      <b>Blog</b>
-    </a>
-  </span>
-  &nbsp;
-  &nbsp;
-  <span>
-    <a style="text-align: right; text-decoration: none; color: var(--fg);" href="https://github.com/alantech">
-      <b>Github</b>
-    </a>
-  </span>
-</div>
-<p> </p>
 <center>
   <img src="alan-logo.png" alt="drawing" width="180"/>
   <h1 style="color: var(--title);">The Alan Programming Language</h1>
@@ -161,12 +215,46 @@ return x;
 <h2><a class="header" href="#about-us" id="about-us">About us</a></h2>
 <p>We are a team of developers based in the Bay Area, CA that got tired of re-writing software products as they scaled.
 Please reach out on <a href="https://discord.gg/XatB9we">Discord</a> or email us at hello at alantechnologies dot com.</p>
+<h1><a class="header" href="#blog" id="blog">Blog</a></h1>
+<h1><a class="header" href="#why-alan" id="why-alan">Why Alan?</a></h1>
 
             </main>
+
+            <nav class="nav-wrapper" aria-label="Page navigation">
+              <!-- Mobile navigation buttons -->
+              
+
+              
+
+              <div style="clear: both"></div>
+            </nav>
         </div>
     </div>
 
 </div>
+
+
+<script type="text/javascript">
+  // we are doing this here because handlebars does not allow evaluation in its conditionals
+  // and mdbook does not allow defining handlebars helpers
+  var dynNav = document.getElementById('dyn-navigation')
+  if ("" === "Homepage") {
+    // hide left buttons in menu to search or toggle sidebar
+    document.getElementById('left-menu').style.display = 'none'
+    // link to blog
+    dynNav.innerHTML = "<i>Blog</i>"
+    dynNav.title = "Blog"
+    dynNav.href = "/blog.html"
+  } else {
+    // hide first element in toc
+    var tocLi = document.getElementsByTagName("li")
+    tocLi[0].innerHTML = ""
+    // link to homepage
+    dynNav.innerHTML = "<i>Home</i>"
+    dynNav.title = "Homepage"
+    dynNav.href = "/"
+  }
+</script>
 
 
 
