@@ -167,6 +167,9 @@
     dynNav.title = "Blog"
     dynNav.href = "/blog.html"
   } else {
+    // hide first element in toc
+    var tocLi = document.getElementsByTagName("li")
+    tocLi[0].innerHTML = ""
     // link to homepage
     dynNav.innerHTML = "<i>Home</i>"
     dynNav.title = "Homepage"

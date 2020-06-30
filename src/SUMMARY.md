@@ -1,5 +1,5 @@
 # Summary
 
-- [Homepage](./homepage.md)
-- [Blog](./blog.md)
+ [Homepage](./homepage.md)
+ [Blog](./blog.md)
   - [Why Alan?](./why_alan.md)
