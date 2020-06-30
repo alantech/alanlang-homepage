@@ -1,30 +1,5 @@
 &nbsp;
 
-<!--- NavBar --->
-<div style="text-align: right">
-  <span>
-    <a style="text-align: right; text-decoration: none; color: var(--fg);" href="https://docs.alantechnologies.com">
-      <b>Docs</b>
-    </a>
-  </span>
-  &nbsp;
-  &nbsp;
-  <span>
-    <a style="text-align: right; text-decoration: none; color: var(--fg);" href="https://docs.alantechnologies.com">
-      <b>Blog</b>
-    </a>
-  </span>
-  &nbsp;
-  &nbsp;
-  <span>
-    <a style="text-align: right; text-decoration: none; color: var(--fg);" href="https://github.com/alantech">
-      <b>Github</b>
-    </a>
-  </span>
-</div>
-
-&nbsp;
-
 <center>
   <img src="alan-logo.png" alt="drawing" width="180"/>
   <h1 style="color: var(--title);">The Alan Programming Language</h1>

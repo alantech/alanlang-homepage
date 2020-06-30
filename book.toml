@@ -3,6 +3,7 @@ src = "src"
 
 [output.html]
 theme = "theme"
+git-repository-url = "https://github.com/alantech"
 default-theme = "solarized-light"
 preferred-dark-theme = "solarized-dark"
 additional-css = [
@@ -22,6 +23,3 @@ additional-js = [
 [output.html.playpen]
 editable = true
 line-numbers = true
-
-[output.html.search]
-enable = false

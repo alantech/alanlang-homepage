@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html lang="{{ language }}" class="sidebar-hidden js">
+<html lang="{{ language }}" class="sidebar-visible js">
 <head>
     <!-- Book generated using mdBook -->
     <meta charset="UTF-8">
@@ -44,20 +44,137 @@
     html.classList.add(default_theme);
 </script>
 
+<!-- Work around some values being stored in localStorage wrapped in quotes -->
+<script type="text/javascript">
+  try {
+    var sidebar = localStorage.getItem('mdbook-sidebar');
+
+    if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+      localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+    }
+  } catch (e) { }
+</script>
+
+<!-- Hide / unhide sidebar before it is displayed -->
+<script type="text/javascript">
+  var html = document.querySelector('html');
+  var sidebar;
+  html.classList.remove('sidebar-visible');
+  if (document.body.clientWidth >= 1080 && "{{ chapter_title }}" !== "Homepage") {
+    try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { console.error(e) }
+    sidebar = sidebar || 'visible';
+  } else {
+    sidebar = 'hidden'
+  }
+  html.classList.add("sidebar-" + sidebar);
+</script>
+
+<nav id="sidebar" class="sidebar" aria-label="Table of contents">
+  <div class="sidebar-scrollbox">
+    {{#toc}}{{/toc}}
+  </div>
+  <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+</nav>
+
 <div id="page-wrapper" class="page-wrapper">
 
     <div class="page">
-        {{> header}}
-        <div id="menu-bar-hover-placeholder"></div>
+      {{> header}}
+      <div id="menu-bar-hover-placeholder"></div>
+        <div id="menu-bar" class="menu-bar sticky bordered">
+          <div id="left-menu" class="left-buttons">
+            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+              <i class="fa fa-bars"></i>
+            </button>
+            {{#if search_enabled}}
+              <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                <i class="fa fa-search"></i>
+              </button>
+            {{/if}}
+          </div>
 
+          <h1 class="menu-title">{{ book_title }}</h1>
+
+          <div class="right-buttons">
+            <a classname="header-link" id="dyn-navigation">
+            </a>
+            <a href="https://docs.alantechnologies.com" title="Documentation">
+              <i>Docs</i>
+            </a>
+            <a href="{{git_repository_url}}" title="Git repository" aria-label="Git repository">
+              <i id="git-repository-button" class="fa {{git_repository_icon}}"></i>
+            </a>
+          </div>
+        </div>
+        {{#if search_enabled}}
+          <div id="search-wrapper" class="hidden">
+            <form id="searchbar-outer" class="searchbar-outer">
+              <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+            </form>
+            <div id="searchresults-outer" class="searchresults-outer hidden">
+              <div id="searchresults-header" class="searchresults-header"></div>
+              <ul id="searchresults">
+              </ul>
+            </div>
+          </div>
+        {{/if}}
+
+        <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+        <script type="text/javascript">
+          document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+          document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+          Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+            link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+          });
+        </script>
         <div id="content" class="content">
             <main>
                 {{{ content }}}
             </main>
+
+            <nav class="nav-wrapper" aria-label="Page navigation">
+              <!-- Mobile navigation buttons -->
+              {{#previous}}
+                <a rel="prev" href="{{ path_to_root }}{{link}}" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                  <i class="fa fa-angle-left"></i>
+                </a>
+              {{/previous}}
+
+              {{#next}}
+                <a rel="next" href="{{ path_to_root }}{{link}}" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                  <i class="fa fa-angle-right"></i>
+                </a>
+              {{/next}}
+
+              <div style="clear: both"></div>
+            </nav>
         </div>
     </div>
 
 </div>
+
+
+<script type="text/javascript">
+  // we are doing this here because handlebars does not allow evaluation in its conditionals
+  // and mdbook does not allow defining handlebars helpers
+  var dynNav = document.getElementById('dyn-navigation')
+  if ("{{ chapter_title }}" === "Homepage") {
+    // hide left buttons in menu to search or toggle sidebar
+    document.getElementById('left-menu').style.display = 'none'
+    // link to blog
+    dynNav.innerHTML = "<i>Blog</i>"
+    dynNav.title = "Blog"
+    dynNav.href = "/blog.html"
+  } else {
+    // hide first element in toc
+    var tocLi = document.getElementsByTagName("li")
+    tocLi[0].innerHTML = ""
+    // link to homepage
+    dynNav.innerHTML = "<i>Home</i>"
+    dynNav.title = "Homepage"
+    dynNav.href = "/"
+  }
+</script>
 
 {{#if livereload}}
     <!-- Livereload script (if served using the cli tool) -->
