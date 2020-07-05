@@ -205,7 +205,7 @@
       if ("{{ chapter_title }}" === "Homepage") {
         analytics.page("Homepage");
       } else {
-        analytics.page("Blog", {{ chapter_title }});
+        analytics.page("Blog", "{{ chapter_title }}");
       }
     }}();
   }
