@@ -2,4 +2,4 @@
 
  [Homepage](./homepage.md)
  [Blog](./blog.md)
-  - [Why Alan?](./why_alan.md)
+  - [Introducing the Alan Programming Language](./introducing_alan.md)
