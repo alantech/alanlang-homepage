@@ -7,9 +7,14 @@
 
 &nbsp;
 
-The `alan` compiler and runtime apply the possible parallelism in the users' code without the need for concurrent or asynchronous programming by enforcing predictable execution.
-`alan` has predictable execution by not allowing unbounded loops nor recursion.
-Learn more about `alan` through our [blog](), [documentation](https://docs.alantechnologies.com), or [source code](https://github.com/alantech).
+The `alan` compiler and runtime apply the possible parallelism in the users' code without the need for concurrent or asynchronous programming.
+`alan` enforces predictable execution by not allowing unbounded loops nor recursion.
+
+&nbsp;
+
+<center>
+  <button onclick="window.location.href='https://github.com/alantech/alan'" class="cta-button">Download Alan</button>
+</center>
 
 ## Try Alan
 
@@ -100,6 +105,12 @@ return x;
 </td>
 </tr>
 </table>
+
+&nbsp;
+
+<center>
+  <button onclick="window.location.href='https://github.com/alantech/alan'" class="cta-button">Download Alan</button>
+</center>
 
 ## About us
 
