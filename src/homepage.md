@@ -8,12 +8,12 @@
 &nbsp;
 
 The `alan` compiler and runtime apply the possible parallelism in the users' code without the need for concurrent or asynchronous programming.
-`alan` enforces predictable execution by not allowing unbounded loops nor recursion.
+`alan` enforces predictable execution by only allowing loops and recursion that always halts (e.g. no `while (true) {}` loops).
 
 &nbsp;
 
 <center>
-  <button onclick="window.location.href='https://github.com/alantech/alan'" class="cta-button">Download Alan</button>
+  <button onclick="window.location.href='https://docs.alan-lang.org/#installation'" class="cta-button">Download Alan</button>
 </center>
 
 ## Try Alan
@@ -38,12 +38,10 @@ on app.start {
 </td>
 </table>
 
-## Compare Alan
+## Compare with Node.js
 
 <table style="width: 100%;">
 <tr>
-<th></th>
-<th></th>
 </tr>
 <tr>
 <td>
@@ -51,32 +49,50 @@ on app.start {
 ```rust,ignore
 /* ALAN */
 
-int foo() {
-int result = 4;
-return result;
-}
+const authUsers = Auth.getAllUsers()
+const dbUsers = Store.getAllUsers()
+const crmUsers = Crm.getAllUsers()
 ```
-
 </td>
+</tr>
+<tr>
+</tr>
+<tr>
 <td>
 
 ```javascript
 /* NODE.JS */
 
-int foo() {
-int x = 4;
-return x;
-}
+const [authUsers, dbUsers, crmUsers] = await Promise.all([
+  Auth.getAll(),
+  Store.getAllUsers(),
+  Crm.getAllUsers()
+]);
 ```
 
 </td>
 </tr>
-</table>
 
-<table style="width: 100%;">
+<th></th>
+<th></th>
+
 <tr>
-<th></th>
-<th></th>
+</tr>
+<tr>
+</tr>
+<tr>
+<td>
+
+```rust,ignore
+/* ALAN */
+
+const authUsers = Auth.getAllUsers()
+const dbUsers = Store.getAllUsers()
+const crmUsers = Crm.getAllUsers()
+```
+</td>
+</tr>
+<tr>
 </tr>
 <tr>
 <td>
@@ -89,27 +105,84 @@ int result = 4;
 return result;
 }
 ```
-
-</td>
-<td>
-
-```java
-/* JAVA */
-
-int foo() { 
-int x = 4;
-return x;
-}
-```
-
 </td>
 </tr>
 </table>
 
 &nbsp;
 
+## Compare Alan
+
 <center>
-  <button onclick="window.location.href='https://github.com/alantech/alan'" class="cta-button">Download Alan</button>
+  <div class="carousel-container">
+    <ul class="carousel my-carousel carousel--thumb">
+      <input class="carousel__activator" type="radio" id="K" name="thumb" checked="checked"/>
+      <input class="carousel__activator" type="radio" id="L" name="thumb"/>
+      <input class="carousel__activator" type="radio" id="M" name="thumb"/>
+      <input class="carousel__activator" type="radio" id="N" name="thumb"/>
+      <input class="carousel__activator" type="radio" id="O" name="thumb"/>
+      <div class="carousel__controls">
+        <label class="carousel__control carousel__control--backward" for="O"></label>
+        <label class="carousel__control carousel__control--forward" for="L"></label>
+      </div>
+      <div class="carousel__controls">
+        <label class="carousel__control carousel__control--backward" for="K"></label>
+        <label class="carousel__control carousel__control--forward" for="M"></label>
+      </div>
+      <div class="carousel__controls">
+        <label class="carousel__control carousel__control--backward" for="L"></label>
+        <label class="carousel__control carousel__control--forward" for="N"></label>
+      </div>
+      <div class="carousel__controls">
+        <label class="carousel__control carousel__control--backward" for="M"></label>
+        <label class="carousel__control carousel__control--forward" for="O"></label>
+      </div>
+      <div class="carousel__controls">
+        <label class="carousel__control carousel__control--backward" for="N"></label>
+        <label class="carousel__control carousel__control--forward" for="K"></label>
+      </div>
+      <li class="carousel__slide">
+        <pre>
+          <code class="language-go hljs">
+          import @std/app
+          </code>
+        </pre>
+        <h1>K</h1>
+      </li>
+      <li class="carousel__slide">
+        <div>
+        ```rust,ignore
+        /* ALAN */
+        const authUsers = Auth.getAllUsers()
+        const dbUsers = Store.getAllUsers()
+        const crmUsers = Crm.getAllUsers()
+        ```
+        </div>
+      </li>
+      <li class="carousel__slide">
+        <h1>M</h1>
+      </li>
+      <li class="carousel__slide">
+        <h1>N</h1>
+      </li>
+      <li class="carousel__slide">
+        <h1>O</h1>
+      </li>
+      <div class="carousel__indicators">
+        <label class="carousel__indicator" for="K"></label>
+        <label class="carousel__indicator" for="L"></label>
+        <label class="carousel__indicator" for="M"></label>
+        <label class="carousel__indicator" for="N"></label>
+        <label class="carousel__indicator" for="O"></label>
+      </div>
+    </ul>
+  </div>
+</center>
+
+&nbsp;
+
+<center>
+  <button onclick="window.location.href='https://docs.alan-lang.org/#installation'" class="cta-button">Download Alan</button>
 </center>
 
 ## About us
