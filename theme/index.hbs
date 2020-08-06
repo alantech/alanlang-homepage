@@ -60,7 +60,7 @@
   var html = document.querySelector('html');
   var sidebar;
   html.classList.remove('sidebar-visible');
-  if (document.body.clientWidth >= 1080 && "{{ chapter_title }}" !== "Homepage") {
+  if (document.body.clientWidth >= 1080 && "{{ chapter_title }}" !== "Alan Language") {
     try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { console.error(e) }
     sidebar = sidebar || 'visible';
   } else {
@@ -158,7 +158,7 @@
   // we are doing this here because handlebars does not allow evaluation in its conditionals
   // and mdbook does not allow defining handlebars helpers
   var dynNav = document.getElementById('dyn-navigation')
-  if ("{{ chapter_title }}" === "Homepage") {
+  if ("{{ chapter_title }}" === "Alan Language") {
     // hide left buttons in menu to search or toggle sidebar
     document.getElementById('left-menu').style.display = 'none'
     // link to blog
@@ -171,7 +171,7 @@
     tocLi[0].innerHTML = ""
     // link to homepage
     dynNav.innerHTML = "<i>Home</i>"
-    dynNav.title = "Homepage"
+    dynNav.title = "Alan Language"
     dynNav.href = "/"
   }
 </script>
