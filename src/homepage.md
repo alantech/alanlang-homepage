@@ -7,7 +7,7 @@
 
 &nbsp;
 
-The `alan` compiler and runtime apply the possible parallelism in the users' code without the need for concurrent or asynchronous programming.`alan` enforces predictable execution by **only** allowing loops and recursion that is guaranteed to halt (e.g. no `while (true) {}` loops).
+The `alan` compiler and runtime can parallelize your code without concurrent or asynchronous programming (threads, promises, channels, etc) by only allowing iteration and recursion that is guaranteed to halt (e.g. no `while (true) {}` loops)
 
 &nbsp;
 
