@@ -446,52 +446,6 @@
   .carousel__activator:nth-of-type(3):checked ~ .carousel__indicators .carousel__indicator:nth-of-type(3) {
     opacity: 1;
   }
-  .carousel__activator:nth-of-type(4):checked ~ .carousel__track {
-    -webkit-transform: translateX(-300%);
-            transform: translateX(-300%);
-  }
-  .carousel__activator:nth-of-type(4):checked ~ .carousel__slide:nth-of-type(4) {
-    -webkit-transition: opacity 0.5s, -webkit-transform 0.5s;
-    transition: opacity 0.5s, -webkit-transform 0.5s;
-    transition: opacity 0.5s, transform 0.5s;
-    transition: opacity 0.5s, transform 0.5s, -webkit-transform 0.5s;
-    top: 0;
-    left: 0;
-    right: 0;
-    opacity: 1;
-    -webkit-transform: scale(1);
-            transform: scale(1);
-  }
-  .carousel__activator:nth-of-type(4):checked ~ .carousel__controls:nth-of-type(4) {
-    display: block;
-    opacity: 1;
-  }
-  .carousel__activator:nth-of-type(4):checked ~ .carousel__indicators .carousel__indicator:nth-of-type(4) {
-    opacity: 1;
-  }
-  .carousel__activator:nth-of-type(5):checked ~ .carousel__track {
-    -webkit-transform: translateX(-400%);
-            transform: translateX(-400%);
-  }
-  .carousel__activator:nth-of-type(5):checked ~ .carousel__slide:nth-of-type(5) {
-    -webkit-transition: opacity 0.5s, -webkit-transform 0.5s;
-    transition: opacity 0.5s, -webkit-transform 0.5s;
-    transition: opacity 0.5s, transform 0.5s;
-    transition: opacity 0.5s, transform 0.5s, -webkit-transform 0.5s;
-    top: 0;
-    left: 0;
-    right: 0;
-    opacity: 1;
-    -webkit-transform: scale(1);
-            transform: scale(1);
-  }
-  .carousel__activator:nth-of-type(5):checked ~ .carousel__controls:nth-of-type(5) {
-    display: block;
-    opacity: 1;
-  }
-  .carousel__activator:nth-of-type(5):checked ~ .carousel__indicators .carousel__indicator:nth-of-type(5) {
-    opacity: 1;
-  }
   .carousel__control {
     height: 30px;
     width: 30px;
