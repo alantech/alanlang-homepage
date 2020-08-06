@@ -8,7 +8,7 @@
 &nbsp;
 
 The `alan` compiler and runtime apply the possible parallelism in the users' code without the need for concurrent or asynchronous programming.
-`alan` enforces predictable execution by only allowing loops and recursion that always halts (e.g. no `while (true) {}` loops).
+`alan` enforces predictable execution by only allowing loops and recursion that always halt (e.g. no `while (true) {}` loops).
 
 &nbsp;
 
@@ -37,79 +37,6 @@ on app.start {
 
 </td>
 </table>
-
-## Compare with Node.js
-
-<table style="width: 100%;">
-<tr>
-</tr>
-<tr>
-<td>
-
-```rust,ignore
-/* ALAN */
-
-const authUsers = Auth.getAllUsers()
-const dbUsers = Store.getAllUsers()
-const crmUsers = Crm.getAllUsers()
-```
-</td>
-</tr>
-<tr>
-</tr>
-<tr>
-<td>
-
-```javascript
-/* NODE.JS */
-
-const [authUsers, dbUsers, crmUsers] = await Promise.all([
-  Auth.getAll(),
-  Store.getAllUsers(),
-  Crm.getAllUsers()
-]);
-```
-
-</td>
-</tr>
-
-<th></th>
-<th></th>
-
-<tr>
-</tr>
-<tr>
-</tr>
-<tr>
-<td>
-
-```rust,ignore
-/* ALAN */
-
-const authUsers = Auth.getAllUsers()
-const dbUsers = Store.getAllUsers()
-const crmUsers = Crm.getAllUsers()
-```
-</td>
-</tr>
-<tr>
-</tr>
-<tr>
-<td>
-
-```go
-/* GOLANG */
-
-int foo() {
-int result = 4;
-return result;
-}
-```
-</td>
-</tr>
-</table>
-
-&nbsp;
 
 ## Compare Alan
 
@@ -142,38 +69,57 @@ return result;
         <label class="carousel__control carousel__control--forward" for="K"></label>
       </div>
       <li class="carousel__slide">
-        <pre>
-          <code class="language-go hljs">
-          import @std/app
-          </code>
-        </pre>
-        <h1>K</h1>
+        <pre class="code-border"><code class="language-javascript">
+  /* ALAN */
+  const authUsers = Auth.getAllUsers()
+  const dbUsers = Store.getAllUsers()
+  const crmUsers = Crm.getAllUsers()
+        </code></pre>
+        <pre class="code-border"><code class="language-javascript">
+  /* NODE.JS */
+  const [authUsers, dbUsers, crmUsers] = await Promise.all([
+    Auth.getAll(),
+    Store.getAllUsers(),
+    Crm.getAllUsers()
+  ]);
+        </code></pre>
       </li>
       <li class="carousel__slide">
-        <div>
-        ```rust,ignore
-        /* ALAN */
-        const authUsers = Auth.getAllUsers()
-        const dbUsers = Store.getAllUsers()
-        const crmUsers = Crm.getAllUsers()
-        ```
-        </div>
+        <pre class="code-border"><code class="language-javascript">
+  /* ALAN */
+  const authUsers = Auth.getAllUsers()
+  const dbUsers = Store.getAllUsers()
+  const crmUsers = Crm.getAllUsers()
+        </code></pre>
+        <pre class="code-border"><code class="language-javascript">
+  /* NODE.JS */
+  const [authUsers, dbUsers, crmUsers] = await Promise.all([
+    Auth.getAll(),
+    Store.getAllUsers(),
+    Crm.getAllUsers()
+  ]);
+        </code></pre>
       </li>
       <li class="carousel__slide">
-        <h1>M</h1>
-      </li>
-      <li class="carousel__slide">
-        <h1>N</h1>
-      </li>
-      <li class="carousel__slide">
-        <h1>O</h1>
+        <pre class="code-border"><code class="language-javascript">
+  /* ALAN */
+  const authUsers = Auth.getAllUsers()
+  const dbUsers = Store.getAllUsers()
+  const crmUsers = Crm.getAllUsers()
+        </code></pre>
+        <pre class="code-border"><code class="language-javascript">
+  /* NODE.JS */
+  const [authUsers, dbUsers, crmUsers] = await Promise.all([
+    Auth.getAll(),
+    Store.getAllUsers(),
+    Crm.getAllUsers()
+  ]);
+        </code></pre>
       </li>
       <div class="carousel__indicators">
         <label class="carousel__indicator" for="K"></label>
         <label class="carousel__indicator" for="L"></label>
         <label class="carousel__indicator" for="M"></label>
-        <label class="carousel__indicator" for="N"></label>
-        <label class="carousel__indicator" for="O"></label>
       </div>
     </ul>
   </div>

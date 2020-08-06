@@ -325,10 +325,10 @@
   * Control & indicator mixin
 */
 .carousel {
-    height: 400px;
+    height: 500px;
     width: 100%;
     overflow: hidden;
-    text-align: center;
+    text-align: left;
     position: relative;
     padding: 0;
     list-style: none;
@@ -347,6 +347,31 @@
   /**
       * Create rules for when slides are contained within a track
     */
+  }
+  .carousel__slide {
+    height: 100%;
+    position: absolute;
+    overflow: hidden;
+    padding: 0 10%;
+    opacity: 0;
+  }
+  .code-border {
+    border-style: solid;
+    border-color: var(--table-border-color);
+  }
+  /**
+    * Theming
+  */
+  .carousel-container {
+    display: inline-block;
+    width: 100%;
+  }
+  .my-carousel {
+    border-radius: 5px;
+  }
+  .carousel__slide {
+    display: block;
+    overflow: hidden;
   }
   .carousel__controls,
   .carousel__activator {
@@ -558,26 +583,6 @@
     -webkit-transform: scale(0);
             transform: scale(0);
   }
-  .carousel__slide {
-    height: 100%;
-    position: absolute;
-    overflow-y: auto;
-    opacity: 0;
-  }
-  /**
-    * Theming
-  */
-  .carousel-container {
-    display: inline-block;
-    width: 100%;
-  }
-  .my-carousel {
-    border-radius: 5px;
-  }
-  .carousel__slide {
-    display: block;
-    overflow: hidden;
-  }
   .carousel--thumb .carousel__indicator {
     height: 30px;
     width: 30px;
@@ -586,28 +591,21 @@
     background-color: #fafafa;
   }
   .carousel--thumb .carousel__indicators .carousel__indicator:nth-of-type(1) {
-    background-image: url("https://unsplash.it/300?random");
-    background-size: cover;
+    background-image: url("https://firebearstudio.com/blog/wp-content/uploads/2015/10/Node-e1443953851722.png");
+    background-size: contain;
+    background-repeat: no-repeat;
     background-position: center;
   }
   .carousel--thumb .carousel__indicators .carousel__indicator:nth-of-type(2) {
-    background-image: url("https://unsplash.it/600?random");
-    background-size: cover;
+    background-image: url("https://logos-download.com/wp-content/uploads/2019/01/Golang_Logo.png");
+    background-size: contain;
+    background-repeat: no-repeat;
     background-position: center;
   }
   .carousel--thumb .carousel__indicators .carousel__indicator:nth-of-type(3) {
-    background-image: url("https://unsplash.it/900?random");
-    background-size: cover;
-    background-position: center;
-  }
-  .carousel--thumb .carousel__indicators .carousel__indicator:nth-of-type(4) {
-    background-image: url("https://unsplash.it/1200?random");
-    background-size: cover;
-    background-position: center;
-  }
-  .carousel--thumb .carousel__indicators .carousel__indicator:nth-of-type(5) {
-    background-image: url("https://unsplash.it/1500?random");
-    background-size: cover;
+    background-image: url("https://upload.wikimedia.org/wikipedia/fr/thumb/2/2e/Java_Logo.svg/1200px-Java_Logo.svg.png");
+    background-size: contain;
+    background-repeat: no-repeat;
     background-position: center;
   }
   
