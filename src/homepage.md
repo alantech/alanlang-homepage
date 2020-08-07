@@ -59,34 +59,60 @@ on app.start {
       </div>
       <li class="carousel__slide">
         <pre class="code-border"><code class="language-javascript">
-  /* ALAN */
-  const authUsers = Auth.getAllUsers()
-  const dbUsers = Store.getAllUsers()
-  const crmUsers = Crm.getAllUsers()
+  /* ALAN automatically executes IO in parallel when possible */
+  const authUids = Auth.getAllUsers().map(fn (u: AuthUser) = u.id)
+  const dbUsers = Store.getAllUsers().map(fn (u: User) = u.uid)
+  const crmUsers = Crm.getAllUsers().map(fn (u: CrmUser) = u.uid)
+  const validUids = authUids.filter(v => dbUids.has(v) && crmUids.has(v))
         </code></pre>
         <pre class="code-border"><code class="language-javascript">
-  /* NODE.JS */
+  /* NODE.JS equivalent */
   const [authUsers, dbUsers, crmUsers] = await Promise.all([
     Auth.getAll(),
     Store.getAllUsers(),
     Crm.getAllUsers()
   ]);
+  const authUids = authUsers.map(u => u['id']);
+  const dbUids = dbUsers.map(u => u['uid']);
+  const crmUids = crmUsers.map(u => u['uid']);
+  const validUids = authUids.filter(v => dbUids.includes(v) && crmUids.includes(v))
         </code></pre>
       </li>
       <li class="carousel__slide">
-        <pre class="code-border"><code class="language-javascript">
-  /* ALAN */
-  const authUsers = Auth.getAllUsers()
-  const dbUsers = Store.getAllUsers()
-  const crmUsers = Crm.getAllUsers()
+        <pre class="code-border"><code class="language-golang">
+  /* ALAN automatically executes CPU operations in parallel when sensible */
+  fn maybeAddConcurrent(nums: int): int {
+    return nums.reduce(fn (accum: int, val: int) = accum + val)
+  }
         </code></pre>
-        <pre class="code-border"><code class="language-javascript">
-  /* NODE.JS */
-  const [authUsers, dbUsers, crmUsers] = await Promise.all([
-    Auth.getAll(),
-    Store.getAllUsers(),
-    Crm.getAllUsers()
-  ]);
+        <pre class="code-border"><code class="language-golang">
+  /* GOLANG */
+  func addConcurrent(numbers []int) int {
+    var v int64
+    totalNumbers := len(numbers)
+    goroutines := runtime.NumCPU()
+    lastGoroutine := goroutines - 1
+    stride := totalNumbers / goroutines
+    var wg sync.WaitGroup
+    wg.Add(goroutines)
+    for g := 0; g < goroutines; g++ {
+      go func(g int) {
+        start := g * stride
+        end := start + stride
+        if g == lastGoroutine {
+          end = totalNumbers
+        }
+        var lv int
+        for _, n := range numbers[start:end] {
+          lv += n
+        }
+        atomic.AddInt64(&v, int64(lv))
+        wg.Done()
+      }(g)
+    }
+    wg.Wait()
+    return int(v)
+  }
         </code></pre>
       </li>
       <li class="carousel__slide">

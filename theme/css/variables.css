@@ -456,7 +456,7 @@
     cursor: pointer;
     border-width: 5px 5px 0 0;
     border-style: solid;
-    border-color: #fafafa;
+    border-color: var(--title);
     opacity: 0.35;
     outline: 0;
     z-index: 3;
