@@ -57,6 +57,7 @@ on app.start {
         <label class="carousel__control carousel__control--backward" for="2"></label>
         <label class="carousel__control carousel__control--forward" for="1"></label>
       </div>
+      <li class="carousel__slide"><!-- Fake for weird CSS reasons --></li>
       <li class="carousel__slide">
         <pre class="code-border"><code class="language-javascript">
   /* ALAN automatically executes IO in parallel when possible */
@@ -81,8 +82,8 @@ on app.start {
       <li class="carousel__slide">
         <pre class="code-border"><code class="language-golang">
   /* ALAN automatically executes CPU operations in parallel when sensible */
-  fn maybeAddConcurrent(nums: int): int {
-    return nums.reduce(fn (accum: int, val: int) = accum + val)
+  fn maybeAddConcurrent(nums: Array&lt;int&gt;): int {
+    return nums.reduce(fn (accum: int, val: int): int = accum + val)
   }
         </code></pre>
         <pre class="code-border"><code class="language-golang">

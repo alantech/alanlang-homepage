@@ -325,9 +325,9 @@
   * Control & indicator mixin
 */
 .carousel {
-    height: 500px;
+    /* height: 500px; */
     width: 100%;
-    overflow: hidden;
+    /* overflow: hidden; */
     text-align: left;
     position: relative;
     padding: 0;
@@ -349,9 +349,11 @@
     */
   }
   .carousel__slide {
-    height: 100%;
+    /*height: 100%;
     position: absolute;
-    overflow: hidden;
+    overflow: hidden;*/
+    position: relative;
+    top: 0;
     padding: 0 10%;
     opacity: 0;
   }
@@ -371,6 +373,9 @@
   }
   .carousel__slide {
     display: block;
+    visibility: hidden;
+    height: 0;
+    opacity: 0;
     overflow: hidden;
   }
   .carousel__controls,
@@ -381,7 +386,7 @@
     -webkit-transform: translateX(0%);
             transform: translateX(0%);
   }
-  .carousel__activator:nth-of-type(1):checked ~ .carousel__slide:nth-of-type(1) {
+  .carousel__activator:nth-of-type(1):checked ~ .carousel__slide:nth-of-type(2) {
     -webkit-transition: opacity 0.5s, -webkit-transform 0.5s;
     transition: opacity 0.5s, -webkit-transform 0.5s;
     transition: opacity 0.5s, transform 0.5s;
@@ -390,6 +395,9 @@
     left: 0;
     right: 0;
     opacity: 1;
+    visibility: visible;
+    overflow: visible;
+    height: 100%;
     -webkit-transform: scale(1);
             transform: scale(1);
   }
@@ -404,15 +412,18 @@
     -webkit-transform: translateX(-100%);
             transform: translateX(-100%);
   }
-  .carousel__activator:nth-of-type(2):checked ~ .carousel__slide:nth-of-type(2) {
+  .carousel__activator:nth-of-type(2):checked ~ .carousel__slide:nth-of-type(3) {
     -webkit-transition: opacity 0.5s, -webkit-transform 0.5s;
     transition: opacity 0.5s, -webkit-transform 0.5s;
     transition: opacity 0.5s, transform 0.5s;
     transition: opacity 0.5s, transform 0.5s, -webkit-transform 0.5s;
-    top: 0;
+    top: -100;
     left: 0;
     right: 0;
     opacity: 1;
+    visibility: visible;
+    overflow: visible;
+    height: 100%;
     -webkit-transform: scale(1);
             transform: scale(1);
   }
@@ -427,15 +438,18 @@
     -webkit-transform: translateX(-200%);
             transform: translateX(-200%);
   }
-  .carousel__activator:nth-of-type(3):checked ~ .carousel__slide:nth-of-type(3) {
+  .carousel__activator:nth-of-type(3):checked ~ .carousel__slide:nth-of-type(4) {
     -webkit-transition: opacity 0.5s, -webkit-transform 0.5s;
     transition: opacity 0.5s, -webkit-transform 0.5s;
     transition: opacity 0.5s, transform 0.5s;
     transition: opacity 0.5s, transform 0.5s, -webkit-transform 0.5s;
-    top: 0;
+    top: -100;
     left: 0;
     right: 0;
     opacity: 1;
+    visibility: visible;
+    overflow: visible;
+    height: 100%;
     -webkit-transform: scale(1);
             transform: scale(1);
   }
@@ -476,7 +490,7 @@
   }
   .carousel__indicators {
     position: absolute;
-    bottom: 20px;
+    top: 22px;
     width: 100%;
     text-align: center;
   }
@@ -514,24 +528,24 @@
     opacity: 1;
   }
   .carousel__track .carousel__slide:nth-of-type(1) {
-    -webkit-transform: translateX(0%);
-            transform: translateX(0%);
+    /*-webkit-transform: translateX(0%);
+            transform: translateX(0%);*/
   }
   .carousel__track .carousel__slide:nth-of-type(2) {
-    -webkit-transform: translateX(100%);
-            transform: translateX(100%);
+    /*-webkit-transform: translateX(100%);
+            transform: translateX(100%);*/
   }
   .carousel__track .carousel__slide:nth-of-type(3) {
-    -webkit-transform: translateX(200%);
-            transform: translateX(200%);
+    /*-webkit-transform: translateX(200%);
+            transform: translateX(200%);*/
   }
   .carousel__track .carousel__slide:nth-of-type(4) {
-    -webkit-transform: translateX(300%);
-            transform: translateX(300%);
+    /*-webkit-transform: translateX(300%);
+            transform: translateX(300%);*/
   }
   .carousel__track .carousel__slide:nth-of-type(5) {
-    -webkit-transform: translateX(400%);
-            transform: translateX(400%);
+    /*-webkit-transform: translateX(400%);
+            transform: translateX(400%);*/
   }
   .carousel--scale .carousel__slide {
     -webkit-transform: scale(0);
