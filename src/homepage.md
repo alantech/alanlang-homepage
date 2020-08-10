@@ -61,34 +61,38 @@ on app.start {
       <li class="carousel__slide">
         <pre class="code-border"><code class="language-javascript">
   /* ALAN automatically executes IO in parallel when possible */
-  const authUids = Auth.getAllUsers().map(fn (u: AuthUser) = u.id)
-  const dbUsers = Store.getAllUsers().map(fn (u: User) = u.uid)
-  const crmUsers = Crm.getAllUsers().map(fn (u: CrmUser) = u.uid)
-  const validUids = authUids.filter(v => dbUids.has(v) && crmUids.has(v))
+  fn getValidUids() {
+    const authUids = Auth.getAllUsers().map(fn (u: AuthUser) = u.id)
+    const dbUsers = Store.getAllUsers().map(fn (u: User) = u.uid)
+    const crmUsers = Crm.getAllUsers().map(fn (u: CrmUser) = u.uid)
+    const validUids = authUids.filter(v => dbUids.has(v) && crmUids.has(v))
+  }
         </code></pre>
         <pre class="code-border"><code class="language-javascript">
   /* NODE.JS equivalent */
-  const [authUsers, dbUsers, crmUsers] = await Promise.all([
-    Auth.getAll(),
-    Store.getAllUsers(),
-    Crm.getAllUsers()
-  ]);
-  const authUids = authUsers.map(u => u['id']);
-  const dbUids = dbUsers.map(u => u['uid']);
-  const crmUids = crmUsers.map(u => u['uid']);
-  const validUids = authUids.filter(v => dbUids.includes(v) && crmUids.includes(v))
+  async function getValudUids() {
+    const [authUsers, dbUsers, crmUsers] = await Promise.all([
+      Auth.getAll(),
+      Store.getAllUsers(),
+      Crm.getAllUsers()
+    ]);
+    const authUids = authUsers.map(u => u['id']);
+    const dbUids = dbUsers.map(u => u['uid']);
+    const crmUids = crmUsers.map(u => u['uid']);
+    const validUids = authUids.filter(v => dbUids.includes(v) && crmUids.includes(v))
+  }
         </code></pre>
       </li>
       <li class="carousel__slide">
         <pre class="code-border"><code class="language-golang">
   /* ALAN automatically executes CPU operations in parallel when sensible */
-  fn maybeAddConcurrent(nums: Array&lt;int&gt;): int {
+  fn sumMaybeConcurrent(nums: Array&lt;int&gt;): int {
     return nums.reduce(fn (accum: int, val: int): int = accum + val)
   }
         </code></pre>
         <pre class="code-border"><code class="language-golang">
   /* GOLANG */
-  func addConcurrent(numbers []int) int {
+  func sumConcurrent(numbers []int) int {
     var v int64
     totalNumbers := len(numbers)
     goroutines := runtime.NumCPU()
@@ -117,19 +121,28 @@ on app.start {
         </code></pre>
       </li>
       <li class="carousel__slide">
-        <pre class="code-border"><code class="language-javascript">
+        <pre class="code-border"><code class="language-golang">
   /* ALAN */
-  const authUsers = Auth.getAllUsers()
-  const dbUsers = Store.getAllUsers()
-  const crmUsers = Crm.getAllUsers()
+  fn fetchAndSum(urls: Array&lt;string&gt;): int {
+    return nums
+      .map(fn (url: string) = http.get(url).body.toString().length)
+      .reduce(fn (accum: int, val: int): int = accum + val)
+  }
         </code></pre>
-        <pre class="code-border"><code class="language-javascript">
-  /* NODE.JS */
-  const [authUsers, dbUsers, crmUsers] = await Promise.all([
-    Auth.getAll(),
-    Store.getAllUsers(),
-    Crm.getAllUsers()
-  ]);
+        <pre class="code-border"><code class="language-java">
+  /* JAVA */
+  CompletableFuture<Integer> fetchAndSum(String...urls) {
+    return Stream
+      .of(urls)
+      .parallel()
+      .map(url -> httpClient
+        .sendAsync(request(url), BodyHandlers.ofString()) // 1 - Fetch the url
+        .thenApply(HttpResponse::body)                    // 2 - Read the body
+        .thenApply(String::length)                        // 3 – Get body’s length
+        .whenComplete((l, err) -> out.printf("=======> from %s\n", url)))
+      .reduce(sum, (prev, curr) -> prev
+        .thenCombine(curr, (p, c) -> p + c));             // 4 - Sum lengths
+  }
         </code></pre>
       </li>
       <div class="carousel__indicators">
