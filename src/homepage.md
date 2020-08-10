@@ -131,7 +131,7 @@ on app.start {
         </code></pre>
         <pre class="code-border"><code class="language-java">
   /* JAVA */
-  CompletableFuture<Integer> fetchAndSum(String...urls) {
+  CompletableFuture&lt;Integer&gt; fetchAndSum(String...urls) {
     return Stream
       .of(urls)
       .parallel()
