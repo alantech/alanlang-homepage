@@ -208,6 +208,11 @@
         analytics.page("Blog", "{{ chapter_title }}");
       }
     }}();
+  } else {
+    window.analytics = {
+      track: function(...args) {},
+      page: function(...args) {},
+    }
   }
 </script>
 

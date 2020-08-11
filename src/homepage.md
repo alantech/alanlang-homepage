@@ -12,7 +12,7 @@ The `alan` compiler and runtime can parallelize your code without concurrent or 
 &nbsp;
 
 <center>
-  <button onclick="window.location.href='https://docs.alan-lang.org/#installation'" class="cta-button">Download Alan</button>
+  <button onclick="analytics.page('Homepage');window.location.href='https://docs.alan-lang.org/#installation'" class="cta-button">Download Alan</button>
 </center>
 
 ## Try Alan
@@ -62,10 +62,10 @@ on app.start {
         <pre class="code-border"><code class="language-javascript">
   /* ALAN automatically executes IO in parallel when possible */
   fn getValidUids() {
-    const authUids = Auth.getAllUsers().map(fn (u: AuthUser) = u.id)
-    const dbUsers = Store.getAllUsers().map(fn (u: User) = u.uid)
-    const crmUsers = Crm.getAllUsers().map(fn (u: CrmUser) = u.uid)
-    const validUids = authUids.filter(v => dbUids.has(v) && crmUids.has(v))
+    const authUids = Auth.getAllUsers().map(fn (u: AuthUser): int = u.id)
+    const dbUsers = Store.getAllUsers().map(fn (u: User): int = u.uid)
+    const crmUsers = Crm.getAllUsers().map(fn (u: CrmUser): int = u.uid)
+    return authUids.filter(fn (v: int): int = dbUids.has(v) && crmUids.has(v))
   }
         </code></pre>
         <pre class="code-border"><code class="language-javascript">
@@ -79,7 +79,7 @@ on app.start {
     const authUids = authUsers.map(u => u['id']);
     const dbUids = dbUsers.map(u => u['uid']);
     const crmUids = crmUsers.map(u => u['uid']);
-    const validUids = authUids.filter(v => dbUids.includes(v) && crmUids.includes(v))
+    return authUids.filter(v => dbUids.includes(v) && crmUids.includes(v))
   }
         </code></pre>
       </li>
@@ -125,7 +125,7 @@ on app.start {
   /* ALAN */
   fn fetchAndSum(urls: Array&lt;string&gt;): int {
     return urls
-      .map(fn (url: string) {
+      .map(fn (url: string): int {
         const website = http.get(url) || http.none
         return toString(website.body).length()
       })
@@ -166,7 +166,7 @@ on app.start {
 &nbsp;
 
 <center>
-  <button onclick="window.location.href='https://docs.alan-lang.org/#installation'" class="cta-button">Download Alan</button>
+  <button onclick="analytics.page('Homepage');window.location.href='https://docs.alan-lang.org/#installation'" class="cta-button">Download Alan</button>
 </center>
 
 ## About us
