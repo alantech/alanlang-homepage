@@ -12,7 +12,7 @@ The `alan` compiler and runtime can parallelize your code without concurrent or 
 &nbsp;
 
 <center>
-  <button onclick="analytics.page('Homepage');window.location.href='https://docs.alan-lang.org/#installation'" class="cta-button">Download Alan</button>
+  <button onclick="analytics.page('DownloadCTA');window.location.href='https://docs.alan-lang.org/#installation'" class="cta-button">Download Alan</button>
 </center>
 
 ## Try Alan
@@ -166,7 +166,7 @@ on app.start {
 &nbsp;
 
 <center>
-  <button onclick="analytics.page('Homepage');window.location.href='https://docs.alan-lang.org/#installation'" class="cta-button">Download Alan</button>
+  <button onclick="analytics.track('DownloadCTA');window.location.href='https://docs.alan-lang.org/#installation'" class="cta-button">Download Alan</button>
 </center>
 
 ## About us
