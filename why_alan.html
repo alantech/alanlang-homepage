@@ -64,7 +64,7 @@
   var html = document.querySelector('html');
   var sidebar;
   html.classList.remove('sidebar-visible');
-  if (document.body.clientWidth >= 1080 && "Why Alan?" !== "Homepage") {
+  if (document.body.clientWidth >= 1080 && "Why Alan?" !== "Alan Language") {
     try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { console.error(e) }
     sidebar = sidebar || 'visible';
   } else {
@@ -75,7 +75,7 @@
 
 <nav id="sidebar" class="sidebar" aria-label="Table of contents">
   <div class="sidebar-scrollbox">
-    <ol class="chapter"><li class="chapter-item expanded affix "><a href="homepage.html">Homepage</a></li><li class="chapter-item expanded affix "><a href="blog.html">Blog</a></li><li class="chapter-item expanded "><a href="why_alan.html" class="active"><strong aria-hidden="true">1.</strong> Why Alan?</a></li></ol>
+    <ol class="chapter"><li class="chapter-item expanded affix "><a href="homepage.html">Alan Language</a></li><li class="chapter-item expanded affix "><a href="blog.html">Blog</a></li><li class="chapter-item expanded "><a href="why_alan.html" class="active"><strong aria-hidden="true">1.</strong> Why Alan?</a></li></ol>
   </div>
   <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
 </nav>
@@ -159,7 +159,7 @@
   // we are doing this here because handlebars does not allow evaluation in its conditionals
   // and mdbook does not allow defining handlebars helpers
   var dynNav = document.getElementById('dyn-navigation')
-  if ("Why Alan?" === "Homepage") {
+  if ("Why Alan?" === "Alan Language") {
     // hide left buttons in menu to search or toggle sidebar
     document.getElementById('left-menu').style.display = 'none'
     // link to blog
@@ -172,7 +172,7 @@
     tocLi[0].innerHTML = ""
     // link to homepage
     dynNav.innerHTML = "<i>Home</i>"
-    dynNav.title = "Homepage"
+    dynNav.title = "Alan Language"
     dynNav.href = "/"
   }
 </script>
@@ -194,6 +194,11 @@
         analytics.page("Blog", "Why Alan?");
       }
     }}();
+  } else {
+    window.analytics = {
+      track: function(...args) {},
+      page: function(...args) {},
+    }
   }
 </script>
 

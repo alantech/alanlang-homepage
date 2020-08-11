@@ -3,3 +3,22 @@
   margin-right: auto;
   max-width: 75%;/* var(--content-max-width); */
 }
+
+.cta-button {
+  border-color: var(--icons-hover);
+  background-color: var(--icons-hover);
+  border: 1px 1px;
+  color: var(--sidebar-bg);
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.cta-button:hover {
+  border-color: var(--icons);
+  background-color: var(--icons);
+  cursor: pointer;
+}
