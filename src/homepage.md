@@ -65,7 +65,7 @@ on app.start {
     const authUids = Auth.getAllUsers().map(fn (u: AuthUser): int = u.id)
     const dbUsers = Store.getAllUsers().map(fn (u: User): int = u.uid)
     const crmUsers = Crm.getAllUsers().map(fn (u: CrmUser): int = u.uid)
-    return authUids.filter(fn (v: int): int = dbUids.has(v) && crmUids.has(v))
+    return authUids.filter(fn (v: int): bool = dbUids.has(v) && crmUids.has(v))
   }
         </code></pre>
         <pre class="code-border"><code class="language-javascript">
