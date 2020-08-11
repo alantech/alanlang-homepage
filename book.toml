@@ -1,5 +1,6 @@
 [book]
 src = "src"
+description = "The Alan Programming Language"
 
 [output.html]
 theme = "theme"
