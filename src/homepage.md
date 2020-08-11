@@ -124,24 +124,33 @@ on app.start {
         <pre class="code-border"><code class="language-golang">
   /* ALAN */
   fn fetchAndSum(urls: Array&lt;string&gt;): int {
-    return nums
-      .map(fn (url: string) = http.get(url).body.toString().length)
+    return urls
+      .map(fn (url: string) {
+        const website = http.get(url) || http.none
+        return toString(website.body).length()
+      })
       .reduce(fn (accum: int, val: int): int = accum + val)
   }
         </code></pre>
         <pre class="code-border"><code class="language-java">
   /* JAVA */
-  CompletableFuture&lt;Integer&gt; fetchAndSum(String...urls) {
-    return Stream
-      .of(urls)
-      .parallel()
-      .map(url -> httpClient
-        .sendAsync(request(url), BodyHandlers.ofString()) // 1 - Fetch the url
-        .thenApply(HttpResponse::body)                    // 2 - Read the body
-        .thenApply(String::length)                        // 3 – Get body’s length
-        .whenComplete((l, err) -> out.printf("=======> from %s\n", url)))
-      .reduce(sum, (prev, curr) -> prev
-        .thenCombine(curr, (p, c) -> p + c));             // 4 - Sum lengths
+  Integer fetchAndSum(String...urls) {
+    var sum = CompletableFuture.completedFuture(0);
+    try {
+      return Stream
+            .of(urls)
+            .parallel()
+            .map(url -> httpClient
+                .sendAsync(request(url), BodyHandlers.ofString())
+                .thenApply(HttpResponse::body)
+                .thenApply(String::length))
+            .reduce(sum, (prev, curr) -> prev
+                .thenCombine(curr, (p, c) -> p + c))
+            .get();
+    } catch(Exception e){
+      System.out.println(e.toString());
+      return 0;
+    }
   }
         </code></pre>
       </li>
