@@ -3,7 +3,7 @@
 We are a team of developers that got tired of managing and re-writing software products as they scaled -- just like everyone else.
 75% of enterprises are running, or planning to run, their software operations on Serverless according to [Pathfinder Report 2019 The Journey to Serverless-First 2019 from 451 Research](https://d1.awsstatic.com/serverless/The%20Journey%20to%20Serverless-First%20-%20451%20Research.pdf). Serverless offers an interface for developers to scale their software in the cloud using a pay-as-you-go model and without any DevOps or system administration operations. Serverless computing has only been around since 2014 and it already is the fastest growing cloud offering category, above machine learning, at 50% YoY according to [RightScale 2019 State of the Cloud Report from Flexera](https://resources.flexera.com/web/media/documents/rightscale-2019-state-of-the-cloud-report-from-flexera.pdf).
 
-![](./rightscale-serverless-growth.png)
+<img src="./rightscale-serverless-growth.png" alt="drawing" width="400"/>
 
 However, Serverless comes with the some drawbacks:
 - Code has to be organized into “functions” in order to work
