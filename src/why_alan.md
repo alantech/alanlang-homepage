@@ -16,6 +16,6 @@ When we worked on Dynamic Pricing at Uber, we needed to run algorithms from Data
 
 Most of the backends of the startups we worked at are consistently firing requests to multiple external APIs. Being able to fire these requests concurrently, when possible, is key to the performance. We found ourselves often composing complex execution graphs from promises in Node.js or futures in Java and Golang. We built the Alan compiler and runtime so it could parallelize your code without concurrent or asynchronous programming (threads, promises, goroutines, channels, etc). This would allow the code in question to look like blocking, declarative Python but run concurrently behind the scenes.
 
-We built a programming language that was not Turing-Complete in order to allow iteration and recursion that is guaranteed to halt to allow for predictable execution. We named Alan in honor of Alan Turing. We find great inspiration in the magnitude of his intellectual contributions.
+Why the name? Alan is not Turing-Complete, but it is named in honor of Alan Turing. We knew that the language could not be Turing-Complete in order to to have predictable execution by *only* allowing iteration and recursion that is guaranteed to halt. But most importantly, we find great inspiration in the magnitude of Alan Turing's intellectual contributions.
 
 There is still a ways to go for Alan to become a worthy abstraction to automatically scale software, but if you are moved by the vision please try it out, give us your feedback and help us shape it.
