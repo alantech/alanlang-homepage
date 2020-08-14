@@ -3,7 +3,7 @@
 <head>
     <!-- Book generated using mdBook -->
     <meta charset="UTF-8">
-    <title>Blog</title>
+    <title>Blog - Alan Language</title>
 
     <!-- Custom HTML head -->
     
@@ -12,7 +12,8 @@
     <meta name="description" content="The Alan Programming Language">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#ffffff" />
-    <meta property="og:title" content="Blog">
+    <meta property="og:title" content="Blog - Alan Language">
+    <meta property="og:type" content="website" />
     <meta property="og:image" content="https://alan-lang.org/alan-logo.png">
     <meta property="og:description" content="The Alan Programming Language">
     <meta property="og:url" content="https://alan-lang.org">
@@ -80,7 +81,7 @@
 
 <nav id="sidebar" class="sidebar" aria-label="Table of contents">
   <div class="sidebar-scrollbox">
-    <ol class="chapter"><li class="chapter-item expanded affix "><a href="homepage.html">Alan Language</a></li><li class="chapter-item expanded affix "><a href="blog.html" class="active">Blog</a></li><li class="chapter-item expanded "><a href="why_alan.html"><strong aria-hidden="true">1.</strong> Why Alan?</a></li></ol>
+    <ol class="chapter"><li class="chapter-item expanded affix "><a href="homepage.html">Alan Language</a></li><li class="chapter-item expanded affix "><a href="blog.html" class="active">Blog</a></li><li class="chapter-item expanded "><a href="why_alan.html"><strong aria-hidden="true">1.</strong> Why we created Alan</a></li></ol>
   </div>
   <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
 </nav>
@@ -102,7 +103,7 @@
             
           </div>
 
-          <h1 class="menu-title"></h1>
+          <h1 class="menu-title">Alan Language</h1>
 
           <div class="right-buttons">
             <a classname="header-link" id="dyn-navigation">
@@ -139,6 +140,9 @@
         <div id="content" class="content">
             <main>
                 <h1><a class="header" href="#blog" id="blog">Blog</a></h1>
+<ul>
+<li><a href="./why_alan.html">Why we created Alan</a> | 2020-08-14</li>
+</ul>
 
             </main>
 
@@ -169,6 +173,8 @@
   // and mdbook does not allow defining handlebars helpers
   var dynNav = document.getElementById('dyn-navigation')
   if ("Blog" === "Alan Language") {
+    // hide book title
+    document.getElementsByClassName('menu-title')[0].textContent = ""
     // hide left buttons in menu to search or toggle sidebar
     document.getElementById('left-menu').style.display = 'none'
     // link to blog
