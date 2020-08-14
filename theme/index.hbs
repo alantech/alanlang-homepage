@@ -12,7 +12,8 @@
     <meta name="description" content="{{ description }}">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#ffffff" />
-    <meta property="og:title" content="{{ title }}">
+    <meta property="og:title" content="{{ description }}">
+    <meta property="og:type" content="website" />
     <meta property="og:image" content="https://alan-lang.org/alan-logo.png">
     <meta property="og:description" content="{{ description }}">
     <meta property="og:url" content="https://alan-lang.org">
@@ -164,6 +165,8 @@
   // and mdbook does not allow defining handlebars helpers
   var dynNav = document.getElementById('dyn-navigation')
   if ("{{ chapter_title }}" === "Alan Language") {
+    // hide book title
+    document.getElementsByClassName('menu-title')[0].textContent = ""
     // hide left buttons in menu to search or toggle sidebar
     document.getElementById('left-menu').style.display = 'none'
     // link to blog

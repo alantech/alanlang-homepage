@@ -490,7 +490,7 @@
   }
   .carousel__indicators {
     position: absolute;
-    top: -27px;
+    top: -4rem;
     width: 100%;
     text-align: center;
   }
