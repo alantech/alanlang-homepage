@@ -1,5 +1,6 @@
 [book]
 src = "src"
+title = "Alan Language"
 description = "The Alan Programming Language"
 
 [output.html]
