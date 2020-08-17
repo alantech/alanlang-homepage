@@ -63,8 +63,8 @@ on app.start {
   /* ALAN automatically executes IO in parallel when possible */
   fn getValidUids() {
     const authUids = Auth.getAllUsers().map(fn (u: AuthUser): int = u.id)
-    const dbUsers = Store.getAllUsers().map(fn (u: User): int = u.uid)
-    const crmUsers = Crm.getAllUsers().map(fn (u: CrmUser): int = u.uid)
+    const dbUids = Store.getAllUsers().map(fn (u: User): int = u.uid)
+    const crmUids = Crm.getAllUsers().map(fn (u: CrmUser): int = u.uid)
     return authUids.filter(fn (v: int): bool = dbUids.has(v) && crmUids.has(v))
   }
         </code></pre>
