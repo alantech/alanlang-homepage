@@ -81,7 +81,7 @@
 
 <nav id="sidebar" class="sidebar" aria-label="Table of contents">
   <div class="sidebar-scrollbox">
-    <ol class="chapter"><li class="chapter-item expanded affix "><a href="homepage.html">Alan Language</a></li><li class="chapter-item expanded affix "><a href="blog.html">Blog</a></li><li class="chapter-item expanded "><a href="why_alan.html" class="active"><strong aria-hidden="true">1.</strong> Why we created Alan</a></li></ol>
+    <ol class="chapter"><li class="chapter-item expanded affix "><a href="homepage.html">Alan Language</a></li><li class="chapter-item expanded affix "><a href="blog.html">Blog</a></li><li class="chapter-item expanded "><a href="why_alan.html" class="active"><strong aria-hidden="true">1.</strong> Why we created Alan</a></li><li class="chapter-item expanded "><a href="alan_overview.html"><strong aria-hidden="true">2.</strong> An Overview of Alan</a></li></ol>
   </div>
   <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
 </nav>
@@ -150,7 +150,7 @@
 <p>When we worked on Dynamic Pricing at Uber, we needed to run algorithms from Data Scientists on large-scale geospatial data within massive arrays. To get the performance necessary to do this in realtime, we built a framework for massively parallel operations on layers of immutable arrays encapsulating the algorithms in question. Alan has automatic array-level parallelism that would allow the code in question to look essentially identical to the Data Scientists' prototypes.</p>
 <p>Most of the backends of the startups we worked at are consistently firing HTTP requests to multiple external APIs. Being able to fire these requests concurrently, when possible, is key to performance. We found ourselves often composing complex execution graphs from promises in Node.js or futures in Java and Golang. We built the Alan compiler and runtime so it could parallelize your code without concurrent or asynchronous programming (threads, promises, goroutines, channels, etc). This would allow the code in question to look like blocking, declarative Python, but run concurrently behind the scenes when applicable.</p>
 <p>Why the name? Alan is not Turing-Complete, but it is named in honor of Alan Turing. We knew that the language could not be Turing-Complete in order to to have predictable execution by <em>only</em> allowing iteration and recursion that is guaranteed to halt. But most importantly, we find great inspiration in the magnitude of Alan Turing's intellectual contributions.</p>
-<p>There is still a ways to go for Alan to become a worthy abstraction to automatically scale software, but if you are moved by the vision please try it out, give us your feedback and help us shape it.</p>
+<p>There is still a ways to go for Alan to become a worthy abstraction to automatically scale software, but if you are moved by the vision please try it out, give us your feedback and help us shape it. If you wish to learn more about the details and philosphy of Alan, please read <a href="./alan_overview.html">An Overview of Alan</a>.</p>
 
             </main>
 
@@ -162,6 +162,10 @@
                 </a>
               
 
+              
+                <a rel="next" href="alan_overview.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                  <i class="fa fa-angle-right"></i>
+                </a>
               
 
               <div style="clear: both"></div>
