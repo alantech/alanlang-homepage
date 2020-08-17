@@ -20,4 +20,4 @@ Most of the backends of the startups we worked at are consistently firing HTTP r
 
 Why the name? Alan is not Turing-Complete, but it is named in honor of Alan Turing. We knew that the language could not be Turing-Complete in order to to have predictable execution by *only* allowing iteration and recursion that is guaranteed to halt. But most importantly, we find great inspiration in the magnitude of Alan Turing's intellectual contributions.
 
-There is still a ways to go for Alan to become a worthy abstraction to automatically scale software, but if you are moved by the vision please try it out, give us your feedback and help us shape it.
+There is still a ways to go for Alan to become a worthy abstraction to automatically scale software, but if you are moved by the vision please try it out, give us your feedback and help us shape it. If you wish to learn more about the details and philosphy of Alan, please read [An Overview of Alan](./alan_overview.md).
