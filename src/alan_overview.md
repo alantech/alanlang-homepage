@@ -18,7 +18,7 @@ It accomplishes this by encouraging the use of parallelizable constructs and aut
 
 **Coarse parallelism** is accomplished via the event system baked into the language:
 
-```rust
+```rust,ignore
 on http.connection fn (req: http.Request, res: http.Response) {
   res.body("Hello, World!").status(200).send()
 }
@@ -28,7 +28,7 @@ Independent connections to the HTTP server are scheduled onto the event loop and
 
 **Fine parallelism** is accomplished through array operations being natively-parallel by default:
 
-```rust
+```rust,ignore
 someLargeArray
   .filter(fn (val: SomeType): bool = val > someDefaultVal)
   .map(fn (val: SomeType): float64 = val.innerNumber * 3.14159)
@@ -39,7 +39,7 @@ If the array is large enough and the inner function given to it is pure, each of
 
 **Concurrency** is accomplished with special IO-flagged opcodes within the runtime:
 
-```rust
+```rust,ignore
 const data: Result<string> = http.get("https://someurl.com/csvfile.csv")
 const datacsv: Array<Array<int64>> = (data || '').split('\n').map(fn (row: string): Array<int64> = row.split(',').map(toInt64))
 const data2: Result<string>  = http.get("https://someotherdatasource.org/othercsvfile.csv")
@@ -53,20 +53,20 @@ The Alan runtime will see that the two URL fetches do not depend on each other a
 
 Alan's type inference is capable of automatically inferring all function return types and all variable assignment types, only requiring function arguments to be typed. Once [this RFC](https://github.com/alantech/alan/blob/main/rfcs/006%20-%20Automatic%20Argument%20Interfaces%20RFC.md) is implemented, it will be capable enough that *all* of the examples above do not need their types explicitly written out. The following would also work:
 
-```rust
+```rust,ignore
 on http.connection fn (req, res) {
   res.body("Hello, World!").status(200).send()
 }
 ```
 
-```rust
+```rust,ignore
 someLargeArray
   .filter(fn (val) = val > someDefaultVal)
   .map(fn (val) = val.innerNumber * 3.14159)
   .each(print)
 ```
 
-```rust
+```rust,ignore
 const data = http.get("https://someurl.com/csvfile.csv")
 const datacsv = (data || '').split('\n').map(fn (row) = row.split(',').map(toInt64))
 const data2 = http.get("https://someotherdatasource.org/othercsvfile.csv")
@@ -128,7 +128,7 @@ sys     0m0.016s
 
 While a Rust Hello World:
 
-```rust
+```rust,ignore
 fn main() {
   println!("Hello, World!");
 }
