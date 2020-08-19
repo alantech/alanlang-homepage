@@ -7,7 +7,7 @@
 
 &nbsp;
 
-The `alan` compiler and runtime can parallelize your code without concurrent or asynchronous programming (threads, promises, channels, etc) by only allowing iteration and recursion that is guaranteed to halt (e.g. no `while (true) {}` loops)
+The `alan` compiler and runtime can parallelize your code without concurrent or asynchronous programming (threads, promises, channels, etc) by only allowing iteration and recursion that is guaranteed to halt (e.g. infinite loops)
 
 &nbsp;
 
@@ -15,7 +15,7 @@ The `alan` compiler and runtime can parallelize your code without concurrent or 
   <button onclick="analytics.track('DownloadCTA');window.location.href='https://docs.alan-lang.org/#installation'" class="cta-button">Download Alan</button>
 </center>
 
-## Try Alan
+## Run Alan code below
 
 <table style="width: 100%;">
 <tr>
