@@ -7,7 +7,7 @@
 
 &nbsp;
 
-The `alan` compiler and runtime can parallelize your code without concurrent or asynchronous programming (threads, promises, channels, etc) by only allowing iteration and recursion that is guaranteed to halt (e.g. infinite loops)
+The Alan compiler and runtime can parallelize your code without concurrent or asynchronous programming (threads, promises, channels, etc) by only allowing iteration and recursion that is guaranteed to halt (e.g. infinite loops)
 
 &nbsp;
 
@@ -58,31 +58,6 @@ on app.start {
         <label class="carousel__control carousel__control--forward" for="1"></label>
       </div>
       <li class="carousel__slide"><!-- Fake for weird CSS reasons --></li>
-      <li class="carousel__slide">
-        <pre class="code-border"><code class="language-javascript">
-  /* ALAN automatically executes IO in parallel when possible */
-  fn getValidUids() {
-    const authUids = Auth.getAllUsers().map(fn (u: AuthUser): int = u.id)
-    const dbUsers = Store.getAllUsers().map(fn (u: User): int = u.uid)
-    const crmUsers = Crm.getAllUsers().map(fn (u: CrmUser): int = u.uid)
-    return authUids.filter(fn (v: int): bool = dbUids.has(v) && crmUids.has(v))
-  }
-        </code></pre>
-        <pre class="code-border"><code class="language-javascript">
-  /* NODE.JS equivalent */
-  async function getValudUids() {
-    const [authUsers, dbUsers, crmUsers] = await Promise.all([
-      Auth.getAll(),
-      Store.getAllUsers(),
-      Crm.getAllUsers()
-    ]);
-    const authUids = authUsers.map(u => u['id']);
-    const dbUids = dbUsers.map(u => u['uid']);
-    const crmUids = crmUsers.map(u => u['uid']);
-    return authUids.filter(v => dbUids.includes(v) && crmUids.includes(v))
-  }
-        </code></pre>
-      </li>
       <li class="carousel__slide">
         <pre class="code-border"><code class="language-golang">
   /* ALAN automatically executes CPU operations in parallel when sensible */
@@ -151,6 +126,31 @@ on app.start {
       System.out.println(e.toString());
       return 0;
     }
+  }
+        </code></pre>
+      </li>
+      <li class="carousel__slide">
+        <pre class="code-border"><code class="language-javascript">
+  /* ALAN automatically executes IO in parallel when possible */
+  fn getValidUids() {
+    const authUids = Auth.getAllUsers().map(fn (u: AuthUser): int = u.id)
+    const dbUsers = Store.getAllUsers().map(fn (u: User): int = u.uid)
+    const crmUsers = Crm.getAllUsers().map(fn (u: CrmUser): int = u.uid)
+    return authUids.filter(fn (v: int): bool = dbUids.has(v) && crmUids.has(v))
+  }
+        </code></pre>
+        <pre class="code-border"><code class="language-javascript">
+  /* NODE.JS equivalent */
+  async function getValudUids() {
+    const [authUsers, dbUsers, crmUsers] = await Promise.all([
+      Auth.getAll(),
+      Store.getAllUsers(),
+      Crm.getAllUsers()
+    ]);
+    const authUids = authUsers.map(u => u['id']);
+    const dbUids = dbUsers.map(u => u['uid']);
+    const crmUids = crmUsers.map(u => u['uid']);
+    return authUids.filter(v => dbUids.includes(v) && crmUids.includes(v))
   }
         </code></pre>
       </li>

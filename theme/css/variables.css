@@ -372,7 +372,10 @@
     border-radius: 5px;
   }
   .carousel__slide {
-    display: block;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
     visibility: hidden;
     height: 0;
     opacity: 0;
@@ -521,7 +524,6 @@
     transition: transform 0.5s ease 0s, -webkit-transform 0.5s ease 0s;
   }
   .carousel__track .carousel__slide {
-    display: block;
     top: 0;
     left: 0;
     right: 0;
@@ -539,19 +541,19 @@
     background-color: #fafafa;
   }
   .carousel--thumb .carousel__indicators .carousel__indicator:nth-of-type(1) {
-    background-image: url("https://firebearstudio.com/blog/wp-content/uploads/2015/10/Node-e1443953851722.png");
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-  }
-  .carousel--thumb .carousel__indicators .carousel__indicator:nth-of-type(2) {
     background-image: url("https://logos-download.com/wp-content/uploads/2019/01/Golang_Logo.png");
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
   }
-  .carousel--thumb .carousel__indicators .carousel__indicator:nth-of-type(3) {
+  .carousel--thumb .carousel__indicators .carousel__indicator:nth-of-type(2) {
     background-image: url("https://upload.wikimedia.org/wikipedia/fr/thumb/2/2e/Java_Logo.svg/1200px-Java_Logo.svg.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+  .carousel--thumb .carousel__indicators .carousel__indicator:nth-of-type(3) {
+    background-image: url("https://firebearstudio.com/blog/wp-content/uploads/2015/10/Node-e1443953851722.png");
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
