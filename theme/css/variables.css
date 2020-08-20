@@ -318,6 +318,13 @@
     }
 }
 
+@media screen and (max-width: 480px) {
+  pre {
+    font-size: 2.5vw;
+    line-height: 1.3em;
+  }
+}
+
 /**
   * style variables
 */
