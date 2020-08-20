@@ -12,7 +12,7 @@ Alan is implicitly parallel because its compiler and runtime recognizes and expl
 
 Out of memory errors are impossible to avoid, but other issues, such as deadlocks, livelocks, undefined variables, divide-by-zero, integer under/overflow, array out-of-bounds accesses, etc, are not possible in Alan. This makes Alan codebases easier to maintain and develop in because most errors are caught at compile time.
 
-### Module system supports third party permissions and mocks
+### Granular third party permission
 
 Alan's module resolution mechanism includes built-in support for defining mocks to make testing easier. The same mechanism allows you to prevent third party dependencies from having access to standard libraries that they should not have access to. This third party permissioning is more precise than Deno, which has project-wide access controls only.
 
