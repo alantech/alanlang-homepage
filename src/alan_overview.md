@@ -32,7 +32,8 @@ Independent connections to the HTTP server are scheduled onto the event loop and
 someLargeArray
   .filter(fn (val: SomeType): bool = val > someDefaultVal)
   .map(fn (val: SomeType): float64 = val.innerNumber * 3.14159)
-  .each(print)
+  .reduce(fn (acc: float64, cur: float64): float64 = acc + cur)
+  .print()
 ```
 
 If the array is large enough and the inner function given to it is pure, each of these steps will run in parallel, utilizing all of the CPU cores on the machine.
@@ -63,7 +64,8 @@ on http.connection fn (req, res) {
 someLargeArray
   .filter(fn (val) = val > someDefaultVal)
   .map(fn (val) = val.innerNumber * 3.14159)
-  .each(print)
+  .reduce(fn (acc, cur) = acc + cur)
+  .print()
 ```
 
 ```rust,ignore

@@ -75,6 +75,34 @@
   html.classList.add("sidebar-" + sidebar);
 </script>
 
+<!-- Old school interval to adjust the carousel status if a carousel is present on this page -->
+<script type="text/javascript">
+  window.onload = () => {
+    const radioButtons = document.getElementsByClassName('carousel__activator')
+    if (radioButtons.length > 0) {
+      const interval = setInterval(() => {
+        for (let i = 0; i < radioButtons.length; i++) {
+          const prevButton = radioButtons[(i + 2) % 3]
+          if (prevButton.checked) {
+            radioButtons[i].checked = true
+            break
+          }
+        }
+      }, 10000)
+      const controls = document.getElementsByClassName('carousel__control')
+      for (let i = 0; i < controls.length; i++) {
+        const c = controls[i]
+        c.addEventListener('click', () => clearInterval(interval))
+      }
+      const indicators = document.getElementsByClassName('carousel__indicator')
+      for (let i = 0; i < indicators.length; i++) {
+        const c = indicators[i]
+        c.addEventListener('click', () => clearInterval(interval))
+      }
+    }
+  }
+</script>
+
 <nav id="sidebar" class="sidebar" aria-label="Table of contents">
   <div class="sidebar-scrollbox">
     {{#toc}}{{/toc}}
