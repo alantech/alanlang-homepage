@@ -22,3 +22,16 @@
   background-color: var(--icons);
   cursor: pointer;
 }
+
+.column {
+  float: left;
+  width: 30%;
+  margin: 3.33%;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
