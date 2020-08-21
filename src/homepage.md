@@ -5,9 +5,29 @@
   <h1 style="color: var(--title);">The Alan Programming Language</h1>
 </center>
 
-&nbsp;
-
-The Alan compiler and runtime can parallelize your code without concurrent or asynchronous programming (threads, promises, channels, etc) by only allowing iteration and recursion that is guaranteed to halt (e.g. infinite loops)
+<div class="row">
+  <div class="column">
+    <center>
+      <img src="implicit-parallel.png" alt="drawing" width="120"/>
+    </center>
+    <h3 style="margin-top:0;">Implicitly parallel across events, arrays and IO</h3>
+    Alan recognizes and exploits opportunities for parallelization without parallel programming (threads, channels, futures, locks, etc.)
+  </div>
+  <div class="column">
+    <center>
+      <img src="runtime-safety.png" alt="drawing" width="120"/>
+    </center>
+    <h3 style="margin-top:0;">No race conditions and fewer runtime errors</h3>
+    Deadlocks, livelocks, undefined variables, divide-by-zero, integer under/overflow, array out-of-bounds access, etc, are not possible in Alan.
+  </div>
+  <div class="column">
+    <center>
+      <img src="permissions.png" alt="drawing" width="120"/>
+    </center>
+    <h3 style="margin-top:0;">Granular third party permissions</h3>
+    Alan's module resolution mechanism allows you to prevent third party dependencies from having access to standard libraries that they should not have access to.
+  </div>
+</div>
 
 &nbsp;
 
@@ -169,7 +189,6 @@ on app.start {
   <button onclick="analytics.track('DownloadCTA');window.location.href='https://docs.alan-lang.org/#installation'" class="cta-button">Download Alan</button>
 </center>
 
-## About us
+## Contact
 
-We are a team of developers based in the Bay Area, CA that got tired of re-writing software products as they scaled.
 Please reach out on [Discord](https://discord.gg/XatB9we) or email us at hello at alantechnologies dot com.
