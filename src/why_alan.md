@@ -20,7 +20,7 @@ Alan's module resolution mechanism, with mocking built-in, allows you to prevent
 
 #### No GC pauses
 
-Alan’s runtime manages memory allocation, access, and deallocation for you like Java, Python, or Javascript. However, Alan’s static event system and automatic event-oriented memory model does so without garbage collector pauses. Learn more [here](./alan_overview.html#memory-management).
+Alan’s runtime manages memory allocation, access, and deallocation for you like Java, Python, or Javascript. However, Alan’s static event system and [automatic event-oriented memory model](./alan_overview.html#memory-management) does so without garbage collector pauses. Learn more [here].
 
 #### Join Us
 
