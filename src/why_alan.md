@@ -2,7 +2,7 @@
 
 **14 August 2020 | David Ellis, Luis F. De Pombo**
 
-We created a programming language to be able to write concurrent algorithms and business logic without having to explicitly program how it should be parallelized. Alan makes people more productive by managing IO and computational parallelism for them, in the same way languages from the 90s like Java and Python made people more productive by managing memory for them when compared to C or C++.
+We created a programming language to be able to write concurrent algorithms and business logic without having to explicitly program how it should be parallelized. Alan makes people more productive by managing IO and computational parallelism for them in the same way languages from the 90s like Java and Python made people more productive, when compared to C or C++, by managing memory for them.
 
 Why the name? Alan is named in honor of Alan Turing. We find great inspiration in the magnitude of his intellectual contributions.
 
