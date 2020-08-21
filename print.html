@@ -196,10 +196,7 @@
   </div>
 </div>
 <p> </p>
-<center>
-  <button onclick="analytics.track('DownloadCTA');window.location.href='https://docs.alan-lang.org/#installation'" class="cta-button">Get Started</button>
-</center>
-<h2><a class="header" href="#run-alan-code-below" id="run-alan-code-below">Run Alan code below</a></h2>
+<h2><a class="header" href="#try-alan" id="try-alan">Try Alan</a></h2>
 <table style="width: 100%;">
 <tr>
 <th></th>
@@ -216,6 +213,7 @@ on app.start {
 </code></pre></pre>
 </td>
 </table>
+<p><button id="run-playground" onclick="analytics.track('RunPlayground');" class="cta-button">Run this code</button></p>
 <h2><a class="header" href="#compare-alan" id="compare-alan">Compare Alan</a></h2>
 <center>
   <div class="carousel-container">
@@ -312,8 +310,8 @@ on app.start {
   /* ALAN automatically executes IO in parallel when possible */
   fn getValidUids() {
     const authUids = Auth.getAllUsers().map(fn (u: AuthUser): int = u.id)
-    const dbUsers = Store.getAllUsers().map(fn (u: User): int = u.uid)
-    const crmUsers = Crm.getAllUsers().map(fn (u: CrmUser): int = u.uid)
+    const dbUids = Store.getAllUsers().map(fn (u: User): int = u.uid)
+    const crmUids = Crm.getAllUsers().map(fn (u: CrmUser): int = u.uid)
     return authUids.filter(fn (v: int): bool = dbUids.has(v) && crmUids.has(v))
   }
         </code></pre>
@@ -356,31 +354,31 @@ on app.start {
 <p>We created a programming language to be able to write concurrent algorithms and business logic without having to explicitly program how it should be parallelized. Alan makes people more productive by managing IO and computational parallelism for them in the same way languages from the 90s like Java and Python made people more productive, when compared to C or C++, by managing memory for them.</p>
 <p>Why the name? Alan is named in honor of Alan Turing. We find great inspiration in the magnitude of his intellectual contributions.</p>
 <h4><a class="header" href="#implicit-parallelization-over-arrays-events-and-io" id="implicit-parallelization-over-arrays-events-and-io">Implicit parallelization over arrays, events and IO</a></h4>
-<p>Alan is implicitly parallel because its compiler and runtime recognizes and exploits opportunities for parallelization across the computing resources available without being told to do so. We have constrained the language a bit to provide better opportunities to do this. This results in nimbler codebases than those built with languages or frameworks that use parallel programming constructs such as threads, actors, channels, locks, futures, promises etc.</p>
+<p>Alan is <a href="./alan_overview.html#implicitly-parallel">implicitly parallel</a> because its compiler and runtime exploits opportunities for parallelization across the computing resources available without being told to do so. We have <a href="./alan_overview.html#parallel-computation-and-the-problem-of-turing-completeness">constrained the language a bit</a> to provide better opportunities to do this. This results in nimbler codebases than those built with languages or frameworks that use parallel programming constructs such as threads, actors, channels, locks, futures, promises etc.</p>
 <h4><a class="header" href="#no-race-conditions-and-fewer-runtime-errors" id="no-race-conditions-and-fewer-runtime-errors">No race conditions and fewer runtime errors</a></h4>
-<p>Deadlocks, livelocks, undefined variables, divide-by-zero, integer under/overflow, array out-of-bounds access, etc, are not possible in Alan. Only out-of-memory errors persist, but they are impossible to avoid. This makes Alan codebases easier to maintain and develop in because runtime errors are nearly always caught at compile time.</p>
+<p>Deadlocks, livelocks, undefined variables, divide-by-zero, integer under/overflow, array out-of-bounds access, etc, are not possible in Alan. Only out-of-memory errors persist, but they are impossible to avoid. This makes Alan codebases easier to maintain and develop in because <a href="./alan_overview.html#statically-compiled-benefits-and-compile-time-safety">runtime errors are nearly always caught at compile time</a>.</p>
 <h4><a class="header" href="#granular-third-party-permissions" id="granular-third-party-permissions">Granular third party permissions</a></h4>
-<p>Alan's module resolution mechanism, with mocking built-in, allows you to prevent third-party dependencies from having access to standard libraries that they should not have access to.</p>
+<p>Alan's module resolution mechanism, with mocking built-in, allows you to <a href="./alan_overview.html#third-party-module-permission-system">prevent specific third-party dependencies from having access to  specific standard libraries</a> that they should not have access to.</p>
 <h4><a class="header" href="#no-gc-pauses" id="no-gc-pauses">No GC pauses</a></h4>
-<p>Alan’s runtime manages memory allocation, access, and deallocation for you like Java, Python, or Javascript. However, Alan’s static event system and automatic event-oriented memory model does so without garbage collector pauses.</p>
+<p>Alan’s runtime manages memory allocation, access, and deallocation for you like Java, Python, or Javascript. However, Alan’s static event system and <a href="./alan_overview.html#memory-management">automatic event-oriented memory model</a> does so without garbage collector pauses.</p>
 <h4><a class="header" href="#join-us" id="join-us">Join Us</a></h4>
-<p>There is still a ways to go for Alan to become a worthy abstraction to automatically parallelize software, but if you are moved by the vision please try it out, give us your feedback and help us shape it. If you wish to learn more about the details and philosphy of Alan, please read <a href="./alan_overview.html">An Overview of Alan</a>.</p>
+<p>There is still a ways to go for Alan to become a worthy abstraction to automatically parallelize software, but if you are moved by the vision please try it out, give us your feedback and help us shape it.</p>
 <h1><a class="header" href="#an-overview-of-alan" id="an-overview-of-alan">An Overview of Alan</a></h1>
 <p><strong>16 August 2020 | Luis F. De Pombo, David Ellis</strong></p>
 <p>Programming languages are useful not only for what they allow, but what they prevent. That is the key separation between a language and a framework. For good or for ill, a framework can be sidestepped by its users while a language can't.</p>
 <p>This overview of Alan will emphasize just as much what it prevents you from doing as what it provides to you. We believe our blend of features and omissions is what general purpose computing needs in the multicore era.</p>
 <h2><a class="header" href="#what-alan-provides" id="what-alan-provides">What Alan Provides</a></h2>
-<p>Alan is a natively-parallel, statically-compiled, type-inferred language with a familiar syntax and many compile-time and run-time safety guarantees.</p>
-<p>Alan's purpose is to provide a programming language that can be easy to pick up while having solid performance that can scale with you and your project until you reach the very extremes of cluster computing needs.</p>
-<h3><a class="header" href="#natively-parallel" id="natively-parallel">Natively Parallel</a></h3>
-<p>It accomplishes this by encouraging the use of parallelizable constructs and automatically managing IO and compute threadpools.</p>
-<p><strong>Coarse parallelism</strong> is accomplished via the event system baked into the language:</p>
-<pre><code class="language-rust ignore">on http.connection fn (req: http.Request, res: http.Response) {
+<p>Alan is a natively-parallel, statically-compiled, type-inferred, evented language with a familiar syntax and many compile-time and run-time safety guarantees.</p>
+<h3><a class="header" href="#implicitly-parallel" id="implicitly-parallel">Implicitly Parallel</a></h3>
+<p>Alan's compiler and runtime automatically recognizes and exploits the parallelism inherent to the computations expressed by some of the language's constructs and automatically managing IO and compute threadpools.</p>
+<p><strong>Parallelism over events</strong> is accomplished via the static event system baked into the language:</p>
+<pre><code class="language-rust ignore">on http.connection fn (conn: http.Connection) {
+  let res: http.Request = conn.res
   res.body(&quot;Hello, World!&quot;).status(200).send()
 }
 </code></pre>
 <p>Independent connections to the HTTP server are scheduled onto the event loop and the compute threadpool pulls them from the queue and executes them in parallel.</p>
-<p><strong>Fine parallelism</strong> is accomplished through array operations being natively-parallel by default:</p>
+<p><strong>Parallelism over arrays</strong> is accomplished by default through natively-parallel array operations:</p>
 <pre><code class="language-rust ignore">someLargeArray
   .filter(fn (val: SomeType): bool = val &gt; someDefaultVal)
   .map(fn (val: SomeType): float64 = val.innerNumber * 3.14159)
@@ -388,7 +386,7 @@ on app.start {
   .print()
 </code></pre>
 <p>If the array is large enough and the inner function given to it is pure, each of these steps will run in parallel, utilizing all of the CPU cores on the machine.</p>
-<p><strong>Concurrency</strong> is accomplished by eagerly running IO-bound opcodes within the runtime:</p>
+<p><strong>IO Concurrency</strong> is accomplished by eagerly running IO-bound opcodes within the runtime based on the dependency graph of statements:</p>
 <pre><code class="language-rust ignore">const data: Result&lt;string&gt; = http.get(&quot;https://someurl.com/csvfile.csv&quot;)
 const datacsv: Array&lt;Array&lt;int64&gt;&gt; = (data || '').split('\n').map(fn (row: string): Array&lt;int64&gt; = row.split(',').map(toInt64))
 const data2: Result&lt;string&gt;  = http.get(&quot;https://someotherdatasource.org/othercsvfile.csv&quot;)
@@ -396,9 +394,29 @@ const data2csv: Array&lt;Array&lt;int64&gt;&gt; = (data2 || '').split('\n').map(
 // Compare the data...
 </code></pre>
 <p>The Alan runtime will see that the two URL fetches do not depend on each other and can run in parallel, so they will be hoisted to the top of the function call, executed in parallel, and the function execution continues after they return, minimizing overall latency and scheduling costs.</p>
+<h3><a class="header" href="#statically-compiled-benefits-and-compile-time-safety" id="statically-compiled-benefits-and-compile-time-safety">Statically Compiled Benefits and Compile-Time Safety</a></h3>
+<p>Alan has a multi-stage compiler with two compile targets: It's own native AGC bytecode format to be run by its native runtime, and Javascript to allow running in Node.js or the browser.</p>
+<p>This will make it possible to make full-stack web applications in Alan that can also be ejected to Javascript if you no longer wish to develop in Alan. (&quot;Will&quot; because the cross-compiler's primary focus has been on correctness, not legibility, of the generated Javascript, but that will improve over time. Also because Alan bindings to Web APIs have not yet been written.)</p>
+<p>Being statically compiled brings lots of benefits (and a few drawbacks) to the table. Primarily, the compiler can spot and prevent many classes of trivial errors from getting into production, but at the expense of requiring a compilation step between checking the changes made to your code.</p>
+<p>However, Alan takes the safety guarantees to a higher level:</p>
+<ul>
+<li><strong>No <code>undefined</code> variables, ever:</strong> In Alan, <code>let</code> or <code>const</code> declared variables <em>must</em> be given an initial value. Potentially missing data can be represented with a <code>Maybe&lt;T&gt;</code> type, but then the compiler will force checking for the presence of actual data or providing a default value if not present. Downstream logic can be assured that the type they are working with is real.</li>
+<li><strong>Most runtime errors impossible:</strong> Out of memory errors are impossible to avoid, but other issues, such as divide-by-zero, integer under/overflow, array out-of-bounds accesses, etc, are not possible in Alan. Actions that could have runtime errored in other languages are converted into <code>Result&lt;T&gt;</code> types that have to be checked for an error condition and/or have a default value provided instead. (The default set of math operators return <code>Result</code>-wrapped values and can accept such values in place of raw integers or floats, but there is also a second set of math operators copying Rust's <a href="https://doc.rust-lang.org/std/intrinsics/fn.saturating_add.html">saturating arithmetic</a> mechanism that always works on raw integers or floats, and will produce predictable but potentially unexpected values when a runtime error would have been reached, otherwise.)</li>
+<li><strong>Deadlocks, Livelocks, and other multithreading issues impossible:</strong> There is no explicit multithreading in Alan. The compiler determines what code you have written is safely parallelizable does this for you. As Alan's compiler and runtime become more intelligent, more code will become parallelized, but with most array operations already being parallelizable as well as all events, the majority of the parallelization possibilities are already covered.</li>
+<li><strong>No shared, mutable state:</strong> Alan defers all such responsibility to databases and caching systems that have had decades of work behind them and many tradeoffs between different mechanisms. We may revisit this if we can bring something to the table here with a significant advantage and minimal downsides in the future, however.</li>
+</ul>
+<h3><a class="header" href="#third-party-module-permission-system" id="third-party-module-permission-system">Third-Party Module Permission System</a></h3>
+<p>Beyond direct code and syntax safety guarantees, Alan also provides safety mechanisms on third-party modules. Alan's module resolution mechanism includes built-in support for <a href="https://docs.alan-lang.org/module_testing.html">defining mocks</a> and, more importantly, <a href="https://docs.alan-lang.org/module_mutation.html">defining mutations</a> of existing modules. This mechanism can be used to deny third party libraries access to parts of the standard library you are not comfortable with. By simply creating a <code>modules</code> directory within the third-party dependency and then defining an <code>std/app.ln</code> file that re-exports non-functional versions of the types, functions, and events of the original standard library, you can prevent that library from being able to use standard library features you would not expect them to have access to. For instance, if you have imported a very popular utility library for, say, curve fitting. You would not expect it to want to have access to your filesystem or creating a child process, so you could inject nonfunctional mocks of <code>@std/fs</code> and <code>@std/cmd</code>.</p>
+<p>This causes the third party code to be compiled without the opcodes it needs to access that functionality at all, providing a defense-in-depth that can be applied along with standard auditing, package signing, and CVE reporting on open source projects. Making this behavior easy-to-use automatically through the package management system is a project goal that will provide users of Alan a layer of security no other project approaches.</p>
+<h3><a class="header" href="#memory-management" id="memory-management">Memory Management</a></h3>
+<p>Most safety in Alan is tackled at compile-time, where it belongs, so you can write code that handles it and it doesn't cause an issue in production. But one major piece that is handled by the runtime for you is memory allocation, access, and deallocation, and Alan does so without GC pauses.</p>
+<p>Languages that handle memory management for you, like Java or Python, tend to be more productive languages to work in, with the cost of a Garbage Collector periodically pausing your code to find and clean up unused memory. Languages without that, like C or C++, require extra cognitive overhead to manage it, but tend to be faster and have a lower memory footprint.</p>
+<p>In Alan, memory is allocated at the beginning of an event handler's run for all &quot;stack-like&quot; variables (basic constants and variables in the handler and all functions it uses) while &quot;heap-like&quot; variables (arrays and user types) are allocated as needed to the size needed at runtime over the course of the event handler's run. This memory is &quot;owned&quot; by the handler so the event handler is the memory's &quot;lifetime&quot; and after the event handler has finished executing all memory associated with that handler is finally freed in a way that does not affect any other event handlers running on other threads (only if the CPU is truly single-core would there be a noticeable pause).</p>
+<p>This &quot;coarse memory ownership model&quot; allows all code written in Alan to not have to worry about memory allocation and deallocation as if it had a Garbage Collector, but without the GC pause issue.</p>
 <h3><a class="header" href="#type-inferred" id="type-inferred">Type Inferred</a></h3>
 <p>Alan's type inference is capable of automatically inferring all function return types and all variable assignment types, only requiring function arguments to be typed. Once <a href="https://github.com/alantech/alan/blob/main/rfcs/006%20-%20Automatic%20Argument%20Interfaces%20RFC.md">this RFC</a> is implemented, it will be capable enough that <em>all</em> of the examples above do not need their types explicitly written out. The following would also work:</p>
-<pre><code class="language-rust ignore">on http.connection fn (req, res) {
+<pre><code class="language-rust ignore">on http.connection fn (conn) {
+  let res = conn.res
   res.body(&quot;Hello, World!&quot;).status(200).send()
 }
 </code></pre>
@@ -415,89 +433,6 @@ const data2csv = (data2 || '').split('\n').map(fn (row) = row.split(',').map(toI
 // Compare the data...
 </code></pre>
 <p>This allows you to be as concise or as explicit as you need to be, with very dynamic-looking code in a static language possible.</p>
-<h3><a class="header" href="#statically-compiled-benefits-and-compile-time-safety" id="statically-compiled-benefits-and-compile-time-safety">Statically Compiled Benefits and Compile-Time Safety</a></h3>
-<p>Alan has a multi-stage compiler with two compile targets: It's own native AGC bytecode format to be run by its native runtime, and Javascript to allow running in Node.js or the browser.</p>
-<p>This will make it possible to make full-stack web applications in Alan that can also be ejected to Javascript if you no longer wish to develop in Alan. (&quot;Will&quot; because the cross-compiler's primary focus has been on correctness, not legibility, of the generated Javascript, but that will improve over time. Also because Alan bindings to Web APIs have not yet been written.)</p>
-<p>Being statically compiled brings lots of benefits (and a few drawbacks) to the table. Primarily, the compiler can spot and prevent many classes of trivial errors from getting into production, but at the expense of requiring a compilation step between checking the changes made to your code.</p>
-<p>However, Alan takes the safety guarantees to a higher level:</p>
-<ul>
-<li><strong>No <code>undefined</code> variables, ever:</strong> In Alan, <code>let</code> or <code>const</code> declared variables <em>must</em> be given an initial value. Potentially missing data can be represented with a <code>Maybe&lt;T&gt;</code> type, but then the compiler will force checking for the presence of actual data or providing a default value if not present. Downstream logic can be assured that the type they are working with is real.</li>
-<li><strong>Most runtime errors impossible:</strong> Out of memory errors are impossible to avoid, but other issues, such as divide-by-zero, integer under/overflow, array out-of-bounds accesses, etc, are not possible in Alan. Actions that could have runtime errored in other languages are converted into <code>Result&lt;T&gt;</code> types that have to be checked for an error condition and/or have a default value provided instead. (The default set of math operators return <code>Result</code>-wrapped values and can accept such values in place of raw integers or floats, but there is also a second set of math operators copying Rust's <a href="https://doc.rust-lang.org/std/intrinsics/fn.saturating_add.html">saturating arithmetic</a> mechanism that always works on raw integers or floats, and will produce predictable but potentially unexpected values when a runtime error would have been reached, otherwise.)</li>
-<li><strong>Deadlocks, Livelocks, and other multithreading issues impossible:</strong> There is no explicit multithreading in Alan. The compiler determines what code you have written is safely parallelizable does this for you. As Alan's compiler and runtime become more intelligent, more code will become parallelized, but with most array operations already being parallelizable as well as all events, the majority of the parallelization possibilities are already covered.</li>
-<li><strong>No shared, mutable state:</strong> Alan defers all such responsibility to databases and caching systems that have had decades of work behind them and many tradeoffs between different mechanisms. We may revisit this if we can bring something to the table here with a significant advantage and minimal downsides in the future, however.</li>
-</ul>
-<h4><a class="header" href="#third-party-module-permission-system" id="third-party-module-permission-system">Third-Party Module Permission System</a></h4>
-<p>Beyond direct code and syntax safety guarantees, Alan also provides safety mechanisms on third-party modules. Alan's module resolution mechanism includes built-in support for <a href="https://docs.alan-lang.org/module_testing.html">defining mocks</a> and, more importantly, <a href="https://docs.alan-lang.org/module_mutation.html">defining mutations</a> of existing modules.</p>
-<p>This mechanism can be used to deny third party libraries access to parts of the standard library you are not comfortable with. By simply creating a <code>modules</code> directory within the third-party dependency and then defining an <code>std/app.ln</code> file that re-exports non-functional versions of the types, functions, and events of the original standard library, you can prevent that library from being able to use standard library features you would not expect them to have access to. For instance, if you have imported a very popular utility library for, say, curve fitting. You would not expect it to want to have access to your filesystem or creating a child process, so you could inject nonfunctional mocks of <code>@std/fs</code> and <code>@std/cmd</code>.</p>
-<p>This causes the third party code to be compiled without the opcodes it needs to access that functionality at all, providing a defense-in-depth that can be applied along with standard auditing, package signing, and CVE reporting on open source projects. Making this behavior easy-to-use automatically through the package management system is a project goal that will provide users of Alan a layer of security no other project approaches.</p>
-<ul>
-<li><strong>Third-Party Module Permission System:</strong> Alan's module system has been designed with several goals in mind, including making it easier to use your own code in your project as easily as third-party dependencies, and making mocking a first-class citizen, but the biggest gain is the standard library permission system possible through it. It is possible to prevent third party code from having access to standard libraries that it should not or you do not want it to have through the module system to a more precise degree than Deno (which is project-wide access controls only). Each third-party module can be restricted to a different set of standard libraries, allowing for defense-in-depth in case of hostile takeover of said libraries.</li>
-</ul>
-<h3><a class="header" href="#memory-management" id="memory-management">Memory Management</a></h3>
-<p>Most safety in Alan is tackled at compile-time, where it belongs, so you can write code that handles it and it doesn't cause an issue in production. But one major piece that is handled by the runtime for you is memory allocation, access, and deallocation, and Alan does so without GC pauses.</p>
-<p>Languages that handle memory management for you, like Java or Python, tend to be more productive languages to work in, with the cost of a Garbage Collector periodically pausing your code to find and clean up unused memory. Languages without that, like C or C++, require extra cognitive overhead to manage it, but tend to be faster and have a lower memory footprint.</p>
-<p>Rust's memory ownership model is very interesting because you can write code that kinda looks like Java but get C++-level performance out of it, and it also allows Rust's compiler to make sure that you don't have use-after-free runtime errors (unless you intentionally go <code>unsafe</code> in Rust), but the drawback is you have to understand a memory ownership model of what functions own what memory, what the lifetime of that memory is, and when you can successfully allow functions to &quot;borrow&quot; that memory versus taking over ownership.</p>
-<p>Alan's runtime has done something a bit in-between Rust's memory ownership model and a GC model. In Alan, memory is allocated at the beginning of an event handler's run for all &quot;stack-like&quot; variables (basic constants and variables in the handler and all functions it uses) while &quot;heap-like&quot; variables (arrays and user types) are allocated as needed to the size needed at runtime over the course of the event handler's run. This memory is &quot;owned&quot; by the handler so the event handler is the memory's &quot;lifetime&quot; and after the event handler has finished executing all memory associated with that handler is finally freed in a way that does not affect any other event handlers running on other threads (only if the CPU is truly single-core would there be a noticeable pause).</p>
-<p>This &quot;coarse memory ownership model&quot; allows all code written in Alan to not have to worry about memory allocation and deallocation as if it had a Garbage Collector, but without the GC pause issue. However, it also means that the peak memory consumption in Alan will be higher than equivalent programs in Rust and similar to garbage collected languages.</p>
-<h3><a class="header" href="#fast-vm-booting" id="fast-vm-booting">Fast VM Booting</a></h3>
-<p>Many developers run their backend services in Serverless-style deployments where infrequently-called endpoints have to go through a full cold-start process much more often than traditional long-lived processes. If the latency of this endpoint matters, the developer needs to port to a compiled language that may be less often used. In order to isolate the VM Booting time before useful work is done, let's take a look at some <code>Hello, World!</code> examples.</p>
-<p>For instance, a Node.js Hello World:</p>
-<pre><code class="language-js">console.log(&quot;Hello, World!&quot;)
-</code></pre>
-<p>will take approximately 90ms to run, give or take:</p>
-<pre><code class="language-sh">time node hello_world_native.js
-Hello, World!
-
-real    0m0.088s
-user    0m0.074s
-sys     0m0.016s
-</code></pre>
-<p>While a Rust Hello World:</p>
-<pre><code class="language-rust ignore">fn main() {
-  println!(&quot;Hello, World!&quot;);
-}
-</code></pre>
-<p>takes about 3ms to run:</p>
-<pre><code class="language-sh">time ./hello_world
-Hello, World!
-
-real    0m0.003s
-user    0m0.003s
-sys     0m0.001s
-</code></pre>
-<p>A Typescript-using developer may be tempted to take all of their typed classes and transliterate them into equivalent Java classes to get such a gain versus Node, but a Java Hello World:</p>
-<pre><code class="language-java">public class HelloWorld {
-  public static void main(String[] args) {
-    System.out.println(&quot;Hello, World!&quot;);
-  }
-}
-</code></pre>
-<p>is still about 80ms to run!</p>
-<pre><code class="language-sh">time java HelloWorld
-Hello, World!
-
-real    0m0.081s
-user    0m0.081s
-sys     0m0.039s
-</code></pre>
-<p>Alan is a VM-based compiled language like Java, but an Alan Hello World:</p>
-<pre><pre class="playpen"><code class="language-rust editable ignore mdbook-runnable">import @std/app
-
-on app.start {
-  app.print(&quot;Hello, World!&quot;)
-  emit app.exit 0
-}
-</code></pre></pre>
-<p>takes about 8ms to run:</p>
-<pre><code class="language-sh">time alan-runtime run hello_world.agc
-Hello, World!
-
-real    0m0.008s
-user    0m0.001s
-sys     0m0.016s
-</code></pre>
-<p>and this is with the extra work to parse the bytecode and spin up IO and CPU threadpools versus bare Rust.</p>
-<p>With a syntax closer to dynamic languages and startup performance closer to GC-less systems languages, Alan is a good choice whether your backend is long-lived or dynamically spawned in a Serverless setup.</p>
 <h2><a class="header" href="#what-alan-removes" id="what-alan-removes">What Alan Removes</a></h2>
 <p>Any engineering endeavour is a balance of trade-offs, and some things must be removed to make room for all of the advantages laid out above.</p>
 <p>Most languages tend to make a similar set of trade-offs, with the largest &quot;axis&quot; of trade-offs being on how static or dynamic the type system is, with C and Rust being far on the static side, Python and Lisp being dynamically typed but static once the variable is defined, and Perl and Javascript being fully dynamically typed where variables can be reassigned with new types and values can be implicitly casted between types. Alan has come down hard on the static typing side like Rust, but with a (soon-to-be) complete type inference system, as well, which we believe can help you &quot;have your cake and eat it, too.&quot;</p>
