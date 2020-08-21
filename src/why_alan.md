@@ -8,11 +8,11 @@ Why the name? Alan is named in honor of Alan Turing. We find great inspiration i
 
 #### Implicit parallelization over arrays, events and IO
 
-Alan is implicitly parallel because its compiler and runtime exploits opportunities for parallelization across the computing resources available without being told to do so. We have [constrained the language a bit](./alan_overview.html#parallel-computation-and-the-problem-of-turing-completeness)  to provide better opportunities to do this. This results in nimbler codebases than those built with languages or frameworks that use parallel programming constructs such as threads, actors, channels, locks, futures, promises etc. Learn more [here](./alan_overview.html#implicitly-parallel).
+Alan is [implicitly parallel](./alan_overview.html#implicitly-parallel) because its compiler and runtime exploits opportunities for parallelization across the computing resources available without being told to do so. We have [constrained the language a bit](./alan_overview.html#parallel-computation-and-the-problem-of-turing-completeness) to provide better opportunities to do this. This results in nimbler codebases than those built with languages or frameworks that use parallel programming constructs such as threads, actors, channels, locks, futures, promises etc.
 
 #### No race conditions and fewer runtime errors
 
-Deadlocks, livelocks, undefined variables, divide-by-zero, integer under/overflow, array out-of-bounds access, etc, are not possible in Alan. Only out-of-memory errors persist, but they are impossible to avoid. This makes Alan codebases easier to maintain and develop in because runtime errors are nearly always caught at compile time. Learn more [here](./alan_overview.html#statically-compiled-benefits-and-compile-time-safety).
+Deadlocks, livelocks, undefined variables, divide-by-zero, integer under/overflow, array out-of-bounds access, etc, are not possible in Alan. Only out-of-memory errors persist, but they are impossible to avoid. This makes Alan codebases easier to maintain and develop in because [runtime errors are nearly always caught at compile time](./alan_overview.html#statically-compiled-benefits-and-compile-time-safety).
 
 #### Granular third party permissions
 

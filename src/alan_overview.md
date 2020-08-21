@@ -17,7 +17,8 @@ Alan's compiler and runtime automatically recognizes and exploits the parallelis
 **Parallelism over events** is accomplished via the static event system baked into the language:
 
 ```rust,ignore
-on http.connection fn (req: http.Request, res: http.Response) {
+on http.connection fn (conn: http.Connection) {
+  let res: http.Request = conn.res
   res.body("Hello, World!").status(200).send()
 }
 ```
@@ -36,7 +37,7 @@ someLargeArray
 
 If the array is large enough and the inner function given to it is pure, each of these steps will run in parallel, utilizing all of the CPU cores on the machine.
 
-**IO Concurrency** is accomplished by eagerly running IO-bound opcodes within the runtime:
+**IO Concurrency** is accomplished by eagerly running IO-bound opcodes within the runtime based on the dependency graph of statements:
 
 ```rust,ignore
 const data: Result<string> = http.get("https://someurl.com/csvfile.csv")
@@ -84,7 +85,8 @@ This "coarse memory ownership model" allows all code written in Alan to not have
 Alan's type inference is capable of automatically inferring all function return types and all variable assignment types, only requiring function arguments to be typed. Once [this RFC](https://github.com/alantech/alan/blob/main/rfcs/006%20-%20Automatic%20Argument%20Interfaces%20RFC.md) is implemented, it will be capable enough that *all* of the examples above do not need their types explicitly written out. The following would also work:
 
 ```rust,ignore
-on http.connection fn (req, res) {
+on http.connection fn (conn) {
+  let res = conn.res
   res.body("Hello, World!").status(200).send()
 }
 ```
