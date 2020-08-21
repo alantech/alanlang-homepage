@@ -331,7 +331,7 @@
 /**
   * Control & indicator mixin
 */
-.carousel {
+  .carousel {
     /* height: 500px; */
     width: 100%;
     /* overflow: hidden; */
@@ -415,6 +415,11 @@
     display: block;
     opacity: 1;
   }
+  @media screen and (max-width: 480px) {
+    .carousel__activator:nth-of-type(1):checked ~ .carousel__controls:nth-of-type(1) {
+      display: none;
+    }
+  }
   .carousel__activator:nth-of-type(1):checked ~ .carousel__indicators .carousel__indicator:nth-of-type(1) {
     opacity: 1;
   }
@@ -441,6 +446,11 @@
     display: block;
     opacity: 1;
   }
+  @media screen and (max-width: 480px) {
+    .carousel__activator:nth-of-type(2):checked ~ .carousel__controls:nth-of-type(2) {
+      display: none;
+    }
+  }
   .carousel__activator:nth-of-type(2):checked ~ .carousel__indicators .carousel__indicator:nth-of-type(2) {
     opacity: 1;
   }
@@ -466,6 +476,11 @@
   .carousel__activator:nth-of-type(3):checked ~ .carousel__controls:nth-of-type(3) {
     display: block;
     opacity: 1;
+  }
+  @media screen and (max-width: 480px) {
+    .carousel__activator:nth-of-type(3):checked ~ .carousel__controls:nth-of-type(3) {
+      display: none;
+    }
   }
   .carousel__activator:nth-of-type(3):checked ~ .carousel__indicators .carousel__indicator:nth-of-type(3) {
     opacity: 1;
@@ -565,4 +580,3 @@
     background-repeat: no-repeat;
     background-position: center;
   }
-  
