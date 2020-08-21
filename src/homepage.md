@@ -32,7 +32,7 @@
 &nbsp;
 
 <center>
-  <button onclick="analytics.track('DownloadCTA');window.location.href='https://docs.alan-lang.org/#installation'" class="cta-button">Download Alan</button>
+  <button onclick="analytics.track('DownloadCTA');window.location.href='https://docs.alan-lang.org/#installation'" class="cta-button">Get Started</button>
 </center>
 
 ## Run Alan code below
@@ -186,7 +186,7 @@ on app.start {
 &nbsp;
 
 <center>
-  <button onclick="analytics.track('DownloadCTA');window.location.href='https://docs.alan-lang.org/#installation'" class="cta-button">Download Alan</button>
+  <button onclick="analytics.track('DownloadCTA');window.location.href='https://docs.alan-lang.org/#installation'" class="cta-button">Get Started</button>
 </center>
 
 ## Contact

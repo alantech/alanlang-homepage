@@ -24,14 +24,17 @@
 }
 
 .column {
-  float: left;
   width: 30%;
-  margin: 3.33%;
+  min-width: 200px;
 }
 
 /* Clear floats after the columns */
-.row:after {
+.row {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items; stretch;
   content: "";
-  display: table;
-  clear: both;
 }
