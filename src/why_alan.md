@@ -16,7 +16,7 @@ Deadlocks, livelocks, undefined variables, divide-by-zero, integer under/overflo
 
 #### Granular third party permissions
 
-Alan's module resolution mechanism, with mocking built-in, allows you to prevent third-party dependencies from having access to standard libraries that they should not have access to. Learn more [here](./alan_overview.html#third-party-module-permission-system).
+Alan's module resolution mechanism, with mocking built-in, allows you to [prevent specific third-party dependencies from having access to  specific standard libraries](./alan_overview.html#third-party-module-permission-system) that they should not have access to.
 
 #### No GC pauses
 
