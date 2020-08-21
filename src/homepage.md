@@ -31,11 +31,7 @@
 
 &nbsp;
 
-<center>
-  <button onclick="analytics.track('DownloadCTA');window.location.href='https://docs.alan-lang.org/#installation'" class="cta-button">Get Started</button>
-</center>
-
-## Run Alan code below
+## Try Alan
 
 <table style="width: 100%;">
 <tr>
@@ -56,6 +52,8 @@ on app.start {
 
 </td>
 </table>
+
+<button id="run-playground" onclick="analytics.track('RunPlayground');" class="cta-button">Run this code</button>
 
 ## Compare Alan
 
@@ -154,8 +152,8 @@ on app.start {
   /* ALAN automatically executes IO in parallel when possible */
   fn getValidUids() {
     const authUids = Auth.getAllUsers().map(fn (u: AuthUser): int = u.id)
-    const dbUsers = Store.getAllUsers().map(fn (u: User): int = u.uid)
-    const crmUsers = Crm.getAllUsers().map(fn (u: CrmUser): int = u.uid)
+    const dbUids = Store.getAllUsers().map(fn (u: User): int = u.uid)
+    const crmUids = Crm.getAllUsers().map(fn (u: CrmUser): int = u.uid)
     return authUids.filter(fn (v: int): bool = dbUids.has(v) && crmUids.has(v))
   }
         </code></pre>
