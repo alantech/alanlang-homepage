@@ -31,11 +31,7 @@
 
 &nbsp;
 
-<center>
-  <button onclick="analytics.track('DownloadCTA');window.location.href='https://docs.alan-lang.org/#installation'" class="cta-button">Get Started</button>
-</center>
-
-## Run Alan code below
+## Try Alan
 
 <table style="width: 100%;">
 <tr>
@@ -56,6 +52,8 @@ on app.start {
 
 </td>
 </table>
+
+<button id="run-playground" onclick="analytics.track('RunPlayground');" class="cta-button">Run this code</button>
 
 ## Compare Alan
 

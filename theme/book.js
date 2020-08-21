@@ -156,6 +156,11 @@ function playpen_text(playpen) {
       run_rust_code(pre_block);
     });
 
+    var runCodeBigButton = document.getElementById("run-playground");
+    runCodeBigButton.addEventListener('click', function (e) {
+      run_rust_code(pre_block);
+    });
+
     if (window.playpen_copyable) {
       var copyCodeClipboardButton = document.createElement('button');
       copyCodeClipboardButton.className = 'fa fa-copy clip-button';
