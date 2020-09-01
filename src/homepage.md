@@ -53,7 +53,7 @@ on app.start {
 </td>
 </table>
 
-<button id="run-playground" onclick="analytics.track('RunPlayground');" class="cta-button">Run this code</button>
+<a id="run-playground" onclick="analytics.track('RunPlayground');" class="cta-button">Run this code</a>
 
 ## Compare Alan
 
@@ -184,7 +184,7 @@ on app.start {
 &nbsp;
 
 <center>
-  <button onclick="analytics.track('DownloadCTA');window.location.href='https://docs.alan-lang.org/getting_started.html'" class="cta-button">Get Started</button>
+  <a href="https://docs.alan-lang.org/getting_started.html" onclick="analytics.track('DownloadCTA');" class="cta-button">Get Started</a>
 </center>
 
 ## Contact

@@ -7,11 +7,12 @@
 .cta-button {
   border-color: var(--icons-hover);
   background-color: var(--icons-hover);
-  border: 1px 1px;
-  color: var(--sidebar-bg);
+  border: 2px;
+  border-style: outset;
+  color: var(--sidebar-bg) !important;
   padding: 15px 32px;
   text-align: center;
-  text-decoration: none;
+  text-decoration: none !important;
   display: inline-block;
   font-size: 22px;
   font-weight: bold;
