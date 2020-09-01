@@ -317,7 +317,7 @@ on app.start {
         </code></pre>
         <pre class="code-border"><code class="language-javascript">
   /* NODE.JS equivalent */
-  async function getValudUids() {
+  async function getValidUids() {
     const [authUsers, dbUsers, crmUsers] = await Promise.all([
       Auth.getAll(),
       Store.getAllUsers(),
