@@ -236,7 +236,10 @@ on app.start {
       <li class="carousel__slide"><!-- Fake for weird CSS reasons --></li>
       <li class="carousel__slide">
         <pre class="code-border"><code class="language-golang">
-  /* ALAN automatically executes CPU operations in parallel when sensible */
+  /* ALAN runs array operations in parallel
+  utilizing all the available CPU cores
+  if the array is large enough
+  and the inner function given to it is pure. */
   fn sumMaybeConcurrent(nums: Array&lt;int&gt;): int {
     return nums.reduce(fn (accum: int, val: int): int = accum + val)
   }
@@ -307,7 +310,7 @@ on app.start {
       </li>
       <li class="carousel__slide">
         <pre class="code-border"><code class="language-javascript">
-  /* ALAN automatically executes IO in parallel when possible */
+  /* ALAN automatically executes IO concurrently when possible */
   fn getValidUids() {
     const authUids = Auth.getAllUsers().map(fn (u: AuthUser): int = u.id)
     const dbUids = Store.getAllUsers().map(fn (u: User): int = u.uid)
