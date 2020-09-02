@@ -25,17 +25,17 @@ on http.connection fn (conn: http.Connection) {
 
 Independent connections to the HTTP server are scheduled onto the event loop and the compute threadpool pulls them from the queue and executes them in parallel.
 
-**Parallelism over arrays** is accomplished by default through natively-parallel array operations:
+**Parallelism over arrays** if the array is large enough and the inner function given to it is pure, each of these steps will run in parallel, utilizing all of the CPU cores on the machine:
 
 ```rust,ignore
 someLargeArray
   .filter(fn (val: SomeType): bool = val > someDefaultVal)
   .map(fn (val: SomeType): float64 = val.innerNumber * 3.14159)
-  .reduce(fn (acc: float64, cur: float64): float64 = acc + cur)
+  .reducePar(fn (acc: float64, cur: float64): float64 = acc + cur)
   .print()
 ```
 
-If the array is large enough and the inner function given to it is pure, each of these steps will run in parallel, utilizing all of the CPU cores on the machine.
+The developer needs to know when to use `reducePar` vs `reduce`. It would be great to have auto-parallelism on `reduce` like every other array operation, but that would require the compiler to be able to prove commutative/associative properties on closures. 
 
 **IO Concurrency** is accomplished by eagerly running IO-bound opcodes within the runtime based on the dependency graph of statements:
 

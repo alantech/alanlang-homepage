@@ -83,7 +83,7 @@ on app.start {
   if the array is large enough
   and the inner function given to it is pure. */
   fn sumMaybeConcurrent(nums: Array&lt;int&gt;): int {
-    return nums.reduce(fn (accum: int, val: int): int = accum + val)
+    return nums.reducePar(fn (accum: int, val: int): int = accum + val)
   }
         </code></pre>
         <pre class="code-border"><code class="language-golang">
@@ -125,7 +125,7 @@ on app.start {
         const website = http.get(url) || http.none
         return toString(website.body).length()
       })
-      .reduce(fn (accum: int, val: int): int = accum + val)
+      .reducePar(fn (accum: int, val: int): int = accum + val)
   }
         </code></pre>
         <pre class="code-border"><code class="language-java">
