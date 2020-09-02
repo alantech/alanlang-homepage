@@ -241,7 +241,7 @@ on app.start {
   if the array is large enough
   and the inner function given to it is pure. */
   fn sumMaybeConcurrent(nums: Array&lt;int&gt;): int {
-    return nums.reduce(fn (accum: int, val: int): int = accum + val)
+    return nums.reducePar(fn (accum: int, val: int): int = accum + val)
   }
         </code></pre>
         <pre class="code-border"><code class="language-golang">
@@ -283,7 +283,7 @@ on app.start {
         const website = http.get(url) || http.none
         return toString(website.body).length()
       })
-      .reduce(fn (accum: int, val: int): int = accum + val)
+      .reducePar(fn (accum: int, val: int): int = accum + val)
   }
         </code></pre>
         <pre class="code-border"><code class="language-java">
@@ -381,14 +381,14 @@ on app.start {
 }
 </code></pre>
 <p>Independent connections to the HTTP server are scheduled onto the event loop and the compute threadpool pulls them from the queue and executes them in parallel.</p>
-<p><strong>Parallelism over arrays</strong> is accomplished by default through natively-parallel array operations:</p>
+<p><strong>Parallelism over arrays</strong> if the array is large enough and the inner function given to it is pure, each of these steps will run in parallel, utilizing all of the CPU cores on the machine:</p>
 <pre><code class="language-rust ignore">someLargeArray
   .filter(fn (val: SomeType): bool = val &gt; someDefaultVal)
   .map(fn (val: SomeType): float64 = val.innerNumber * 3.14159)
-  .reduce(fn (acc: float64, cur: float64): float64 = acc + cur)
+  .reducePar(fn (acc: float64, cur: float64): float64 = acc + cur)
   .print()
 </code></pre>
-<p>If the array is large enough and the inner function given to it is pure, each of these steps will run in parallel, utilizing all of the CPU cores on the machine.</p>
+<p>The developer needs to know when to use <code>reducePar</code> vs <code>reduce</code>. It would be great to have auto-parallelism on <code>reduce</code> like every other array operation, but that would require the compiler to be able to prove commutative/associative properties on closures. </p>
 <p><strong>IO Concurrency</strong> is accomplished by eagerly running IO-bound opcodes within the runtime based on the dependency graph of statements:</p>
 <pre><code class="language-rust ignore">const data: Result&lt;string&gt; = http.get(&quot;https://someurl.com/csvfile.csv&quot;)
 const datacsv: Array&lt;Array&lt;int64&gt;&gt; = (data || '').split('\n').map(fn (row: string): Array&lt;int64&gt; = row.split(',').map(toInt64))
