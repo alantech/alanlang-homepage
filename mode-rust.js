@@ -77,7 +77,7 @@ var RustHighlightRules = function() {
             regex: /\b(?:import|export|as|from)\b/
         }],
         "#numbers": [{
-            token: "string.other",
+            token: "constant.numeric",
             regex: /\b(?:0(?:x|X)[0-9a-fA-F]*|(?:[0-9]+\.?[0-9]*|\.[0-9]+)(?:(?:e|E)(?:\+|-)?[0-9]+)?)(?:L|l|UL|ul|u|U|F|f|ll|LL|ull|ULL)?\b/
         }],
         "#symbols": [{
@@ -85,7 +85,7 @@ var RustHighlightRules = function() {
             regex: /[,\{\}\(\)<>\[\]\.=@:]/
         }],
         "#operators": [{
-            token: "constant.numeric",
+            token: "string.other",
             regex: /[+\-\/*^.~`!@#$%&|:;<?=][+\-\/*^.~`!@#$%&|:;<>?=]*/
         }],
         "#booleans": [{
@@ -93,7 +93,7 @@ var RustHighlightRules = function() {
             regex: /\b(?:true|false)\b/
         }],
         "#doubleQuoteStrings": [{
-            token: "string.quoted.double",
+            token: "constant.numeric",
             regex: /"/,
             push: [{
                 token: "string.quoted.double",
@@ -107,7 +107,7 @@ var RustHighlightRules = function() {
             }]
         }],
         "#singleQuoteStrings": [{
-            token: "string.quoted.single",
+            token: "constant.numeric",
             regex: /'/,
             push: [{
                 token: "string.quoted.single",
