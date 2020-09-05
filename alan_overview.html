@@ -176,14 +176,14 @@
 <h3><a class="header" href="#implicitly-parallel" id="implicitly-parallel">Implicitly Parallel</a></h3>
 <p>Alan's compiler and runtime automatically recognizes and exploits the parallelism inherent to the computations expressed by some of the language's constructs and automatically managing IO and compute threadpools.</p>
 <p><strong>Parallelism over events</strong> is accomplished via the static event system baked into the language:</p>
-<pre><code class="language-rust ignore">on http.connection fn (conn: http.Connection) {
+<pre><code class="language-alan">on http.connection fn (conn: http.Connection) {
   let res: http.Request = conn.res
   res.body(&quot;Hello, World!&quot;).status(200).send()
 }
 </code></pre>
 <p>Independent connections to the HTTP server are scheduled onto the event loop and the compute threadpool pulls them from the queue and executes them in parallel.</p>
 <p><strong>Parallelism over arrays</strong> if the array is large enough and the inner function given to it is pure, each of these steps will run in parallel, utilizing all of the CPU cores on the machine:</p>
-<pre><code class="language-rust ignore">someLargeArray
+<pre><code class="language-alan">someLargeArray
   .filter(fn (val: SomeType): bool = val &gt; someDefaultVal)
   .map(fn (val: SomeType): float64 = val.innerNumber * 3.14159)
   .reducePar(fn (acc: float64, cur: float64): float64 = acc + cur)
@@ -191,7 +191,7 @@
 </code></pre>
 <p>The developer needs to know when to use <code>reducePar</code> vs <code>reduce</code>. It would be great to have auto-parallelism on <code>reduce</code> like every other array operation, but that would require the compiler to be able to prove commutative/associative properties on closures. </p>
 <p><strong>IO Concurrency</strong> is accomplished by eagerly running IO-bound opcodes within the runtime based on the dependency graph of statements:</p>
-<pre><code class="language-rust ignore">const data: Result&lt;string&gt; = http.get(&quot;https://someurl.com/csvfile.csv&quot;)
+<pre><code class="language-alan">const data: Result&lt;string&gt; = http.get(&quot;https://someurl.com/csvfile.csv&quot;)
 const datacsv: Array&lt;Array&lt;int64&gt;&gt; = (data || '').split('\n').map(fn (row: string): Array&lt;int64&gt; = row.split(',').map(toInt64))
 const data2: Result&lt;string&gt;  = http.get(&quot;https://someotherdatasource.org/othercsvfile.csv&quot;)
 const data2csv: Array&lt;Array&lt;int64&gt;&gt; = (data2 || '').split('\n').map(fn (row: string): Array&lt;int64&gt; = row.split(',').map(toInt64))
@@ -219,18 +219,18 @@ const data2csv: Array&lt;Array&lt;int64&gt;&gt; = (data2 || '').split('\n').map(
 <p>This &quot;coarse memory ownership model&quot; allows all code written in Alan to not have to worry about memory allocation and deallocation as if it had a Garbage Collector, but without the GC pause issue.</p>
 <h3><a class="header" href="#type-inferred" id="type-inferred">Type Inferred</a></h3>
 <p>Alan's type inference is capable of automatically inferring all function return types and all variable assignment types, only requiring function arguments to be typed. Once <a href="https://github.com/alantech/alan/blob/main/rfcs/006%20-%20Automatic%20Argument%20Interfaces%20RFC.md">this RFC</a> is implemented, it will be capable enough that <em>all</em> of the examples above do not need their types explicitly written out. The following would also work:</p>
-<pre><code class="language-rust ignore">on http.connection fn (conn) {
+<pre><code class="language-alan">on http.connection fn (conn) {
   let res = conn.res
   res.body(&quot;Hello, World!&quot;).status(200).send()
 }
 </code></pre>
-<pre><code class="language-rust ignore">someLargeArray
+<pre><code class="language-alan">someLargeArray
   .filter(fn (val) = val &gt; someDefaultVal)
   .map(fn (val) = val.innerNumber * 3.14159)
   .reduce(fn (acc, cur) = acc + cur)
   .print()
 </code></pre>
-<pre><code class="language-rust ignore">const data = http.get(&quot;https://someurl.com/csvfile.csv&quot;)
+<pre><code class="language-alan">const data = http.get(&quot;https://someurl.com/csvfile.csv&quot;)
 const datacsv = (data || '').split('\n').map(fn (row) = row.split(',').map(toInt64))
 const data2 = http.get(&quot;https://someotherdatasource.org/othercsvfile.csv&quot;)
 const data2csv = (data2 || '').split('\n').map(fn (row) = row.split(',').map(toInt64))
@@ -360,9 +360,14 @@ const data2csv = (data2 || '').split('\n').map(fn (row) = row.split(',').map(toI
 <script type="text/javascript">
     window.BigInt = window.BigInt || function() {}
 </script>
+
+<script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="highlight.js" type="text/javascript" charset="utf-8"></script>
 <!-- Custom JS scripts -->
 
     <script type="text/javascript" src="bundle.js"></script>
+
+    <script type="text/javascript" src="hljs-alan.min.js"></script>
 
     <script type="text/javascript" src="mode-rust.js"></script>
 
@@ -370,9 +375,6 @@ const data2csv = (data2 || '').split('\n').map(fn (row) = row.split(',').map(toI
 
     <script type="text/javascript" src="theme-solarized_light.js"></script>
 
-
-<script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
-<script src="highlight.js" type="text/javascript" charset="utf-8"></script>
 <script src="book.js" type="text/javascript" charset="utf-8"></script>
 
 </body>

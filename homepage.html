@@ -235,7 +235,7 @@ on app.start {
       </div>
       <li class="carousel__slide"><!-- Fake for weird CSS reasons --></li>
       <li class="carousel__slide">
-        <pre class="code-border"><code class="language-golang">
+        <pre class="code-border"><code class="language-alan">
   /* ALAN runs array operations in parallel
   utilizing all the available CPU cores
   if the array is large enough
@@ -275,7 +275,7 @@ on app.start {
         </code></pre>
       </li>
       <li class="carousel__slide">
-        <pre class="code-border"><code class="language-golang">
+        <pre class="code-border"><code class="language-alan">
   /* ALAN */
   fn fetchAndSum(urls: Array&lt;string&gt;): int {
     return urls
@@ -309,7 +309,7 @@ on app.start {
         </code></pre>
       </li>
       <li class="carousel__slide">
-        <pre class="code-border"><code class="language-javascript">
+        <pre class="code-border"><code class="language-alan">
   /* ALAN automatically executes IO concurrently when possible */
   fn getValidUids() {
     const authUids = Auth.getAllUsers().map(fn (u: AuthUser): int = u.id)
@@ -441,9 +441,14 @@ on app.start {
 <script type="text/javascript">
     window.BigInt = window.BigInt || function() {}
 </script>
+
+<script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="highlight.js" type="text/javascript" charset="utf-8"></script>
 <!-- Custom JS scripts -->
 
     <script type="text/javascript" src="bundle.js"></script>
+
+    <script type="text/javascript" src="hljs-alan.min.js"></script>
 
     <script type="text/javascript" src="mode-rust.js"></script>
 
@@ -451,9 +456,6 @@ on app.start {
 
     <script type="text/javascript" src="theme-solarized_light.js"></script>
 
-
-<script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
-<script src="highlight.js" type="text/javascript" charset="utf-8"></script>
 <script src="book.js" type="text/javascript" charset="utf-8"></script>
 
 </body>
