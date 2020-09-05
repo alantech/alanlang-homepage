@@ -77,7 +77,7 @@ on app.start {
       </div>
       <li class="carousel__slide"><!-- Fake for weird CSS reasons --></li>
       <li class="carousel__slide">
-        <pre class="code-border"><code class="language-golang">
+        <pre class="code-border"><code class="language-alan">
   /* ALAN runs array operations in parallel
   utilizing all the available CPU cores
   if the array is large enough
@@ -117,7 +117,7 @@ on app.start {
         </code></pre>
       </li>
       <li class="carousel__slide">
-        <pre class="code-border"><code class="language-golang">
+        <pre class="code-border"><code class="language-alan">
   /* ALAN */
   fn fetchAndSum(urls: Array&lt;string&gt;): int {
     return urls
@@ -151,7 +151,7 @@ on app.start {
         </code></pre>
       </li>
       <li class="carousel__slide">
-        <pre class="code-border"><code class="language-javascript">
+        <pre class="code-border"><code class="language-alan">
   /* ALAN automatically executes IO concurrently when possible */
   fn getValidUids() {
     const authUids = Auth.getAllUsers().map(fn (u: AuthUser): int = u.id)
