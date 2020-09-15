@@ -97,17 +97,14 @@ on app.start {
     }
     out <- sum
   }
-
   func sumConcurrent(numbers []int) int {
     threads := runtime.NumCPU() - 1
     out := make(chan int)
     stride := len(numbers) / threads
-
     for i := 0; i < threads; i++ {
       go sum(numbers[i*stride:(i*stride)+stride], out)
     }
     go sum(numbers[threads*stride:len(numbers)], out)
-
     var s int
     for i := 0; i <= threads; i++ {
       s += <-out
