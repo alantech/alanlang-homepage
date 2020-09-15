@@ -227,90 +227,88 @@ on app.start {
     }
     out <- sum
   }
-<p>func sumConcurrent(numbers []int) int {
-threads := runtime.NumCPU() - 1
-out := make(chan int)
-stride := len(numbers) / threads</p>
-<pre><code>for i := 0; i &lt; threads; i++ {
-  go sum(numbers[i*stride:(i*stride)+stride], out)
-}
-go sum(numbers[threads*stride:len(numbers)], out)
-
-var s int
-for i := 0; i &lt;= threads; i++ {
-  s += &lt;-out
-}
-return s
-</code></pre>
-<p>}
-</code></pre>
-</li>
-<li class="carousel__slide">
-<pre class="code-border"><code class="language-alan">
-/* ALAN <em>/
-fn fetchAndSum(urls: Array&lt;string&gt;): int {
-return urls
-.map(fn (url: string): int {
-const website = http.get(url) || http.none
-return toString(website.body).length()
-})
-.reducePar(fn (accum: int, val: int): int = accum + val)
-}
-</code></pre>
-<pre class="code-border"><code class="language-java">
-/</em> JAVA <em>/
-Integer fetchAndSum(String...urls) {
-var sum = CompletableFuture.completedFuture(0);
-try {
-return Stream
-.of(urls)
-.parallel()
-.map(url -&gt; httpClient
-.sendAsync(request(url), BodyHandlers.ofString())
-.thenApply(HttpResponse::body)
-.thenApply(String::length))
-.reduce(sum, (prev, curr) -&gt; prev
-.thenCombine(curr, (p, c) -&gt; p + c))
-.get();
-} catch(Exception e){
-System.out.println(e.toString());
-return 0;
-}
-}
-</code></pre>
-</li>
-<li class="carousel__slide">
-<pre class="code-border"><code class="language-alan">
-/</em> ALAN automatically executes IO concurrently when possible <em>/
-fn getValidUids() {
-const authUids = Auth.getAllUsers().map(fn (u: AuthUser): int = u.id)
-const dbUids = Store.getAllUsers().map(fn (u: User): int = u.uid)
-const crmUids = Crm.getAllUsers().map(fn (u: CrmUser): int = u.uid)
-return authUids.filter(fn (v: int): bool = dbUids.has(v) &amp;&amp; crmUids.has(v))
-}
-</code></pre>
-<pre class="code-border"><code class="language-javascript">
-/</em> NODE.JS equivalent */
-async function getValidUids() {
-const [authUsers, dbUsers, crmUsers] = await Promise.all([
-Auth.getAll(),
-Store.getAllUsers(),
-Crm.getAllUsers()
-]);
-const authUids = authUsers.map(u =&gt; u['id']);
-const dbUids = dbUsers.map(u =&gt; u['uid']);
-const crmUids = crmUsers.map(u =&gt; u['uid']);
-return authUids.filter(v =&gt; dbUids.includes(v) &amp;&amp; crmUids.includes(v))
-}
-</code></pre>
-</li>
-<div class="carousel__indicators">
-<label class="carousel__indicator" for="1"></label>
-<label class="carousel__indicator" for="2"></label>
-<label class="carousel__indicator" for="3"></label>
-</div>
-</ul></p>
-</div>
+  func sumConcurrent(numbers []int) int {
+    threads := runtime.NumCPU() - 1
+    out := make(chan int)
+    stride := len(numbers) / threads
+    for i := 0; i < threads; i++ {
+      go sum(numbers[i*stride:(i*stride)+stride], out)
+    }
+    go sum(numbers[threads*stride:len(numbers)], out)
+    var s int
+    for i := 0; i <= threads; i++ {
+      s += <-out
+    }
+    return s
+  }
+        </code></pre>
+      </li>
+      <li class="carousel__slide">
+        <pre class="code-border"><code class="language-alan">
+  /* ALAN */
+  fn fetchAndSum(urls: Array&lt;string&gt;): int {
+    return urls
+      .map(fn (url: string): int {
+        const website = http.get(url) || http.none
+        return toString(website.body).length()
+      })
+      .reducePar(fn (accum: int, val: int): int = accum + val)
+  }
+        </code></pre>
+        <pre class="code-border"><code class="language-java">
+  /* JAVA */
+  Integer fetchAndSum(String...urls) {
+    var sum = CompletableFuture.completedFuture(0);
+    try {
+      return Stream
+            .of(urls)
+            .parallel()
+            .map(url -> httpClient
+                .sendAsync(request(url), BodyHandlers.ofString())
+                .thenApply(HttpResponse::body)
+                .thenApply(String::length))
+            .reduce(sum, (prev, curr) -> prev
+                .thenCombine(curr, (p, c) -> p + c))
+            .get();
+    } catch(Exception e){
+      System.out.println(e.toString());
+      return 0;
+    }
+  }
+        </code></pre>
+      </li>
+      <li class="carousel__slide">
+        <pre class="code-border"><code class="language-alan">
+  /* ALAN automatically executes IO concurrently when possible */
+  fn getValidUids() {
+    const authUids = Auth.getAllUsers().map(fn (u: AuthUser): int = u.id)
+    const dbUids = Store.getAllUsers().map(fn (u: User): int = u.uid)
+    const crmUids = Crm.getAllUsers().map(fn (u: CrmUser): int = u.uid)
+    return authUids.filter(fn (v: int): bool = dbUids.has(v) && crmUids.has(v))
+  }
+        </code></pre>
+        <pre class="code-border"><code class="language-javascript">
+  /* NODE.JS equivalent */
+  async function getValidUids() {
+    const [authUsers, dbUsers, crmUsers] = await Promise.all([
+      Auth.getAll(),
+      Store.getAllUsers(),
+      Crm.getAllUsers()
+    ]);
+    const authUids = authUsers.map(u => u['id']);
+    const dbUids = dbUsers.map(u => u['uid']);
+    const crmUids = crmUsers.map(u => u['uid']);
+    return authUids.filter(v => dbUids.includes(v) && crmUids.includes(v))
+  }
+        </code></pre>
+      </li>
+      <div class="carousel__indicators">
+        <label class="carousel__indicator" for="1"></label>
+        <label class="carousel__indicator" for="2"></label>
+        <label class="carousel__indicator" for="3"></label>
+      </div>
+    </ul>
+  </div>
 </center>
 <p> </p>
 <center>
