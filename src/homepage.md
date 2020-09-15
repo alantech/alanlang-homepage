@@ -87,32 +87,32 @@ on app.start {
   }
         </code></pre>
         <pre class="code-border"><code class="language-golang">
-  /* GOLANG */
-  func sumConcurrent(numbers []int) int {
-    var v int64
-    totalNumbers := len(numbers)
-    goroutines := runtime.NumCPU()
-    lastGoroutine := goroutines - 1
-    stride := totalNumbers / goroutines
-    var wg sync.WaitGroup
-    wg.Add(goroutines)
-    for g := 0; g < goroutines; g++ {
-      go func(g int) {
-        start := g * stride
-        end := start + stride
-        if g == lastGoroutine {
-          end = totalNumbers
-        }
-        var lv int
-        for _, n := range numbers[start:end] {
-          lv += n
-        }
-        atomic.AddInt64(&v, int64(lv))
-        wg.Done()
-      }(g)
+  /* GOLANG
+  https://play.golang.org/p/yB7gR3r09ZU
+  */
+  func sum(nums []int, out chan int) {
+    var sum int
+    for _, num := range nums {
+      sum += num
     }
-    wg.Wait()
-    return int(v)
+    out <- sum
+  }
+
+  func sumConcurrent(numbers []int) int {
+    threads := runtime.NumCPU() - 1
+    out := make(chan int)
+    stride := len(numbers) / threads
+
+    for i := 0; i < threads; i++ {
+      go sum(numbers[i*stride:(i*stride)+stride], out)
+    }
+    go sum(numbers[threads*stride:len(numbers)], out)
+
+    var s int
+    for i := 0; i <= threads; i++ {
+      s += <-out
+    }
+    return s
   }
         </code></pre>
       </li>
