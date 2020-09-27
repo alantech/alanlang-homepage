@@ -329,7 +329,7 @@
   border-style: solid;
   border-color: var(--table-border-color);
   width: 48%;
-  overflow-x: scroll;
+  overflow: hidden;
   text-align: left;
 }
 
@@ -341,8 +341,9 @@
   */
 
 .language {
-  padding: 0;
+  padding: 0 0 15px 0 !important;
   height: 100%;
+  overflow-x: scroll;
 }
 
 /* Tabs Start */
