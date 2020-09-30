@@ -58,26 +58,18 @@ on app.start {
 ## Compare Alan
 
 <center>
-  <div class="carousel-container">
-    <ul class="carousel my-carousel carousel--thumb">
-      <input class="carousel__activator" type="radio" id="1" name="thumb" checked="checked"/>
-      <input class="carousel__activator" type="radio" id="2" name="thumb"/>
-      <input class="carousel__activator" type="radio" id="3" name="thumb"/>
-      <div class="carousel__controls">
-        <label class="carousel__control carousel__control--backward" for="3"></label>
-        <label class="carousel__control carousel__control--forward" for="2"></label>
-      </div>
-      <div class="carousel__controls">
-        <label class="carousel__control carousel__control--backward" for="1"></label>
-        <label class="carousel__control carousel__control--forward" for="3"></label>
-      </div>
-      <div class="carousel__controls">
-        <label class="carousel__control carousel__control--backward" for="2"></label>
-        <label class="carousel__control carousel__control--forward" for="1"></label>
-      </div>
-      <li class="carousel__slide"><!-- Fake for weird CSS reasons --></li>
-      <li class="carousel__slide">
-        <pre class="code-border"><code class="language-alan">
+  <div class="tabs-container">
+    <div class="tabs effect">        
+      <input type="radio" id="tab-1" name="tab-effect" checked="checked">
+      <span class="tab-indicator"></span>
+      <input type="radio" id="tab-2" name="tab-effect">
+      <span class="tab-indicator"></span>
+      <input type="radio" id="tab-3" name="tab-effect">
+      <span class="tab-indicator"></span>
+      <!-- tab-content -->
+      <div class="tab-content">
+        <section id="tab-go">
+          <pre class="code-border alan"><code class="language language-alan">
   /* ALAN runs array operations in parallel
   utilizing all the available CPU cores
   if the array is large enough
@@ -85,8 +77,8 @@ on app.start {
   fn sumMaybeConcurrent(nums: Array&lt;int&gt;): int {
     return nums.reducePar(fn (accum: int, val: int): int = accum + val)
   }
-        </code></pre>
-        <pre class="code-border"><code class="language-golang">
+          </code></pre>
+          <pre class="code-border"><code class="language language-golang">
   /* GOLANG
   https://play.golang.org/p/yB7gR3r09ZU
   */
@@ -111,10 +103,10 @@ on app.start {
     }
     return s
   }
-        </code></pre>
-      </li>
-      <li class="carousel__slide">
-        <pre class="code-border"><code class="language-alan">
+          </code></pre>
+        </section>
+        <section id="tab-java">
+        <pre class="code-border alan"><code class="language language-alan">
   /* ALAN */
   fn fetchAndSum(urls: Array&lt;string&gt;): int {
     return urls
@@ -125,7 +117,7 @@ on app.start {
       .reducePar(fn (accum: int, val: int): int = accum + val)
   }
         </code></pre>
-        <pre class="code-border"><code class="language-java">
+        <pre class="code-border"><code class="language language-java">
   /* JAVA */
   Integer fetchAndSum(String...urls) {
     var sum = CompletableFuture.completedFuture(0);
@@ -146,9 +138,9 @@ on app.start {
     }
   }
         </code></pre>
-      </li>
-      <li class="carousel__slide">
-        <pre class="code-border"><code class="language-alan">
+        </section>
+        <section id="tab-js">
+                  <pre class="code-border alan"><code class="language language-alan">
   /* ALAN automatically executes IO concurrently when possible */
   fn getValidUids() {
     const authUids = Auth.getAllUsers().map(fn (u: AuthUser): int = u.id)
@@ -157,7 +149,7 @@ on app.start {
     return authUids.filter(fn (v: int): bool = dbUids.has(v) && crmUids.has(v))
   }
         </code></pre>
-        <pre class="code-border"><code class="language-javascript">
+        <pre class="code-border"><code class="language language-javascript">
   /* NODE.JS equivalent */
   async function getValidUids() {
     const [authUsers, dbUsers, crmUsers] = await Promise.all([
@@ -171,13 +163,9 @@ on app.start {
     return authUids.filter(v => dbUids.includes(v) && crmUids.includes(v))
   }
         </code></pre>
-      </li>
-      <div class="carousel__indicators">
-        <label class="carousel__indicator" for="1"></label>
-        <label class="carousel__indicator" for="2"></label>
-        <label class="carousel__indicator" for="3"></label>
+        </section>
       </div>
-    </ul>
+    </div>
   </div>
 </center>
 
