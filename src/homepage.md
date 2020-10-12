@@ -33,7 +33,7 @@
 
 ## Try Alan
 
-<table style="width: 100%;">
+<table id="playground-table">
 <tr>
 <th></th>
 <th></th>
