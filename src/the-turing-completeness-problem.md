@@ -52,11 +52,7 @@ To accomplish this, we need something different from a classic Turing tape to co
 
 This seems incompatible with any sort of looping or branching behavior at first glance, though, since a dependency graph of operations that must all be executed eventually appears to preclude the behavior of JUMP operations like the classic [JNZ (Jump if Not Zero)](https://www.aldeid.com/wiki/X86-assembly/Instructions/jnz). If there is no singular "forward" or "backwards" in a tree, how can these things work at all? This is *not* what Alan restricts users from writing -- `if` statements exist in Alan and even [guaranteed halting versions of classic looping constructs are in a standard library](https://docs.alan-lang.org/std_seq.html) that provide a predictable "worst case" execution time based on a maximum iteration count allowed. We will demonstrate that this graph-based representation can be made Turing Complete and is therefore a lossless representation that gains information to make automatic parallelization possible. Our further constraints placed on it are to make the question of when such parallelization should be done answerable.
 
-```
-                      ->- ->- ->- ->- ->- -
-                     /                     \
-OP1 ---> OP2 ---> JNZ - -> OP3 ---> OP4 ---> OP5 ---> OP6
-```
+![Turing Tape Example with JNZ](./turing-tape.png)
 
 Here two operations `OP1` and `OP2` run, then a `JNZ` runs. If the check is not zero, it skips to only run `OP5` and `OP6`, otherwise it runs `OP3` and `OP4` before running `OP5` and `OP6`.
 
