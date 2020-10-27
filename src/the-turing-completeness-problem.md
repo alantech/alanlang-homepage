@@ -77,12 +77,7 @@ Here, the conditional call is a special COND operation that may or may not execu
 
 Back to classic Turing machines, what is the opposite of an `if` statement in a Turing tape? It's not `else if` or `else` as those are just other forward jumps on different conditions. The opposite of an `if` is a `do-while` statement, because that is a jump *backwards*
 
-
-```
-                  -<- -<- -<- -<- -<- -<- -<- -<
-                 /                              \
-OP1 ---> OP2 ---> OP3 ---> OP4 ---> OP5 ---> JNZ - -> OP6
-```
+![Turing Tape Example with JNZ-based loop](./turing-loop.png)
 
 ```
 var a = op1();
