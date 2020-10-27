@@ -1,4 +1,4 @@
-digraph turing_tape {
+digraph graph_if {
   rankdir="LR";
   bgcolor="transparent";
   OP1 [style="filled" color="#073642" fillcolor="#eee8d5" fontcolor="#073642"];
@@ -7,11 +7,15 @@ digraph turing_tape {
   OP4 [style="filled" color="#073642" fillcolor="#eee8d5" fontcolor="#073642"];
   OP5 [style="filled" color="#073642" fillcolor="#eee8d5" fontcolor="#073642"];
   OP6 [style="filled" color="#073642" fillcolor="#eee8d5" fontcolor="#073642"];
-  JNZ [style="filled" color="#073642" fillcolor="#eee8d5" fontcolor="#073642"];
+  subgraph clusterCOND {
+    label="COND";
+    color="#073642";
+    fontcolor="#073642";
+    OP3 -> OP4 [color="#073642"];
+  }
   OP1 -> OP2 [color="#073642"];
-  OP2 -> JNZ [color="#073642"];
-  JNZ -> {OP5 OP3} [style="dashed" color="#073642"];
-  OP3 -> OP4 [color="#073642"];
-  OP4 -> OP5 [color="#073642"];
+  OP2 -> OP3 [style="dashed" color="#073642"];
+  OP1 -> OP5 [color="#073642"];
+  OP4 -> OP5 [style="dashed" color="#073642"];
   OP5 -> OP6 [color="#073642"];
 }

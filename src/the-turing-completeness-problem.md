@@ -69,20 +69,9 @@ var d = op5(a);
 return op6(d);
 ```
 
-The equivalent representation in a graph (using the Graphviz syntax here for illustrative purposes, it's simpler than the actual Alan Graphcode and more widely known) would be something like:
+The equivalent representation in a graph would be something like:
 
-```
-graph main {
-  OP1 -> OP2;
-  OP2 -> COND(if);
-  {OP1 COND(if)} -> OP5;
-  OP5 -> OP6;
-}
-
-graph if {
-  OP3 -> OP4;
-}
-```
+![Graph Example with if](./graph-if.png)
 
 Here, the conditional call is a special COND operation that may or may not execute the specified graph named `if`. All of the nodes of the main graph are executed, but the COND node may or may not execute the inner subgraph. There is absolutely no parallelization possible based on the set of dependencies, but it's clear that `OP5` can't run until both `OP1` and `COND(if)` are run.
 
