@@ -177,4 +177,4 @@ on app.start {
 
 ## Contact
 
-Please reach out on [Discord](https://discord.gg/XatB9we), Reddit (https://www.reddit.com/r/alanlang) or email us at hello at alantechnologies dot com.
+Please reach out on [Discord](https://discord.gg/XatB9we), [Reddit](https://www.reddit.com/r/alanlang) or email us at hello at alantechnologies dot com.
