@@ -94,7 +94,7 @@ The equivalent in a graph representation would be:
 
 ![Graph Example with do-while loop](./graph-loop.png)
 
-Here a DOWHILE opcode runs the loop sub-graph over and over until the expected condition is met. So with these two special opcodes COND and DOWHILE we can reproduce the behavior of JNZ's forwards and backwards jumping and we can enter infinite loops with DOWHILE, meaning we should be Turing Complete. Representing something like [Duff's Device](https://en.wikipedia.org/wiki/Duff%27s_device) would be very difficult but not impossible here -- it just wouldn't make much sense because while the performance could be the same, the executable in this representation would be significantly larger, undoing it's main value.
+Here a DOWHILE opcode runs the loop sub-graph over and over until the expected condition is met. So with these two special opcodes COND and DOWHILE we can reproduce the behavior of JNZ's forwards and backwards jumping and we can enter infinite loops with DOWHILE, meaning we should be Turing Complete.
 
 So how do we make this barely not Turing complete? We make a list/array type a first class citizen in the VM itself and then we only add operations that know the bounds that they are to operate on based on that list or some other condition that cannot be *directly* mutated by the user's own code.
 
