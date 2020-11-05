@@ -140,7 +140,7 @@
         <div id="content" class="content">
             <main>
                 <h1><a class="header" href="#the-turing-completeness-problem" id="the-turing-completeness-problem">The Turing-Completeness Problem</a></h1>
-<p><strong>22 October 2020 | Luis F. De Pombo, David Ellis</strong></p>
+<p><strong>4 November 2020 | Luis F. De Pombo, David Ellis</strong></p>
 <p>What if we could write programs that could be automatically parallelized? Part of the work of Alan Turing and Alonzo Church on <a href="https://en.wikipedia.org/wiki/Computability">computability</a> demonstrated that for some programs it cannot be determined ahead of time whether or not the program can be computed. This constitutes the crux of the <a href="https://en.wikipedia.org/wiki/Halting_problem">Halting Problem</a>. This &quot;Turing-Completeness Problem&quot; is not an issue with what they have shown, but how the software development process is hindered by the lack of assurances on computability and our industry's lack of recognition of the burden this has put onto software developers. Further, it has been exacerbated by the actual computing mechanisms, such as multithreading, NUMA, GPGPU, and distributed computing, which have moved away from the &quot;single tape&quot; Turing Machine model of computation that most programming languages are founded upon.</p>
 <p>The following snippet of C code succinctly contains the problems of Turing completeness complicating modern development:</p>
 <pre><code class="language-c">while (node) {

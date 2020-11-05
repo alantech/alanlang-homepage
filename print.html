@@ -308,6 +308,7 @@ on app.start {
 <ul>
 <li><a href="./why_alan.html">Why we created Alan</a> | 2020-08-14</li>
 <li><a href="./alan_overview.html">An Overview of Alan</a> | 2020-08-16</li>
+<li><a href="./the-turing-completeness-problem.html">The Turing-Completeness Problem</a> | 2020-11-04</li>
 </ul>
 <h1><a class="header" href="#why-we-created-alan" id="why-we-created-alan">Why we created Alan</a></h1>
 <p><strong>14 August 2020 | David Ellis, Luis F. De Pombo</strong></p>
@@ -423,7 +424,7 @@ const data2csv = (data2 || '').split('\n').map(fn (row) = row.split(',').map(toI
 <p>Alan is not just another mixed-mode imperative/functional language with a slightly different syntactic skin. Through a delibrate and uncommon set of trade-off decisions, Alan can guarantee that you will have no uncontrolled runtime errors and that where possible it will parallelize your code, and in the future it will be able to do so without any explicitly defined types and without accidental performance regressions versus executing single-threaded.</p>
 <p>These trade-offs have been chosen to minimize the amount of &quot;unusual&quot; patterns of logic so it doesn't get in your way, especially if you already write code in the recommended idiomatic forms of Typescript, Rust, etc. They are significant trade-offs, however. No unmanaged looping or recursion is allowed, and Alan functions are, on their own, not Turing complete, but we believe we have skimmed &quot;close enough&quot; to Turing completeness to maintain the vast majority of the utility involved but without many of the downsides.</p>
 <h1><a class="header" href="#the-turing-completeness-problem" id="the-turing-completeness-problem">The Turing-Completeness Problem</a></h1>
-<p><strong>22 October 2020 | Luis F. De Pombo, David Ellis</strong></p>
+<p><strong>4 November 2020 | Luis F. De Pombo, David Ellis</strong></p>
 <p>What if we could write programs that could be automatically parallelized? Part of the work of Alan Turing and Alonzo Church on <a href="https://en.wikipedia.org/wiki/Computability">computability</a> demonstrated that for some programs it cannot be determined ahead of time whether or not the program can be computed. This constitutes the crux of the <a href="https://en.wikipedia.org/wiki/Halting_problem">Halting Problem</a>. This &quot;Turing-Completeness Problem&quot; is not an issue with what they have shown, but how the software development process is hindered by the lack of assurances on computability and our industry's lack of recognition of the burden this has put onto software developers. Further, it has been exacerbated by the actual computing mechanisms, such as multithreading, NUMA, GPGPU, and distributed computing, which have moved away from the &quot;single tape&quot; Turing Machine model of computation that most programming languages are founded upon.</p>
 <p>The following snippet of C code succinctly contains the problems of Turing completeness complicating modern development:</p>
 <pre><code class="language-c">while (node) {
