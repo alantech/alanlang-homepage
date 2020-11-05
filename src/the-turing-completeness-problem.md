@@ -50,7 +50,7 @@ Not only is the matrix multiplication a trivially parallelizable operation that 
 
 To accomplish automatic parallelization, we need something different from a classic Turing tape to compile to. We call this the Alan Graphcode: a bytecode format with graph annotations that is guaranteed to have no cycles. A dependency graph of operations to perform, with some of these also having a subgraph of operations to perform, provides us with the information we need to know which operations are safe to execute in parallel, coupled with (implied) operation execution time estimates to determine if it makes sense to do so.
 
-This acyclic graphcode seems incompatible with any sort of control flow at first glance, though, since a dependency graph of operations that must all be executed appears to preclude the behavior of JUMP operations, like the classic [JNZ (Jump if Not Zero)](https://www.aldeid.com/wiki/X86-assembly/Instructions/jnz). Alan allows `if` statements and even [guaranteed halting versions of classic looping constructs are in a standard library](https://docs.alan-lang.org/std_seq.html) that provide a predictable "worst case" execution time based on a maximum iteration count allowed. We will demonstrate how Alan allows control flow with a graph-based representation can be made Turing Complete for most practical purposes and is therefore a lossless computational representation that also makes automatic parallelization possible.
+Alan's acyclic graphcode seems incompatible with any sort of control flow at first glance, though, since a dependency graph of operations that must all be executed appears to preclude the behavior of JUMP operations, like the classic [JNZ (Jump if Not Zero)](https://www.aldeid.com/wiki/X86-assembly/Instructions/jnz). Alan allows `if` statements and even [guaranteed halting versions of classic looping constructs are in a standard library](https://docs.alan-lang.org/std_seq.html) that provide a predictable "worst case" execution time based on a maximum iteration count allowed. We will demonstrate how Alan allows control flow with a graph-based representation that makes automatic parallelization possible.
 
 ![Turing Tape Example with JNZ](./turing-tape.png)
 
@@ -75,7 +75,7 @@ The equivalent representation in a graph would be something like:
 
 Here, the conditional call is a special COND node that may or may not execute the specified graph named `if`. All of the nodes of the main graph are executed, but the COND operation may or may not execute the inner subgraph. There is absolutely no parallelization possible based on the set of dependencies, but it's clear that `OP5` can't run until both `OP1` and `COND(if)` are run.
 
-Back to classic Turing machines, what is the opposite of an `if` statement in a Turing tape? The opposite of an `if` is a `do-while` statement, because that is a jump *backwards*. It's not `else if` or `else` as those are just other forward jumps on different conditions. 
+Back to classic Turing machines, what is the opposite of an `if` statement in a Turing tape? It's not `else if` or `else` as those are just other forward jumps on different conditions. The opposite of an `if` is a `do-while` statement, because that is a jump *backwards*. 
 
 ![Turing Tape Example with JNZ-based loop](./turing-loop.png)
 
