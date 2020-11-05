@@ -1,6 +1,6 @@
 # The Turing-Completeness Problem
 
-**22 October 2020 | Luis F. De Pombo, David Ellis**
+**4 November 2020 | Luis F. De Pombo, David Ellis**
 
 What if we could write programs that could be automatically parallelized? Part of the work of Alan Turing and Alonzo Church on [computability](https://en.wikipedia.org/wiki/Computability) demonstrated that for some programs it cannot be determined ahead of time whether or not the program can be computed. This constitutes the crux of the [Halting Problem](https://en.wikipedia.org/wiki/Halting_problem). This "Turing-Completeness Problem" is not an issue with what they have shown, but how the software development process is hindered by the lack of assurances on computability and our industry's lack of recognition of the burden this has put onto software developers. Further, it has been exacerbated by the actual computing mechanisms, such as multithreading, NUMA, GPGPU, and distributed computing, which have moved away from the "single tape" Turing Machine model of computation that most programming languages are founded upon.
 
