@@ -10,7 +10,7 @@
     <center>
       <img src="implicit-parallel.png" alt="drawing" width="120"/>
     </center>
-    <h3 style="margin-top:0;">Implicitly parallel across events, arrays and IO</h3>
+    <h3 style="margin-top:0;">Distributed computing without parallel programming</h3>
     Alan recognizes and exploits opportunities for parallelization without parallel programming (threads, channels, futures, locks, etc.)
   </div>
   <div class="column">
@@ -172,7 +172,7 @@ on app.start {
 &nbsp;
 
 <center>
-  <a href="https://docs.alan-lang.org/getting_started.html" onclick="analytics.track('DownloadCTA');" class="cta-button">Get Started</a>
+  <a href="https://github.com/alantech/alan" onclick="analytics.track('DownloadCTA');" class="cta-button">Get Started</a>
 </center>
 
 ## Contact
