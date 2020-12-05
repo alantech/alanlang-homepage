@@ -45,8 +45,8 @@
 import @std/app
 
 on app.start {
-  app.print("Hello, World!")
-  emit app.exit 0
+  app.print("Hello, World!");
+  emit app.exit 0;
 }
 ```
 
@@ -75,7 +75,7 @@ on app.start {
   if the array is large enough
   and the inner function given to it is pure. */
   fn sumMaybeConcurrent(nums: Array&lt;int&gt;): int {
-    return nums.reducePar(fn (accum: int, val: int): int = accum + val)
+    return nums.reducePar(fn (accum: int, val: int): int = accum + val);
   }
           </code></pre>
           <pre class="code-border"><code class="language language-golang">
@@ -111,10 +111,10 @@ on app.start {
   fn fetchAndSum(urls: Array&lt;string&gt;): int {
     return urls
       .map(fn (url: string): int {
-        const website = http.get(url) || http.none
-        return toString(website.body).length()
+        const website = http.get(url) || http.none;
+        return toString(website.body).length();
       })
-      .reducePar(fn (accum: int, val: int): int = accum + val)
+      .reducePar(fn (accum: int, val: int): int = accum + val);
   }
         </code></pre>
         <pre class="code-border"><code class="language language-java">
@@ -143,10 +143,10 @@ on app.start {
                   <pre class="code-border alan"><code class="language language-alan">
   /* ALAN automatically executes IO concurrently when possible */
   fn getValidUids() {
-    const authUids = Auth.getAllUsers().map(fn (u: AuthUser): int = u.id)
-    const dbUids = Store.getAllUsers().map(fn (u: User): int = u.uid)
-    const crmUids = Crm.getAllUsers().map(fn (u: CrmUser): int = u.uid)
-    return authUids.filter(fn (v: int): bool = dbUids.has(v) && crmUids.has(v))
+    const authUids = Auth.getAllUsers().map(fn (u: AuthUser): int = u.id);
+    const dbUids = Store.getAllUsers().map(fn (u: User): int = u.uid);
+    const crmUids = Crm.getAllUsers().map(fn (u: CrmUser): int = u.uid);
+    return authUids.filter(fn (v: int): bool = dbUids.has(v) && crmUids.has(v));
   }
         </code></pre>
         <pre class="code-border"><code class="language language-javascript">
