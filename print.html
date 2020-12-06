@@ -179,8 +179,8 @@
 <pre><pre class="playpen"><code class="language-rust editable ignore mdbook-runnable">import @std/app
 
 on app.start {
-  app.print(&quot;Hello, World!&quot;)
-  emit app.exit 0
+  app.print(&quot;Hello, World!&quot;);
+  emit app.exit 0;
 }
 </code></pre></pre>
 </td>
@@ -205,7 +205,7 @@ on app.start {
   if the array is large enough
   and the inner function given to it is pure. */
   fn sumMaybeConcurrent(nums: Array&lt;int&gt;): int {
-    return nums.reducePar(fn (accum: int, val: int): int = accum + val)
+    return nums.reducePar(fn (accum: int, val: int): int = accum + val);
   }
           </code></pre>
           <pre class="code-border"><code class="language language-golang">
@@ -241,10 +241,10 @@ on app.start {
   fn fetchAndSum(urls: Array&lt;string&gt;): int {
     return urls
       .map(fn (url: string): int {
-        const website = http.get(url) || http.none
-        return toString(website.body).length()
+        const website = http.get(url) || http.none;
+        return toString(website.body).length();
       })
-      .reducePar(fn (accum: int, val: int): int = accum + val)
+      .reducePar(fn (accum: int, val: int): int = accum + val);
   }
         </code></pre>
         <pre class="code-border"><code class="language language-java">
@@ -273,10 +273,10 @@ on app.start {
                   <pre class="code-border alan"><code class="language language-alan">
   /* ALAN automatically executes IO concurrently when possible */
   fn getValidUids() {
-    const authUids = Auth.getAllUsers().map(fn (u: AuthUser): int = u.id)
-    const dbUids = Store.getAllUsers().map(fn (u: User): int = u.uid)
-    const crmUids = Crm.getAllUsers().map(fn (u: CrmUser): int = u.uid)
-    return authUids.filter(fn (v: int): bool = dbUids.has(v) && crmUids.has(v))
+    const authUids = Auth.getAllUsers().map(fn (u: AuthUser): int = u.id);
+    const dbUids = Store.getAllUsers().map(fn (u: User): int = u.uid);
+    const crmUids = Crm.getAllUsers().map(fn (u: CrmUser): int = u.uid);
+    return authUids.filter(fn (v: int): bool = dbUids.has(v) && crmUids.has(v));
   }
         </code></pre>
         <pre class="code-border"><code class="language language-javascript">
@@ -334,8 +334,8 @@ on app.start {
 <p>Alan's compiler and runtime automatically recognizes and exploits the parallelism inherent to the computations expressed by some of the language's constructs and automatically managing IO and compute threadpools.</p>
 <p><strong>Parallelism over events</strong> is accomplished via the static event system baked into the language:</p>
 <pre><code class="language-alan">on http.connection fn (conn: http.Connection) {
-  let res: http.Request = conn.res
-  res.body(&quot;Hello, World!&quot;).status(200).send()
+  let res: http.Request = conn.res;
+  res.body(&quot;Hello, World!&quot;).status(200).send();
 }
 </code></pre>
 <p>Independent connections to the HTTP server are scheduled onto the event loop and the compute threadpool pulls them from the queue and executes them in parallel.</p>
@@ -344,14 +344,14 @@ on app.start {
   .filter(fn (val: SomeType): bool = val &gt; someDefaultVal)
   .map(fn (val: SomeType): float64 = val.innerNumber * 3.14159)
   .reducePar(fn (acc: float64, cur: float64): float64 = acc + cur)
-  .print()
+  .print();
 </code></pre>
 <p>The developer needs to know when to use <code>reducePar</code> vs <code>reduce</code>. It would be great to have auto-parallelism on <code>reduce</code> like every other array operation, but that would require the compiler to be able to prove commutative/associative properties on closures. </p>
 <p><strong>IO Concurrency</strong> is accomplished by eagerly running IO-bound opcodes within the runtime based on the dependency graph of statements:</p>
-<pre><code class="language-alan">const data: Result&lt;string&gt; = http.get(&quot;https://someurl.com/csvfile.csv&quot;)
-const datacsv: Array&lt;Array&lt;int64&gt;&gt; = (data || '').split('\n').map(fn (row: string): Array&lt;int64&gt; = row.split(',').map(toInt64))
-const data2: Result&lt;string&gt;  = http.get(&quot;https://someotherdatasource.org/othercsvfile.csv&quot;)
-const data2csv: Array&lt;Array&lt;int64&gt;&gt; = (data2 || '').split('\n').map(fn (row: string): Array&lt;int64&gt; = row.split(',').map(toInt64))
+<pre><code class="language-alan">const data: Result&lt;string&gt; = http.get(&quot;https://someurl.com/csvfile.csv&quot;);
+const datacsv: Array&lt;Array&lt;int64&gt;&gt; = (data || '').split('\n').map(fn (row: string): Array&lt;int64&gt; = row.split(',').map(toInt64));
+const data2: Result&lt;string&gt;  = http.get(&quot;https://someotherdatasource.org/othercsvfile.csv&quot;);
+const data2csv: Array&lt;Array&lt;int64&gt;&gt; = (data2 || '').split('\n').map(fn (row: string): Array&lt;int64&gt; = row.split(',').map(toInt64));
 // Compare the data...
 </code></pre>
 <p>The Alan runtime will see that the two URL fetches do not depend on each other and can run in parallel, so they will be hoisted to the top of the function call, executed in parallel, and the function execution continues after they return, minimizing overall latency and scheduling costs.</p>
@@ -377,20 +377,20 @@ const data2csv: Array&lt;Array&lt;int64&gt;&gt; = (data2 || '').split('\n').map(
 <h3><a class="header" href="#type-inferred" id="type-inferred">Type Inferred</a></h3>
 <p>Alan's type inference is capable of automatically inferring all function return types and all variable assignment types, only requiring function arguments to be typed. Once <a href="https://github.com/alantech/alan/blob/main/rfcs/006%20-%20Automatic%20Argument%20Interfaces%20RFC.md">this RFC</a> is implemented, it will be capable enough that <em>all</em> of the examples above do not need their types explicitly written out. The following would also work:</p>
 <pre><code class="language-alan">on http.connection fn (conn) {
-  let res = conn.res
-  res.body(&quot;Hello, World!&quot;).status(200).send()
+  let res = conn.res;
+  res.body(&quot;Hello, World!&quot;).status(200).send();
 }
 </code></pre>
 <pre><code class="language-alan">someLargeArray
   .filter(fn (val) = val &gt; someDefaultVal)
   .map(fn (val) = val.innerNumber * 3.14159)
   .reduce(fn (acc, cur) = acc + cur)
-  .print()
+  .print();
 </code></pre>
-<pre><code class="language-alan">const data = http.get(&quot;https://someurl.com/csvfile.csv&quot;)
-const datacsv = (data || '').split('\n').map(fn (row) = row.split(',').map(toInt64))
-const data2 = http.get(&quot;https://someotherdatasource.org/othercsvfile.csv&quot;)
-const data2csv = (data2 || '').split('\n').map(fn (row) = row.split(',').map(toInt64))
+<pre><code class="language-alan">const data = http.get(&quot;https://someurl.com/csvfile.csv&quot;);
+const datacsv = (data || '').split('\n').map(fn (row) = row.split(',').map(toInt64));
+const data2 = http.get(&quot;https://someotherdatasource.org/othercsvfile.csv&quot;);
+const data2csv = (data2 || '').split('\n').map(fn (row) = row.split(',').map(toInt64));
 // Compare the data...
 </code></pre>
 <p>This allows you to be as concise or as explicit as you need to be, with very dynamic-looking code in a static language possible.</p>
@@ -443,14 +443,14 @@ const data2csv = (data2 || '').split('\n').map(fn (row) = row.split(',').map(toI
 <p>This is the thesis of <a href="https://github.com/alantech/alan">the Alan programming language</a>, that with minor syntax constraints (that we believe the vast majority of developers will not notice, or at least won't mind) we can be sure that the code you write always halts, and we can parallelize your code for you. We can make models for runtime estimates at compile time that only require the size and &quot;shape&quot; of the data to get an answer and can therefore determine not only how to parallelize your code, but whether or not it makes sense given the data being operated on. We have not yet accomplished all of these claims, but this is now only a matter of time and effort. :)</p>
 <p>The root of most of the problems with the example C code involves the ambiguity in the data structure and the behavior of the user-defined function. The other problem is that the while loop is an unbounded looping construct that cannot be reasoned about except &quot;the body of the while loop is executed zero or more times.&quot; In Alan, <em>arbitrary</em> looping and recursion are disallowed, and all data is built on top of data types with knowable constraints, no arbitrary JUMP statements or data pointer logic allowed.</p>
 <p>What this means in practice is that instead of writing that while loop above for your list of nodes, you would write something like:</p>
-<pre><code class="language-ln">nodes.each(doSomethingWith)
+<pre><code class="language-ln">nodes.each(doSomethingWith);
 </code></pre>
 <p>Your intent to perform a side-effect action on each of the nodes in the list is clear, and the Alan compiler can determine the &quot;purity&quot; of the function -- whether or not it mutates the input argument or an outer scope -- to determine if it <em>could</em> execute the operations in parallel. Then at runtime it can use the estimated execution time of the function, the number of nodes in the <code>nodes</code> array, and the cost to distribute that work across multiple threads, to decide <em>if</em> it will execute the operations in parallel.</p>
 <p>This can even apply across simple sequentially-written lines of code:</p>
 <pre><code class="language-ln">fn example(file1: string, file2: string): Array&lt;Array&lt;int64&gt;&gt; {
-  const matrix1 = loadFile(file1).parseMatrix()
-  const matrix2 = loadFile(file2).parseMatrix()
-  return matrix1 * matrix2
+  const matrix1 = loadFile(file1).parseMatrix();
+  const matrix2 = loadFile(file2).parseMatrix();
+  return matrix1 * matrix2;
 }
 </code></pre>
 <p>Not only is the matrix multiplication a trivially parallelizable operation that likely will be parallelized for any large-ish matrix, but reading the files from disk and then parsing their contents may be done in parallel before the matrix multiplication because the performance benefit is there to do so.</p>

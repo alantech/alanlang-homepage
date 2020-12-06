@@ -159,14 +159,14 @@
 <p>This is the thesis of <a href="https://github.com/alantech/alan">the Alan programming language</a>, that with minor syntax constraints (that we believe the vast majority of developers will not notice, or at least won't mind) we can be sure that the code you write always halts, and we can parallelize your code for you. We can make models for runtime estimates at compile time that only require the size and &quot;shape&quot; of the data to get an answer and can therefore determine not only how to parallelize your code, but whether or not it makes sense given the data being operated on. We have not yet accomplished all of these claims, but this is now only a matter of time and effort. :)</p>
 <p>The root of most of the problems with the example C code involves the ambiguity in the data structure and the behavior of the user-defined function. The other problem is that the while loop is an unbounded looping construct that cannot be reasoned about except &quot;the body of the while loop is executed zero or more times.&quot; In Alan, <em>arbitrary</em> looping and recursion are disallowed, and all data is built on top of data types with knowable constraints, no arbitrary JUMP statements or data pointer logic allowed.</p>
 <p>What this means in practice is that instead of writing that while loop above for your list of nodes, you would write something like:</p>
-<pre><code class="language-ln">nodes.each(doSomethingWith)
+<pre><code class="language-ln">nodes.each(doSomethingWith);
 </code></pre>
 <p>Your intent to perform a side-effect action on each of the nodes in the list is clear, and the Alan compiler can determine the &quot;purity&quot; of the function -- whether or not it mutates the input argument or an outer scope -- to determine if it <em>could</em> execute the operations in parallel. Then at runtime it can use the estimated execution time of the function, the number of nodes in the <code>nodes</code> array, and the cost to distribute that work across multiple threads, to decide <em>if</em> it will execute the operations in parallel.</p>
 <p>This can even apply across simple sequentially-written lines of code:</p>
 <pre><code class="language-ln">fn example(file1: string, file2: string): Array&lt;Array&lt;int64&gt;&gt; {
-  const matrix1 = loadFile(file1).parseMatrix()
-  const matrix2 = loadFile(file2).parseMatrix()
-  return matrix1 * matrix2
+  const matrix1 = loadFile(file1).parseMatrix();
+  const matrix2 = loadFile(file2).parseMatrix();
+  return matrix1 * matrix2;
 }
 </code></pre>
 <p>Not only is the matrix multiplication a trivially parallelizable operation that likely will be parallelized for any large-ish matrix, but reading the files from disk and then parsing their contents may be done in parallel before the matrix multiplication because the performance benefit is there to do so.</p>
