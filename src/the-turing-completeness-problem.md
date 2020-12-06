@@ -31,7 +31,7 @@ The root of most of the problems with the example C code involves the ambiguity 
 What this means in practice is that instead of writing that while loop above for your list of nodes, you would write something like:
 
 ```ln
-nodes.each(doSomethingWith)
+nodes.each(doSomethingWith);
 ```
 
 Your intent to perform a side-effect action on each of the nodes in the list is clear, and the Alan compiler can determine the "purity" of the function -- whether or not it mutates the input argument or an outer scope -- to determine if it *could* execute the operations in parallel. Then at runtime it can use the estimated execution time of the function, the number of nodes in the `nodes` array, and the cost to distribute that work across multiple threads, to decide *if* it will execute the operations in parallel.
@@ -40,9 +40,9 @@ This can even apply across simple sequentially-written lines of code:
 
 ```ln
 fn example(file1: string, file2: string): Array<Array<int64>> {
-  const matrix1 = loadFile(file1).parseMatrix()
-  const matrix2 = loadFile(file2).parseMatrix()
-  return matrix1 * matrix2
+  const matrix1 = loadFile(file1).parseMatrix();
+  const matrix2 = loadFile(file2).parseMatrix();
+  return matrix1 * matrix2;
 }
 ```
 

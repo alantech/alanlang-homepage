@@ -18,8 +18,8 @@ Alan's compiler and runtime automatically recognizes and exploits the parallelis
 
 ```alan
 on http.connection fn (conn: http.Connection) {
-  let res: http.Request = conn.res
-  res.body("Hello, World!").status(200).send()
+  let res: http.Request = conn.res;
+  res.body("Hello, World!").status(200).send();
 }
 ```
 
@@ -32,7 +32,7 @@ someLargeArray
   .filter(fn (val: SomeType): bool = val > someDefaultVal)
   .map(fn (val: SomeType): float64 = val.innerNumber * 3.14159)
   .reducePar(fn (acc: float64, cur: float64): float64 = acc + cur)
-  .print()
+  .print();
 ```
 
 The developer needs to know when to use `reducePar` vs `reduce`. It would be great to have auto-parallelism on `reduce` like every other array operation, but that would require the compiler to be able to prove commutative/associative properties on closures. 
@@ -40,10 +40,10 @@ The developer needs to know when to use `reducePar` vs `reduce`. It would be gre
 **IO Concurrency** is accomplished by eagerly running IO-bound opcodes within the runtime based on the dependency graph of statements:
 
 ```alan
-const data: Result<string> = http.get("https://someurl.com/csvfile.csv")
-const datacsv: Array<Array<int64>> = (data || '').split('\n').map(fn (row: string): Array<int64> = row.split(',').map(toInt64))
-const data2: Result<string>  = http.get("https://someotherdatasource.org/othercsvfile.csv")
-const data2csv: Array<Array<int64>> = (data2 || '').split('\n').map(fn (row: string): Array<int64> = row.split(',').map(toInt64))
+const data: Result<string> = http.get("https://someurl.com/csvfile.csv");
+const datacsv: Array<Array<int64>> = (data || '').split('\n').map(fn (row: string): Array<int64> = row.split(',').map(toInt64));
+const data2: Result<string>  = http.get("https://someotherdatasource.org/othercsvfile.csv");
+const data2csv: Array<Array<int64>> = (data2 || '').split('\n').map(fn (row: string): Array<int64> = row.split(',').map(toInt64));
 // Compare the data...
 ```
 
@@ -86,8 +86,8 @@ Alan's type inference is capable of automatically inferring all function return 
 
 ```alan
 on http.connection fn (conn) {
-  let res = conn.res
-  res.body("Hello, World!").status(200).send()
+  let res = conn.res;
+  res.body("Hello, World!").status(200).send();
 }
 ```
 
@@ -96,14 +96,14 @@ someLargeArray
   .filter(fn (val) = val > someDefaultVal)
   .map(fn (val) = val.innerNumber * 3.14159)
   .reduce(fn (acc, cur) = acc + cur)
-  .print()
+  .print();
 ```
 
 ```alan
-const data = http.get("https://someurl.com/csvfile.csv")
-const datacsv = (data || '').split('\n').map(fn (row) = row.split(',').map(toInt64))
-const data2 = http.get("https://someotherdatasource.org/othercsvfile.csv")
-const data2csv = (data2 || '').split('\n').map(fn (row) = row.split(',').map(toInt64))
+const data = http.get("https://someurl.com/csvfile.csv");
+const datacsv = (data || '').split('\n').map(fn (row) = row.split(',').map(toInt64));
+const data2 = http.get("https://someotherdatasource.org/othercsvfile.csv");
+const data2csv = (data2 || '').split('\n').map(fn (row) = row.split(',').map(toInt64));
 // Compare the data...
 ```
 
