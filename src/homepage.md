@@ -25,7 +25,7 @@
       <img src="cross-cloud.png" alt="drawing" width="125"/>
     </center>
     <h3 style="margin-top:0;">Deploy HTTP servers across any cloud</h3>
-    A single CLI command, <code>alan deploy</code>, runs and autoscalables your Alan HTTP server across your own accounts in AWS, Azure and/or GCP.
+    A single CLI command, <code>alan deploy</code>, runs and autoscales your Alan HTTP server across your own accounts in AWS, Azure and/or GCP.
   </div>
 </div>
 
