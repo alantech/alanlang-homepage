@@ -12,15 +12,15 @@
     <center>
       <img src="forecast.png" alt="drawing" width="125"/>
     </center>
-    <h3 style="margin-top:0;">Predictable worst-case runtime</h3>
-    Programs are represented as DAGs with predictable worst-case runtime for all computations because there is no unbounded recursion or iteration.
+    <h3 style="margin-top:0;">Predictable runtime for all computations</h3>
+    A program is represented as DAG(s) where the running time for all computations can be predicted because there is no unbounded recursion or iteration.
   </div>
   <div class="column">
     <center>
       <img src="implicit-parallel.png" alt="drawing" width="120"/>
     </center>
     <h3 style="margin-top:0;">Automatic concurrency and parallelism</h3>
-    Alan exploits opportunities for IO concurrency or CPU parallelization without threads, channels, promises, futures, locks, etc.
+    Alan exploits opportunities for IO concurrency or CPU parallelization across machines in a cluster without threads, channels, promises, futures, locks, etc.
   </div>
   <div class="column">
     <center>
