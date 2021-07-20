@@ -20,7 +20,7 @@
       <img src="implicit-parallel.png" alt="drawing" width="120"/>
     </center>
     <h3 style="margin-top:0;">Automatic concurrency and parallelism</h3>
-    Alan exploits opportunities for IO concurrency or CPU parallelization across machines in a cluster without threads, channels, promises, futures, locks, etc.
+    Alan exploits opportunities for IO concurrency or CPU parallelization across machines in a cluster via arrays and a static event loop without threads, channels, promises, futures, locks, etc.
   </div>
   <div class="column">
     <center>
