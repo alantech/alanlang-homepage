@@ -5,27 +5,29 @@
   <h1 style="color: var(--title);">The Alan Programming Language</h1>
 </center>
 
+&nbsp;
+
 <div class="row">
+  <div class="column">
+    <center>
+      <img src="forecast.png" alt="drawing" width="125"/>
+    </center>
+    <h3 style="margin-top:0;">Predictable runtime for all computations</h3>
+    A program is represented as DAG(s) where the running time for all computations can be predicted because there is no unbounded recursion or iteration.
+  </div>
   <div class="column">
     <center>
       <img src="implicit-parallel.png" alt="drawing" width="120"/>
     </center>
     <h3 style="margin-top:0;">Automatic concurrency and parallelism</h3>
-    Alan recognizes and exploits opportunities for IO concurrency or CPU parallelization across cores without threads, channels, promises, futures, locks, etc.
+    Alan exploits opportunities for IO concurrency or CPU parallelization across machines in a cluster via arrays and a static event loop without threads, channels, promises, futures, locks, etc.
   </div>
   <div class="column">
     <center>
       <img src="runtime-safety.png" alt="drawing" width="120"/>
     </center>
     <h3 style="margin-top:0;">Most runtime errors impossible</h3>
-    Deadlocks, livelocks, undefined variables, divide-by-zero, integer under/overflow, array out-of-bounds access, etc, are not possible in Alan.
-  </div>
-  <div class="column">
-    <center>
-      <img src="cross-cloud.png" alt="drawing" width="125"/>
-    </center>
-    <h3 style="margin-top:0;">Deploy HTTP servers across any cloud</h3>
-    A single CLI command, <code>alan deploy</code>, runs and autoscales your Alan HTTP server across your own accounts in AWS, Azure and/or GCP.
+    No deadlocks, livelocks, undefined variables, divide-by-zero, integer under/overflow, array out-of-bounds access, etc.
   </div>
 </div>
 
@@ -175,6 +177,6 @@ on app.start {
   <a href="https://github.com/alantech/alan#installation" onclick="analytics.track('DownloadCTA');" class="cta-button">Get Started</a>
 </center>
 
-## Community
+## Get involved
 
 Please reach out on [Discord](https://discord.gg/XatB9we), [Reddit](https://www.reddit.com/r/alanlang) or email us at hello at alantechnologies dot com.
