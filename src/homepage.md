@@ -171,12 +171,18 @@ on app.start {
   </div>
 </center>
 
+## Get involved
+
+Reach out on [Discord](https://discord.gg/XatB9we), [Reddit](https://www.reddit.com/r/alanlang), [Twitter](https://twitter.com/alanlanguage) or email us at hello at alantechnologies dot com.
+
+## About us
+
+Alan is being actively developed by [Alan Technologies Inc.](https://www.crunchbase.com/organization/alan-technologies), which is a startup backed by [Haystack](https://haystack.vc) and [Root](https://root.vc) VC.
+
+&nbsp;
+
 &nbsp;
 
 <center>
   <a href="https://github.com/alantech/alan#installation" onclick="analytics.track('DownloadCTA');" class="cta-button">Get Started</a>
 </center>
-
-## Get involved
-
-Please reach out on [Discord](https://discord.gg/XatB9we), [Reddit](https://www.reddit.com/r/alanlang) or email us at hello at alantechnologies dot com.
