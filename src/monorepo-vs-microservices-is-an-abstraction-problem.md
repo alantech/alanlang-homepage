@@ -21,7 +21,89 @@ Dependency version conflict is or is not an issue for large-scale monorepos depe
 
 <!-- Should the following paragraph be included, or is it beating on the same subject too much?
 
-A few of you may have also taken issue with the testing and deployment times affecting productivity negatively. Either you have not yet worked on a truly massive team with a massive number of changes per day, or you had an incredibly experienced software architect in charge of your company's codebase to avoid all of the pitfalls. (Eg, making sure that the test suite runs in parallel, can be easily scoped to a small subset of the codebase, preferably automatically based on the changed files, and the CI system considers local testing *itself* a test to run, spinning up the company-standard local environment and then running the test suite in that, instead of a specialized environment for the CI system.) 
+A few of you may have also taken issue with the testing and deployment times affecting productivity negatively. Either you have not yet worked on a truly massive team with a massive number of changes per day, or you had an incredibly experienced software architect in charge of your company's codebase to avoid all of the pitfalls. (Eg, making sure that the test suite runs in parallel, can be easily scoped to a small subset of the codebase, preferably automatically based on the changed files, and the CI system considers local testing *itself* a test to run, spinning up the company-standard local environment and then running the test suite in that, instead of a specialized environment for the CI system.)
 -->
 
-We believe that all of the problems that causes one to migrate from a monorepo to microservices are due to problems in the abstractions of the languages used to write backend production code, that a new language can resolve these abstractions, and that a new language is *required* for some of these abstraction issues as the foundation of these languages does not fit with the reality they operate in. 
+We believe that all of the problems that causes one to migrate from a monorepo to microservices are due to problems in the abstractions of the languages used to write backend production code, that a new language can resolve these abstractions, and that a new language is *required* for some of these abstraction issues as the foundation of these languages does not fit with the reality they operate in.
+
+Minimizing latency when dealing with data stored in a cluster is the simplest problem to be abstracted and doable with current languages, but often very awkward and difficult to do. In a situation where a request comes in to node N1 but the relevant data is located on node N2, there are two possible choices to make:
+
+1. Grab the relevant data from the request to N1 and push it and the code to execute to N2, then execute the code and push the result from N2 back to N1.
+2. Request the relevant data from N2 to N1, then execute the code using the relevant data from the request and return the result.
+
+Option 2 is taken the vast majority of the time because your distributed data is often in a distinct cluster (a database) from your request/response application layer, and doing the compute within the database is made difficult by needing to be written in another language from your main application language, requiring a context switch, and often made further difficult by this language primarily being a query language and being awkward or impossible to represent the computation desired.
+
+Even when the database supports the same language as your application, it often also has a differing set of standard libraries, making code reuse difficult if even possible. But option 1 is *often* the right choice when you have a complex computation you need to perform on a large amount of data that you can't just filter away, and so going through that pain when the execution time of option 2 is orders of magnitude more than option 1 is an optimization stable projects go through when traffic volume increases and the engineering cost to make that optimization becomes justifiable.
+
+But if that cost to you was zero, because your programming language could determine when one path or the other was the optimal choice, what would the actual switching point be? Let's write these two options out as equations on the total response latency:
+
+```
+Toption1 = Tclosure + Texecute + Tresult
+Toption2 = Tdata + Texecute
+```
+
+Where `Tclosure` is the time to transmit the relevant metadata for the execution from N1 to N2, `Tresult` is the time to transmit the output result from N2 to N1, `Tdata` is the time to transmit the raw data from N2 to N1, and `Texecute` is the time required to perform the relevant computation, assumed to be identical on both sides here (but not the case when the execution has to be rewritten in a different language).
+
+Therefore, choose Option 1 when:
+
+```
+Tclosure + Tresult < Tdata
+```
+
+When the total data to compute on is less than the metadata from the request and the size out the output payload, then it makes sense to push the compute to the remote machine, otherwise it makes sense to pull the data from that node and perform the computation locally.
+
+A handshaking protocol between the two nodes while negotating whether or not the data or the closure will be transmitted can be performed to make the sizes of those two payloads known and the decision automatic (assuming symmetric bandwidth between the two nodes). But wait, what about `Tresult`? You have to perform the computation to know which choice is correct, right?
+
+While true in a general case, there are a few ways that the uncertainty can be reduced. First, in a statically-typed language, types that are constant in size (unitary types like `int`, `float`, and `bool`, or compount struct types composed only of those types or other struct types similarly composed) have a compile-time known size, and the exact sizing of `Tresult` can be known ahead of time. If a variable-length type is included, such as `Array` or `string`, then prediction becomes more difficult without also tracing the origin of the data in question. If `Tdata` was of type `Array<T>` and `Tresult` is of type `Array<U>`, and the type was due to something like `data.filter(filterFn).map(mapFn)`, then it is known that the length of the output `Array<U>` is less than or equal to the `Array<T>`. Then if the `len(Array<T>) * sizeof(U) < len(Array<T>) * sizeof(T) + sizeof(closureData)`, you are similarly guaranteed that the computation should be pushed to the remote end.
+
+But there will be cases where explicit determination of which side to perform the computation is not possible. However, with some reasonable assumptions, we can create an approximate solution that can produce a solution that will choose the correct execution location most of the time. The input data is from the closure and remote data pieces, and so the entropy, `E`, of the output result should not exceed that. Of course it is possible to create highly compressible data that still fits in that definition, but it is more likely that the compressibility of the input and output data are approximately equal, and that the output data has lower entropy than the input. Therefore, `Eresult < Edata + Eclosure` and almost always `Tresult < Tdata + Tclosure`. The range of possible entropies for the result is therefore between `[0..Edata + Eclosure]`. The exact distribution of entropies for `Eresult` depends on the use-case, but is likely a normal distribution with a low average and a long tail when considered in bulk across many different queries for many different remote executions. Therefore if we instead go with a conservative linear distribution, we overestimate the expected entropy of the output result somewhat and define `Eresult = (Edata + Eclosure) / 2`, and again assuming equal compressibility for equal entropy, we can substitute this back into our original inequality and get:
+
+```
+Tclosure + (Tdata + Tclosure) / 2 < Tdata
+(3/2) * Tclosure < (1/2) * Tdata
+```
+
+This approximation will likely bias towards local execution when remote execution would have been the better bet, but generally when the stakes are low and the impact of one choice or the other has a low variance in the output latencies. And for static languages we can produce exact results in many circumstances (first by the type system, and later with a more intelligent compiler proving relations between `Eresult` and `Edata`). All of this analysis depends on being able to ship identically-behaving code between the nodes, and becomes considerably more difficult if the code in question must be rewritten in another language for the data storage side of things, hence why it has tended to be done on an adhoc, "squeaky wheel gets the grease" manner, and only when a developer has a "hunch" that it will pay off.
+
+There are other reasons why one would perform remote execution, though. If the data in question is too large to fit into the memory of a single node, splitting it across multiple nodes and performing all analysis of it via remote execution allows computation that would otherwise need to be awkwardly rewritten in a streaming style with disk backing (and potentially much slower, too). And in a computationally intensive problem, if the work can be parallelized, it *may* make sense to do so. There are multiple levels of parallelization decisions:
+
+1. Don't parallelize even if its possible.
+2. Parallelize across multiple CPU cores on the same node.
+3. Parallelize across multiple nodes in the same datacenter.
+4. Parallelize across multiple nodes in multiple datacenters.
+
+For the exact same parallelizable code, all four permutations are valid to consider, depending on the size of the payload an the execution time of the parallelizable unit.
+
+Where `n` is the number of executions to perform in total, `m` is the number of CPU cores on a given node (assuming all nodes are equal), `o` is the number of nodes in a datacenter (assuming all datacenters have an equal number of nodes) and `p` is the number of datacenters:
+
+```
+Tlocal = n * TexecutionUnit
+Tcores = TscatterThread + (n / m) * TexecutionUnit + TgatherThread
+ToneDatacenter = TscatterDatacenter + (n / m / o) * TexecutionUnit + TgatherDatacenter
+TallDatacenters = TscatterAll + (n / m / o / p) * TexecutionUnit + TgatherAll
+```
+
+Where the `scatter` and `gather` times are a function of both the bandwidth between the threads/nodes/datacenters, the number of executions to perform, and the size of each unit of data for the input (scatter) and output (gather). Because the data necessary to perform a computation in a parallel execution consists of some unique data per computation and some shared data per computation, there is also value in making sure that the shared data is transmitted only once per actual CPU core doing work. This makes the total definitions of `scatter` and `gather` complex:
+
+```
+Tlocal = n * TexecutionUnit
+Tcores = TcopyInputClosureData + (n / m) * TcopyParallelData + (n / m) * TexecutionUnit + (n / m) * TcopyParallelOutput
+ToneDatacenter = TcopyInputClosureDataToOtherNodes + (n / o) * TcopyParallelDataToOtherNodes + (n / m / o) * TexecutionUnit + (n / o) * TcopyParallelOutputFromOtherNodes
+TallDatacenters = TcopyInputClosureDatatoOtherDatacneters + (n / p) * TcopyParallelDataToOtherDatacenters + (n / m / o / p) * TexecutionUnit + (n / p) * TcopyParallelOutputFromOtherDatacenters
+```
+
+Where it is assumed the bandwidth between threads is greater than between nodes in the same datacenter is greater than between datacenters.
+
+As before, the size of the output impacts the choice here, and as before the type system and compiler can help here. If the choice is delayed to execution time, though, and constrained to smaller operations, such as purely a `map` operation on an array, it is simple to compute the amount of data to be generated by the output and solid estimates on transfer time.
+
+What is different here is that `TexecutionUnit` doesn't fall out of the comparison as it did with "simple" remote execution. It is a vital component of deciding which level of parallelization should be taken, determining the smallest of `Tlocal`, `Tcores`, `ToneDatacenter` and `TallDatacenters` depends on the size and shape of the cluster as well as the size of the data, how finely it is diced up, and how long it takes to perform the transformation on any particular unit of the parallelizable data.
+
+And, as you may know, Turing complete languages cannot provide any guarantees on execution time; they may not even halt. [The Turing-Completeness Problem](./the-turing-completeness-problem.md) is a problem for most languages, but if you constrain the code that you are executing in parallel to a directed acyclic graph, then minimum and maximum execution times can be computed, and this can be used, with a similar averaging assumption, to make the parallelization decision decidable.
+
+When you can have good estimates on execution time for any given unit of work, you now also have enough information to produce a fair scheduler that tries to minimize the standard deviation in the runtime of any particular execution task. Simply put, if you have a task that takes 15 seconds and another that takes 10ms, the 10ms task should take priority over the 15 second task even if it needs to halt it entirely as 15.01 seconds is immaterial to user expectations if they expected 15, but a dramatic 1,501x slower time the other way around. Effectively using the total run time as a prioritization. A mechanism like this would cause the entire server to slow down roughly proportionally for each task, rather than penalize the lightest workloads at the expense of the heaviest.
+
+Once you have something that can decide where to execute your workload based on where the data is located and how parallelizable the work is, and does a good job of keeping resource utilization fair in a resource-constrained environment, you no longer run into any of the performance-related pain points where a microservice architecture may be considered. Pain points with testing should also be minimized as the test suite would automatically parallelize itself for you, though care to allow users to specify the tests they're interested in for local development would still be the biggest benefit there.
+
+That leaves the last two reasons that may be used in favor of microservices: vendoring different library versions and invalid code changes to on upgrades of parts of your cluster out of sync but the test suite not catching this. The former is simple: the language should simply adopt the dependency graph mechanism of dependency abstraction. The latter can also be simple: if you can have all of these "disparate" parts of your backend actually stay in the same codebase as the same singular deployment artifact, then it becomes impossible to get into such an invalid cluster state because you *do* basically Blue-Green deploy the entirety of production.
+
+And you don't even give it a thought that you do.
