@@ -67,7 +67,7 @@ There are other reasons why one would perform remote execution, though. If the d
 3. Parallelize across multiple nodes in the same datacenter.
 4. Parallelize across multiple nodes in multiple datacenters.
 
-For the exact same parallelizable code, all four permutations are valid to consider, depending on the size of the payload an the execution time of the parallelizable unit.
+For the exact same parallelizable code, all four permutations are valid to consider, depending on the size of the payload and the execution time of the parallelizable unit.
 
 Where `n` is the number of executions to perform in total, `m` is the number of CPU cores on a given node (assuming all nodes are equal), `o` is the number of nodes in a datacenter (assuming all datacenters have an equal number of nodes) and `p` is the number of datacenters:
 
