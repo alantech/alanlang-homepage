@@ -2,8 +2,6 @@
 
 **19 August 2021 | Luis F. De Pombo, Alejandro Guillen, Colton Donnelly, David Ellis**
 
-(Set up the post, the separation of where the data is located and where work is being done with it.)
-
 In backend applications, separation of data storage and compute is the gold standard. Whether you're using Go on AWS Lambda, or Ruby-on-Rails on Heroku, or Perl and C++ CGI scripts on your own server in a rack you rented at Peak Hosting, your application layer doesn't maintain any responsibility for the storage of the data it is working with. Instead, you have a database cluster, whether it's DynamoDB, or Cassandra, or PostgreSQL. One of these applications is deployed to be in charge your data.
 
 Your application is "stateless" and your databases "only" store and retrieve data. You don't write distributed compute code because it's hard to get right and will make things more difficult to follow.
@@ -192,4 +190,77 @@ Tclosure + (Tdata + Tclosure) / 2 < Tdata
 
 This approximation will likely bias towards local execution when remote execution would have been the better bet, but generally when the stakes are low and the impact of one choice or the other has a low variance in the output latencies. And for static languages we can produce exact results in many circumstances (first by the type system, and later with a more intelligent compiler proving relations between `Tresult` and `Tdata`). All of this analysis depends on being able to ship identically-behaving code between the nodes, and becomes considerably more difficult if the code in question must be rewritten in another language for the data storage side of things, hence why it has tended to be done on an adhoc, "squeaky wheel gets the grease" manner, and only when a developer has a "hunch" that it will pay off.
 
-(Talk about Alan and how its remote execution works)
+Alan is capable of this sort of automatic determination of where to run logic related to remote data. The `@std/datastore` standard library in Alan provides an interface for storing any data structure you desire in a Document DB way, and the Alan Virtual Machine (AVM) coordinates a cluster of processes in daemon mode using a RendezvousHash-like structure. You can query `datastore` for the values and pull them locally, providing an eventually-consistent experience useful for places where memcache would have been used, except slightly better as it preferentially queries nodes in the same cloud region when possible, so latency in a multi-region deployment is usually equivalent to a single-region cluster.
+
+However, the more interesting feature is acquiring a `ref`erence or `mut`able reference to the record in `datastore`, and then providing a closure function to perform some operation on it (possibly mutating the original value) and returning the result of your closure. The AVM is able to determine whether it should pull the data locally to perform the computation or push the compute and closure variables to the primary node in charge of the data and return only the result.
+
+The syntax is concise:
+
+```ln
+const moreThan20 = namespace('some-namespace')
+  .ref('some-int-array')
+  .closure(fn (arr: Array<int64>) = arr.filter(fn (n: int64) = n > 20));
+```
+
+This is something like `select n from some-namespace.some-int-array where n > 20`, and this particular example would run remotely, as the closure itself is nothing, and `3 * 0 = 0`. There is no index on `n` in this example (and an index might be just as liable to slow down this operation with the extra checks) but assuming there was an index of type `Array<KeyVal<int64, Array<int64>>>` that is sorted by the keys, which are the values of `n` and the values are the indexes in the int array where `n` is that value, then for a very large array, this could be faster:
+
+```ln
+const moreThan20 = namespace('some-namespace')
+  .ref('some-int-array-index')
+  .closure(fn (idx: Array<KeyVal<int64, Array<int64>>>) {
+    const rows = idx
+      .filter(fn (kv: KeyVal<int64, Array<int64>>) = kv.key > 20)
+      .map(fn (kv: KeyVal<int64, Array<int64>>) = kv.val)
+      .reduce(fn (rows: Array<int64>, curr: Array<in64>) = rows.concat(curr), new Array<int64> []);
+    return namespace('some-namespace')
+      .ref('some-int-array')
+      .closure(fn (arr: Array<int64>) = rows.map(fn (row: int64) = arr[row] || 0));
+  });
+```
+
+We trigger a remote execution on the index, remove the index records outside of our "where clause", and then take the values of the index and concatenate them together to produce an array of relevant indexes. Then because this remote execution is happening on any node with the exact same capabilities, we can internally trigger a remote execution on the actual data in question, pushing the array of indexes to the remote node (or pulling the remote array locally and computing here, we don't actually care and the runtime will figure out which is optimal during the remote execution handshake), and then we simply map the indexes to the value in the actual array of data.
+
+We can further optimize this code by making the index an actual user type that includes metadata about the table of data, such as it's total length and the length of the index array and switch between the first formulation and the second when the overhead of the second formulation makes sense, and then we could wrap this up in a more generic function, so we just have to write something like:
+
+```ln
+const moreThan20 = select('some-namespace', 'some-int-array').where(fn (n: int64) = n > 20);
+```
+
+and now we have something that functions very much like Cassandra. (Tables in a distributed database but no joins.) However, we *can* do joins. Let's assume one table is defined as:
+
+```ln
+type MyValues {
+  val: int64,
+  descId: int64,
+}
+```
+
+and `descId` is the index into a table of string descriptions. If you define a type:
+
+```ln
+type MyJoinedValues {
+  val: int64,
+  description: string,
+}
+```
+
+then something like
+
+```ln
+const moreThan20 = select('some-namespace', 'my-values').where(fn (rec: MyValues) = rec.val > 20);
+const withDescriptions = namespace('some-namespace')
+  .ref('my-descriptions')
+  .closure(fn (descs: Array<string>) = moreThan20
+    .map(fn (rec: Array<MyValues>) = new MyJoinedValues {
+      val: rec.val,
+      description: descs[rec.descId] || '',
+    }));
+```
+
+will select out the records we're interested in and then construct the joined records either where the descriptions are stored, or pull the descriptions over to do the joining locally, depending on which requires more bandwidth in the cluster.
+
+We now have the bones of a real SQL database with indexes and joins that works in a distributed cluster. We're missing important things like storage to disk, transactions, and a familiar SQL syntax, but those can be added on with polish. And we further gain the flexibility to simply use the same language we're already developing for querying, so that haversine calculation for the nearest relevant locations can be written plainly, and the runtime can decide which side of the divide it makes more sense to do it.
+
+It may even change that decision automatically for you as you increase the number of relevant locations in your database. You did not need to rewrite your logic in another language, you did not need to notice worsening performance in that query as prior assumptions no longer hold before potentially addressing it.
+
+By being intimately involved in the entire flow of your application's computation and with the ability to model more precisely what you are doing, the language and its runtime can eliminate an entire class of problems and trade-offs, giving you more time to focus on solving the problems that matter to you and your business. That's the kind of productivity gain that can make a new language worthwhile.
