@@ -264,3 +264,29 @@ We now have the bones of a real SQL database with indexes and joins that works i
 It may even change that decision automatically for you as you increase the number of relevant locations in your database. You did not need to rewrite your logic in another language, you did not need to notice worsening performance in that query as prior assumptions no longer hold before potentially addressing it.
 
 By being intimately involved in the entire flow of your application's computation and with the ability to model more precisely what you are doing, the language and its runtime can eliminate an entire class of problems and trade-offs, giving you more time to focus on solving the problems that matter to you and your business. That's the kind of productivity gain that can make a new language worthwhile.
+
+However, it is possible to bring a close facsimile of this to existing languages. With a consistent hash or rendezvous hash ring established between the nodes in the deployment and a private RPC mechanism they can share, you can send messages to the node that should "own" a given key. A mechanism to designate backup nodes (which falls out of Rendezvous Hashing's structure, btw) and automated push or pull of data associated with a key improves the resilience (but is not strictly necessary if you believe your cluster will never have an outage...) can be built on that.
+
+Finally you can recreate remote execution somewhat similarly to what Alan is capable of, but since the vast majority of languages with closures do not provide a programmatic way to access or iterate on said closures, you can only do so with "pure-ish" functions, that only use compile-time constants and other functions. This fits in well with `static` methods on classes like in Java or Javascript. In this case, the function would need to take in two arguments: the value of the key it is operating on, and any other data necessary for the operation, if any.
+
+It could look something like:
+
+```js
+class MoreThan20 extends RemoteExec {
+  static run(idx) {
+    const rows = idx
+      .filter((kv) => kv.key > 20)
+      .map((kv) => kv.val)
+      .reduce((rows, curr) => rows.concat(curr), []);
+    return new RowToVal('some-namespace').ref('some-int-array').call(rows);
+  }
+}
+class RowToVal extends RemoteExecWith {
+  static run(rows, arr) {
+    return rows.map((row) => arr[row] || 0);
+  }
+}
+const moreThan20 = await new MoreThan20('some-namespace').ref('some-int-array-index').call();
+```
+
+(This looks like crap. Is there any way to be less crap but still clear that you can't use a closure?)
