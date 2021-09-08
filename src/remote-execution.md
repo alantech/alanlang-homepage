@@ -1,6 +1,6 @@
-# Remote Execution (WIP Title)
+# Where Does The Work Belong In The Data Divide?
 
-**19 August 2021 | Luis F. De Pombo, Alejandro Guillen, Colton Donnelly, David Ellis**
+**8 September 2021 | Luis F. De Pombo, Alejandro Guillen, Colton Donnelly, David Ellis**
 
 In backend applications, separation of data storage and compute is the gold standard. Whether you're using Go on AWS Lambda, or Ruby-on-Rails on Heroku, or Perl and C++ CGI scripts on your own server in a rack you rented at Peak Hosting, your application layer doesn't maintain any responsibility for the storage of the data it is working with. Instead, you have a database cluster, whether it's DynamoDB, or Cassandra, or PostgreSQL. One of these applications is deployed to be in charge your data.
 
@@ -263,22 +263,20 @@ We now have the bones of a real SQL database with indexes and joins that works i
 
 It may even change that decision automatically for you as you increase the number of relevant locations in your database. You did not need to rewrite your logic in another language, you did not need to notice worsening performance in that query as prior assumptions no longer hold before potentially addressing it.
 
-By being intimately involved in the entire flow of your application's computation and with the ability to model more precisely what you are doing, the language and its runtime can eliminate an entire class of problems and trade-offs, giving you more time to focus on solving the problems that matter to you and your business. That's the kind of productivity gain that can make a new language worthwhile.
+There are many features of Alan like this that make developing your software better, from [runtime exception guards for everything but out-of-memory issues](https://github.com/alantech/alan/blob/main/rfcs/004%20-%20Runtime%20Error%20Elimination%20RFC.md) to keep your backend server running without major outages, [install-time access controls on modules to prevent third party libraries from accessing parts of the standard library they don't need](https://github.com/alantech/alan/blob/main/rfcs/020%20-%20Dependencies%20permissions%20RFC.md), to the planned automatic parallelization of array-based operations when the linear compute time vs the scatter-gather parallel compute time tradeoff makes sense that cannot be replicated in languages without the controls on Turing completeness that Alan has.
 
-However, it is possible to bring a close facsimile of this to existing languages. With a consistent hash or rendezvous hash ring established between the nodes in the deployment and a private RPC mechanism they can share, you can send messages to the node that should "own" a given key. A mechanism to designate backup nodes (which falls out of Rendezvous Hashing's structure, btw) and automated push or pull of data associated with a key improves the resilience (but is not strictly necessary if you believe your cluster will never have an outage...) can be built on that.
+But this remote execution feature is replicable in other languages in a way that the other examples are not, and Alan is not yet production ready while other languages... are. With a [consistent hash](https://en.wikipedia.org/wiki/Consistent_hashing) or [rendezvous hash](https://en.wikipedia.org/wiki/Rendezvous_hashing) ring established between the nodes in the deployment and a private [RPC](https://en.wikipedia.org/wiki/Remote_procedure_call) mechanism they can share, you can send messages to the node that should "own" a given key. A mechanism to designate backup nodes (which falls out of Rendezvous Hashing's structure, btw) and automated push or pull of data associated with a key improves the resilience (but is not strictly necessary if you believe your cluster will never have an outage...) can be built on that.
 
-Finally you can recreate remote execution somewhat similarly to what Alan is capable of, but since the vast majority of languages with closures do not provide a programmatic way to access or iterate on said closures, you can only do so with "pure-ish" functions, that only use compile-time constants and other functions. This fits in well with `static` methods on classes like in Java or Javascript. In this case, the function would need to take in two arguments: the value of the key it is operating on, and any other data necessary for the operation, if any.
-
-It could look something like:
+Finally you can recreate remote execution somewhat similarly to what Alan is capable of, but since the vast majority of languages with closures do not provide a programmatic way to access or iterate on said closures, you can only do so with "pure-ish" functions, that only use compile-time constants and other functions. This fits in well with `static` methods on classes like in Java or Javascript. However, writing your code in such a way will always be inelegant, with more boilerplate and less clear ordering. The best we can think of there is:
 
 ```js
 class MoreThan20 extends RemoteExec {
-  static run(idx) {
+  static async run(idx) {
     const rows = idx
       .filter((kv) => kv.key > 20)
       .map((kv) => kv.val)
       .reduce((rows, curr) => rows.concat(curr), []);
-    return new RowToVal('some-namespace').ref('some-int-array').call(rows);
+    return await new RowToVal('some-namespace').ref('some-int-array').call(rows);
   }
 }
 class RowToVal extends RemoteExecWith {
@@ -289,20 +287,25 @@ class RowToVal extends RemoteExecWith {
 const moreThan20 = await new MoreThan20('some-namespace').ref('some-int-array-index').call();
 ```
 
-The flow of the logic is not very clear, however. If you're willing to risk confusion on what is and is not allowed with a callback function, you can get something much closer to the original Alan code:
+The initial filtering query is split in two, with the first class that is defined and with the final constant that `await`s for the result. The class defined in the middle and used by the first class performs the actual record lookup, reproducing the earlier example of querying an indexed array with a where-like clause, but had to extend a different base class to get the desired behavior of being able to pass in an argument from the calling side versus not needing to with the first class.
+
+If you're willing to risk some confusion on what is and is not allowed within the callback function, you can get something much closer to the original Alan code:
 
 ```js
-const moreThan20 = select('some-namespace', 'my-values').where((rec) => rec.val > 20);
-const withDescriptions = namespace('some-namespace')
-  .ref('my-descriptions')
-  .using(moreThan20)
-  .run((descs, moreThan20) => moreThan20
-    .map((rec) => ({
-      val: rec.val,
-      description: descs[rec.descId] || '',
-    })));
+const moreThan20 = await namespace('some-namespace')
+  .ref('some-int-array-index')
+  .run(async (idx) => {
+    const rows = idx
+      .filter((kv) => kv.key > 20)
+      .map((kv) => kv.val)
+      .reduce((rows, curr) => rows.concat(curr), []);
+    return await namespace('some-namespace')
+      .ref('some-int-array')
+      .using(rows)
+      .run((arr, rows) => rows.map((row) => arr[row] || 0));
+  });
 ```
 
-Any variables you want to use must be passed as arguments to the potentially-remote function now passed to a `run` method instead of a `closure` method, and each extra argument needs to be declared with a `using` method. This keeps things clean, but now there are no safeguards against trying to use a closure argument that will not be set as expected. Worse, it may be a wrong value instead of simply not being defined, depending on the implementation, and silently compute incorrect results! Instead of language-level guarantees and principle-of-least-surprise consistency, we lose some consistency for clarity, assuming you know the constraint on functions passed to `run` that don't apply anywhere else in the language.
+Any variables you want to use must be passed as arguments to the potentially-remote function now passed to a `run` method instead of a `closure` method, where each extra argument is declared with a `using` method call beforehand. This keeps things clean, but there are no safeguards against using a closure argument that will not be set as expected. Instead of language-level guarantees and principle-of-least-surprise consistency, we lose some consistency in closure function behavior for clarity in what the code is doing.
 
-However, a source linting tool could check for improper usage and re-impose "language-level" guarantees (even if a bit surprising), mitigating this concern. So as a framework that defines clustering, RPC, and at least part of your build process for you, similar advantages could be attached to almost any language. :)
+However, it should be possible to prevent people who don't understand this from causing invalid calculations in production by way of a source linting tool that detects closure variable usage that isn't top-level function/class/constant usage, reimposing "language-level" guarantees. This requires a framework that is integrated into your build process (for the linting) and your deployment process (for the consistent or rendezvous hash ring membership), but should be doable in any programming language, and can help improve the performance of many codebases without significantly impacting the clarity of intent.
