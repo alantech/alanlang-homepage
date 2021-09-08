@@ -289,4 +289,20 @@ class RowToVal extends RemoteExecWith {
 const moreThan20 = await new MoreThan20('some-namespace').ref('some-int-array-index').call();
 ```
 
-(This looks like crap. Is there any way to be less crap but still clear that you can't use a closure?)
+The flow of the logic is not very clear, however. If you're willing to risk confusion on what is and is not allowed with a callback function, you can get something much closer to the original Alan code:
+
+```js
+const moreThan20 = select('some-namespace', 'my-values').where((rec) => rec.val > 20);
+const withDescriptions = namespace('some-namespace')
+  .ref('my-descriptions')
+  .using(moreThan20)
+  .run((descs, moreThan20) => moreThan20
+    .map((rec) => ({
+      val: rec.val,
+      description: descs[rec.descId] || '',
+    })));
+```
+
+Any variables you want to use must be passed as arguments to the potentially-remote function now passed to a `run` method instead of a `closure` method, and each extra argument needs to be declared with a `using` method. This keeps things clean, but now there are no safeguards against trying to use a closure argument that will not be set as expected. Worse, it may be a wrong value instead of simply not being defined, depending on the implementation, and silently compute incorrect results! Instead of language-level guarantees and principle-of-least-surprise consistency, we lose some consistency for clarity, assuming you know the constraint on functions passed to `run` that don't apply anywhere else in the language.
+
+However, a source linting tool could check for improper usage and re-impose "language-level" guarantees (even if a bit surprising), mitigating this concern. So as a framework that defines clustering, RPC, and at least part of your build process for you, similar advantages could be attached to almost any language. :)
