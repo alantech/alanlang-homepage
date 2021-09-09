@@ -32,7 +32,7 @@ const userTripsInOrder = trips
   .sort((a, b) => a.origin.time - b.origin.time);
 ```
 
-It's more likely you would write something like:
+If you are familiar with SQL, as most people are, it's more likely you would write something like:
 
 ```js
 const userTripsInOrder = await query(`
