@@ -173,7 +173,7 @@ on app.start {
 
 ## Get involved
 
-Reach out on [Discord](https://discord.gg/XatB9we), [Reddit](https://www.reddit.com/r/alanlang), [Twitter](https://twitter.com/alanlanguage) or email us at hello at alantechnologies dot com.
+Reach out on [Discord](https://discord.gg/XatB9we), [Reddit](https://www.reddit.com/r/alanlang) or [Twitter](https://twitter.com/alanlanguage).
 
 ## About us
 
