@@ -1,7 +1,7 @@
 &nbsp;
 
 <center>
-  <img src="alan-logo.png" alt="drawing" width="180"/>
+  <img src="logo.png" alt="drawing" width="180"/>
   <h1 style="color: var(--title);">The Alan Programming Language</h1>
 </center>
 
