@@ -177,7 +177,7 @@ Reach out on [Discord](https://discord.gg/XatB9we), [Reddit](https://www.reddit.
 
 ## About us
 
-Alan is being actively developed by [Alan Technologies Inc.](https://www.crunchbase.com/organization/alan-technologies), which is a startup backed by [Haystack](https://haystack.vc) and [Root](https://root.vc) VC.
+Alan was created by [Alan Technologies Inc.](https://www.crunchbase.com/organization/alan-technologies), which is a startup backed by [Haystack](https://haystack.vc) and [Root](https://root.vc) VC.
 
 &nbsp;
 
