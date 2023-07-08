@@ -173,12 +173,8 @@ on app.start {
 
 ## About us
 
-The Alan programming language was created by [Alan Technologies Inc.](https://alantechnologies.com).
+The Alan programming language was created by [Alan Technologies Inc.](https://alantechnologies.com). It is not currently under active development.
 
 &nbsp;
 
 &nbsp;
-
-<center>
-  <a href="https://github.com/alantech/alan#installation" onclick="analytics.track('DownloadCTA');" class="cta-button">Get Started</a>
-</center>
