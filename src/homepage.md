@@ -171,13 +171,9 @@ on app.start {
   </div>
 </center>
 
-## Get involved
-
-Reach out on [Discord](https://discord.gg/XatB9we), [Reddit](https://www.reddit.com/r/alanlang) or [Twitter](https://twitter.com/alanlanguage).
-
 ## About us
 
-Alan was created by [Alan Technologies Inc.](https://www.crunchbase.com/organization/alan-technologies), which is a startup backed by [Haystack](https://haystack.vc) and [Root](https://root.vc) VC.
+The Alan programming language was created by [Alan Technologies Inc.](https://alantechnologies.com).
 
 &nbsp;
 
