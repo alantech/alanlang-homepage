@@ -1,6 +1,6 @@
 # Why we created Alan
 
-**14 August 2020 | David Ellis, Luis F. De Pombo**
+**14 August 2020 | David Ellis, Luifer De Pombo**
 
 We created a programming language to be able to write concurrent algorithms and business logic without having to explicitly program how it should be parallelized. Alan makes people more productive by managing IO and computational parallelism for them in the same way languages from the 90s like Java and Python made people more productive, when compared to C or C++, by managing memory for them.
 
