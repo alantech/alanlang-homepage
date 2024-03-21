@@ -1,6 +1,6 @@
 # An Overview of Alan
 
-**16 August 2020 | Luifer De Pombo, David Ellis**
+**16 August 2020 | L. Fernando De Pombo, David Ellis**
 
 Programming languages are useful not only for what they allow, but what they prevent. That is the key separation between a language and a framework. For good or for ill, a framework can be sidestepped by its users while a language can't.
 
