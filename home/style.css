@@ -91,4 +91,7 @@ section {
 footer {
   padding: 25px;
   background-color: rgba(22, 24, 29, 0.87);
+  position: fixed;
+  bottom: 0px;
+  width: calc(100% - 50px);
 }
