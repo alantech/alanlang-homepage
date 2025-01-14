@@ -2,5 +2,7 @@ node_modules/
 *.swp
 *.pid
 alan
-home/pkg/
+home/*.json
+home/*.wasm
+home/*.ts
 *.js
