@@ -81,12 +81,29 @@ main {
 }
 
 section {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+  grid-auto-rows: minmax(150px, auto);
   padding-left: 10%;
   padding-right: 10%;
   padding-top: 20px;
   padding-bottom: 20px;
   width: 80%;
   min-width: 640px;
+}
+
+article {
+  text-align: center;
+}
+
+article img {
+  width: 120px;
+  height: 120px;
+}
+
+article p {
+  text-align: justify;
 }
 
 footer {
