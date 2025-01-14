@@ -1,0 +1,175 @@
+body {
+  padding: 0px;
+  margin: 0px;
+  background-color: rgb(30, 33, 41);
+  font-family: "Roboto", -apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif;
+  font-feature-settings: "kern", "liga";
+  font-size: 10px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: rgb(255, 255, 255);
+}
+
+a:visited, a:hover, a:active, a:link {
+  text-decoration: none;
+  color: rgb(255, 255, 255);
+}
+
+#titlebar {
+  position: sticky;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  background-color: rgb(38, 139, 210);
+}
+
+#footerbar {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+}
+
+#titlebartitle {
+  display: inline;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+#titlebarlinks, #socialmedialinks {
+  font-size: 18px;
+  text-align: right;
+}
+
+#titlebar a, #footerbar a {
+  opacity: 0.7;
+  transition-behavior: normal, normal;
+  transition-delay: 0.08s;
+  transition-duration: 0.4s, 0.25s;
+  transition-property: transform, opacity;
+  transition-timing-function: cubic-bezier(0.1, 0.7, 0.1, 1), ease;
+}
+
+#titlebar a:hover, #footerbar a:hover {
+  opacity: 1.0;
+}
+
+#titlebar ol, #footerbar ol {
+  list-style: none;
+}
+
+#titlebar ol li, #footerbar ol li {
+  display: inline;
+  padding: 10px;
+}
+
+#titlebar img {
+  height: 24px;
+  width: 24px;
+  padding-top: 5px;
+  padding-right: 10px;
+}
+
+#footerbar svg {
+  height: 24px;
+  width: 24px;
+  fill: rgba(255, 255, 255, 0.867);
+}
+
+main {
+  width: 100%;
+}
+
+#liveexample {
+  width: 80%;
+  padding-left: 10%;
+  padding-right: 10%;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  min-width: 640px;
+}
+
+#advantages {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+  grid-auto-rows: minmax(150px, auto);
+  padding-left: 10%;
+  padding-right: 10%;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  width: 80%;
+  min-width: 640px;
+}
+
+#comparison {
+  width: 80%;
+  padding-left: 10%;
+  padding-right: 10%;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  min-width: 640px;
+  margin-bottom: 134px; /* Taken from CSS inspector for the footer's computed height plus 20px */
+}
+
+#comparison ul li {
+  padding: 5px;
+}
+
+article {
+  text-align: center;
+}
+
+article img {
+  width: 120px;
+  height: 120px;
+}
+
+article p {
+  text-align: justify;
+}
+
+form {
+  display: contents;
+}
+
+textarea, #liveexample div {
+  font-family: "Roboto Mono", SFMono-Regular, Consolas, Menlo, monospace;
+  font-size: 13.6px;
+  width: calc(100% - 40px);
+  height: 240px;
+  color: rgb(255, 255, 255);
+  border: 0px;
+  background: rgba(22, 24, 29, 0.87);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+button {
+  width: calc(25% - 40px);
+  height: 40px;
+  color: rgba(255, 255, 255, 0.867);
+  background-color: rgba(38, 139, 210, 0.87);
+  border: 0px;
+  font-weight: 700;
+  transition-behavior: normal, normal;
+  transition-delay: 0.08s;
+  transition-duration: 0.4s, 0.25s;
+  transition-property: transform, color, background-color;
+  transition-timing-function: cubic-bezier(0.1, 0.7, 0.1, 1), ease;
+  margin-bottom: 20px;
+}
+
+button:hover {
+  color: rgb(255, 255, 255);
+  background-color: rgb(38, 139, 210);
+  cursor: pointer;
+}
+
+footer {
+  padding: 25px;
+  background-color: rgba(22, 24, 29, 0.87);
+  position: fixed;
+  bottom: 0px;
+  width: calc(100% - 50px);
+}
