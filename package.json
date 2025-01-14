@@ -1,0 +1,25 @@
+{
+  "name": "web_compiler",
+  "type": "module",
+  "collaborators": [
+    "David Ellis <isv.damocles@gmail.com>"
+  ],
+  "description": "A limited version of the Alan Compiler to run inside of the browser",
+  "version": "0.2.0",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alantech/alan"
+  },
+  "files": [
+    "web_compiler_bg.wasm",
+    "web_compiler.js",
+    "web_compiler.d.ts"
+  ],
+  "main": "web_compiler.js",
+  "homepage": "https://alan-lang.org",
+  "types": "web_compiler.d.ts",
+  "sideEffects": [
+    "./snippets/*"
+  ]
+}
