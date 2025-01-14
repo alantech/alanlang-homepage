@@ -103,7 +103,17 @@ main {
 }
 
 #comparison {
+  width: 80%;
+  padding-left: 10%;
+  padding-right: 10%;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  min-width: 640px;
   margin-bottom: 134px; /* Taken from CSS inspector for the footer's computed height plus 20px */
+}
+
+#comparison ul li {
+  padding: 5px;
 }
 
 article {
@@ -123,7 +133,9 @@ form {
   display: contents;
 }
 
-textarea {
+textarea, #liveexample div {
+  font-family: "Roboto Mono", SFMono-Regular, Consolas, Menlo, monospace;
+  font-size: 13.6px;
   width: calc(100% - 40px);
   height: 240px;
   color: rgb(255, 255, 255);
@@ -145,6 +157,7 @@ button {
   transition-duration: 0.4s, 0.25s;
   transition-property: transform, color, background-color;
   transition-timing-function: cubic-bezier(0.1, 0.7, 0.1, 1), ease;
+  margin-bottom: 20px;
 }
 
 button:hover {
