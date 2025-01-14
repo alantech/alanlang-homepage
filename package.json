@@ -1,0 +1,15 @@
+{
+  "name": "alanlang-homepage",
+  "version": "0.2.0",
+  "description": "Homepage for the Alan Programming Language",
+  "scripts": {
+    "start-server": "bash -c 'http-server &\necho $! > ./http-server.pid'",
+    "stop-server": "bash -c 'kill `cat ./http-server.pid`\n rm ./http-server.pid'"
+  },
+  "repository": "git@github.com:alantech/alanlang-homepage",
+  "author": "David Ellis <isv.damocles@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  }
+}

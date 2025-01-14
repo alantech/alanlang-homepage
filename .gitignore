@@ -1,4 +1,6 @@
-book
-.idea
+node_modules/
+*.swp
+*.pid
 alan
-bundle.js
+home/pkg/
+*.js
