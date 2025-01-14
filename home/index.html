@@ -19,7 +19,18 @@
     </header>
     <main>
       <section id="liveexample">
-        TODO: Live Example goes here
+        <form>
+          <textarea id="code">export fn main {
+  // Create a buffer of memory on the GPU
+  let b = GBuffer([1, 2, 3, 4]);
+  // Map the values into a new buffer on the GPU
+  let out = b.map(fn (val: gi32) = val + 2);
+  // Read the results back to RAM and print them
+  out.read{i32}.print;
+}</textarea>
+          <button type="button" id="run">Run</button>
+        </form>
+        <div id="stdout"></div>
       </section>
       <section id="advantages">
         <article>
