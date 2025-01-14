@@ -150,6 +150,7 @@ button {
 button:hover {
   color: rgb(255, 255, 255);
   background-color: rgb(38, 139, 210);
+  cursor: pointer;
 }
 
 footer {
