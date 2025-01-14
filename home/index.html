@@ -96,7 +96,7 @@
           <li>Operators are just aliases to functions. <code>+</code> is <code>add</code>, for example.</li>
           <li>You can declare new operators and their precedence, but only within the current module scope.</li>
           <li>Typescript-style operators in the type system are similarly just aliases to generic types. <code>+</code> is <code>Add</code>, for example.</li>
-          <li>You can delcare new type operators and their precedence, similarly limited to the current module scope.</li>
+          <li>You can declare new type operators and their precedence, similarly limited to the current module scope.</li>
           <li>The type system is where compile-time computation happens, so binding platform (Rust or Javascript) types and functions is done in the type system, and so is importing from other modules.</li>
           <li>You don't need to ever declare the type of a variable, it will figure it out. But if you do declare the type and it differs from what the compiler thinks it should be, that will cause a compile-time error, so it can still be good to do so to prevent unexpected API changes.</li>
         </ul>
