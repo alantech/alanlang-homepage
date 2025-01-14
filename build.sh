@@ -10,5 +10,5 @@ cargo install wasm-pack
 yarn wasm-compiler
 popd
 cp alan/alanStdBundle.js home/alanStdBundle.js
-cp -r alan/web_compiler/pkg home/pkg
+cp -r alan/web_compiler/pkg/* home/
 rm -rf alan
