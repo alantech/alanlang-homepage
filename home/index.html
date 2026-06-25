@@ -82,8 +82,8 @@
     // Disable the normal cursor when over the canvas
     win.cursorInvisible;
   }, fn (win: Mut{Window}) = [
-    // On each frame, create a context buffer consisting of the width, height, current run time, and mouse position
-    win.width, win.height, win.runtime, win.mouseX, win.mouseY
+    // On each frame, create a context buffer consisting of the width, height, current run time, and mouse data
+    win.width, win.height, win.runtime, win.mouseX, win.mouseY, win.mouseLeft, win.mouseRight
   ], fn (frame: Frame) {
     // On each frame in the GPU, get the current pixel to render and extract the context
     let id = frame.pixel;
@@ -92,11 +92,19 @@
     let time = frame.context[2].asF32;
     let mouseX = frame.context[3];
     let mouseY = frame.context[4];
+    let mouseLeft = frame.context[5].asBool;
+    let mouseRight = frame.context[6].asBool;
     // Compute a value that cycles cleanly over 10 seconds of time
     let per10sec = time / 10.0;
     let cycle = 2.0 * abs(per10sec - floor(per10sec) - 0.5);
     // Determine how "bright" the light the mouse "shines" on the current pixel
-    let light = 1.0 / gvec2f(abs(mouseX.gi32 - id.x).gf32, abs(mouseY.gi32 - id.y).gf32).magnitude;
+    let scale = 3.0.gf32;
+    if mouseLeft {
+      scale = 5.0.gf32;
+    } else if mouseRight {
+      scale = 10.0.gf32;
+    }
+    let light = scale / gvec2f(abs(mouseX.gi32 - id.x).gf32, abs(mouseY.gi32 - id.y).gf32).magnitude;
     // Compute the RGBA values for the current pixel
     let red = min(1.0, light + cycle * gf32(id.x) / gf32(width));
     let green = min(1.0, light + 1.0 - red);
