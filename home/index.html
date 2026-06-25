@@ -57,6 +57,9 @@
           // Remove any `import` from the generated Javascript before eval'ing
           eval(js.replaceAll(/^import.*/g, ""));
         });
+        document.addEventListener('contextmenu', function(event) {
+          event.preventDefault();
+        });
       });
     </script>
   </head>
